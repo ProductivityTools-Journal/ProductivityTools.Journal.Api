@@ -67,7 +67,7 @@ namespace ProductivityTools.Meetings.WebApi
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000", "http://meetingsweb.z13.web.core.windows.net").AllowAnyMethod().AllowAnyHeader();
+                    builder.WithOrigins("http://localhost:3000", "https://meetingsweb.z13.web.core.windows.net").AllowAnyMethod().AllowAnyHeader();
                 });
             });
         }
