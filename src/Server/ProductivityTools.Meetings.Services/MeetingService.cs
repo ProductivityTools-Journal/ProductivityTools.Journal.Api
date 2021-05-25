@@ -33,7 +33,14 @@ namespace ProductivityTools.Meetings.Services
             }
             else
             {
-                return this.Mapper.Map<List<Meeting>>(this.MeetingQueries.GetMeetings());
+                if (drillDown)
+                {
+                    return this.Mapper.Map<List<Meeting>>(this.MeetingQueries.GetMeetings());
+                }
+                else
+                {
+                    return new List<Meeting>();
+                }
             }
         }
 
