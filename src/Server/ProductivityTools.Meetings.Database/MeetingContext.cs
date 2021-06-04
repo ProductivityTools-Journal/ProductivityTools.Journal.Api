@@ -39,7 +39,6 @@ namespace ProductivityTools.Meetings.Database
                 optionsBuilder.UseLoggerFactory(GetLoggerFactory());
                 optionsBuilder.EnableSensitiveDataLogging();
                 base.OnConfiguring(optionsBuilder);
-
             }
         }
 

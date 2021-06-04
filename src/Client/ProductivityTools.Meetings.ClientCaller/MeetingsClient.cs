@@ -81,7 +81,7 @@ namespace ProductivityTools.Meetings.ClientCaller
             //this.HttpPostClient.SetBaseUrl("http://localhost:5002/api");//vs
 
             //this.HttpPostClient.SetBaseUrl("https://productivitytools.tech:443/api");
-            this.HttpPostClient.SetBaseUrl("https://meetings.productivitytools.tech:8081/api");
+            this.HttpPostClient.SetBaseUrl("https://meetings.productivitytools.tech:8020/api");
             //this.HttpPostClient.SetBaseUrl("http://192.168.1.51:8081/api");
             this.HttpPostClient.HttpClient.SetBearerToken(Token);
 
