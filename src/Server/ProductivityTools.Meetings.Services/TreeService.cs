@@ -65,5 +65,10 @@ namespace ProductivityTools.Meetings.Services
         {
             this.TreeQueries.AddTreNode(parentId, name);
         }
+
+        public int RemoveTreeNodeWithAllItems(int treeId)
+        {
+            return 1;
+        }
     }
 }

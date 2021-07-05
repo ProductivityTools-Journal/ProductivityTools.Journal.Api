@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductivityTools.Meetings.CoreObjects;
@@ -33,10 +34,17 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route(Consts.TreeControlerNewNode)]
         public void AddTreeNode(NewTreeNodeRequest request)
         {
-            this.TreeServices.AddTreeNode(request.Parent, request.Name);
+            this.TreeServices.AddTreeNode(request.ParentId, request.Name);
+        }
+
+        public int RemoveTreeNodeWithAllItems(RemoveTreeNodeRequest removeTreeNodeRequest)
+        {
+            int removed = this.TreeServices.RemoveTreeNodeWithAllItems(removeTreeNodeRequest.TreeId);
+            return removed;
         }
     }
 }

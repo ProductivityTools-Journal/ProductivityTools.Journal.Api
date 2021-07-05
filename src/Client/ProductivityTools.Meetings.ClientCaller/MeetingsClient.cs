@@ -25,7 +25,7 @@ namespace ProductivityTools.Meetings.ClientCaller
 
                     var client = new HttpClient();
 
-                    var disco = client.GetDiscoveryDocumentAsync("https://identityserver.productivitytools.tech:8084/").Result;
+                    var disco = client.GetDiscoveryDocumentAsync("https://identityserver.productivitytools.tech:8010/").Result;
                     if (disco.IsError)
                     {
                         Console.WriteLine(disco.Error);
