@@ -1,20 +1,27 @@
 ﻿using AutoMapper;
 using ProductivityTools.Meetings.CoreObjects;
+using ProducvitityTools.Meetings.Commands;
 using ProducvitityTools.Meetings.Queries;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 
 namespace ProductivityTools.Meetings.Services
 {
     public class TreeService : ITreeService
     {
-        readonly ITreeQueries TreeQueries;
+        private readonly ITreeQueries TreeQueries;
+        private readonly ITreeCommands TreeCommands;
+        private readonly IMeetingCommands MeetingCommands;
+
         readonly IMapper Mapper;
 
-        public TreeService(ITreeQueries treeQueries, IMapper mapper)
+        public TreeService(ITreeQueries treeQueries, ITreeCommands treeCommands, IMeetingCommands meetingCommands, IMapper mapper)
         {
             this.TreeQueries = treeQueries;
+            this.TreeCommands = treeCommands;
+            this.MeetingCommands = meetingCommands;
             this.Mapper = mapper;
         }
 
@@ -63,12 +70,17 @@ namespace ProductivityTools.Meetings.Services
 
         public void AddTreeNode(int parentId, string name)
         {
-            this.TreeQueries.AddTreNode(parentId, name);
+            this.TreeCommands.AddTreeNode(parentId, name);
         }
 
-        public int RemoveTreeNodeWithAllItems(int treeId)
+        public int Delete(int treeId)
         {
-            return 1;
+            List<TreeNode> subTreeNodes = GetNodes(treeId);
+            subTreeNodes.Add(this.Mapper.Map < TreeNode >(this.TreeQueries.GetTreeNode(treeId)));
+            var treesIds = subTreeNodes.Select(x => x.Id);
+            int meetingRemoved=this.MeetingCommands.Delete(treesIds);
+            int treeNodeRemoved=this.TreeCommands.Delete(treesIds);
+            return meetingRemoved + treeNodeRemoved;
         }
     }
 }

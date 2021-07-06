@@ -13,5 +13,7 @@ namespace ProductivityTools.Meetings.Database.Objects
         public string DuringNotes { get; set; }
         public string AfterNotes { get; set; }
         public int? TreeId { get; set; }
+
+        public bool Deleted { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ProductivityTools.Meetings.Database;
@@ -6,6 +7,14 @@ using ProductivityTools.Meetings.Database.Objects;
 
 namespace ProducvitityTools.Meetings.Commands
 {
+    public interface IMeetingCommands
+    {
+        int Save(Meeting meeting);
+        void Update(Meeting meeting);
+        void Delete(Meeting meetingId);
+        int Delete(IEnumerable<int> treeIds);
+    }
+
     public class MeetingCommands : IMeetingCommands
     {
         MeetingContext MeetingContext;
@@ -55,6 +64,19 @@ namespace ProducvitityTools.Meetings.Commands
         {
             MeetingContext.Meeting.Remove(meeting);
             MeetingContext.SaveChanges();
+        }
+
+        int IMeetingCommands.Delete(IEnumerable<int> treeIds)
+        {
+            var meetings = MeetingContext.Meeting.Where(x => treeIds.Contains(x.TreeId.Value));
+            foreach (var meeting in meetings)
+            {
+                meeting.Deleted = true;
+            };
+
+            MeetingContext.SaveChanges();
+
+            return meetings.Count();
         }
     }
 }

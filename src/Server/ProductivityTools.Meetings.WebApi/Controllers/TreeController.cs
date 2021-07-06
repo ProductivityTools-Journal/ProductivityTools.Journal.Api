@@ -41,9 +41,13 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             this.TreeServices.AddTreeNode(request.ParentId, request.Name);
         }
 
-        public int RemoveTreeNodeWithAllItems(RemoveTreeNodeRequest removeTreeNodeRequest)
+
+        [HttpPost]
+        [Authorize]
+        [Route(Consts.TreeControlerDelete)]
+        public int Delete(RemoveTreeNodeRequest removeTreeNodeRequest)
         {
-            int removed = this.TreeServices.RemoveTreeNodeWithAllItems(removeTreeNodeRequest.TreeId);
+            int removed = this.TreeServices.Delete(removeTreeNodeRequest.TreeId);
             return removed;
         }
     }
