@@ -25,7 +25,7 @@ namespace ProducvitityTools.Meetings.Queries
         {
             var result = this.MeetingContext.Meeting
                 .Where(x=> x.TreeId.HasValue &&  treeNodeId.Contains(x.TreeId.Value))
-                .OrderByDescending(x=>x.Date).Take(5).ToList();
+                .OrderByDescending(x=>x.Date).Take(50).ToList();
             return result;
         }
 
