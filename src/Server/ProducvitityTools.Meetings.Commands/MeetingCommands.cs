@@ -9,9 +9,9 @@ namespace ProducvitityTools.Meetings.Commands
 {
     public interface IMeetingCommands
     {
-        int Save(Meeting meeting);
-        void Update(Meeting meeting);
-        void Delete(Meeting meetingId);
+        int Save(JournalItem meeting);
+        void Update(JournalItem meeting);
+        void Delete(JournalItem meetingId);
         int Delete(IEnumerable<int> treeIds);
     }
 
@@ -24,9 +24,9 @@ namespace ProducvitityTools.Meetings.Commands
             this.MeetingContext = context;
         }
 
-        void IMeetingCommands.Update(Meeting meeting)
+        void IMeetingCommands.Update(JournalItem meeting)
         {//pw: not used
-            MeetingContext.Meeting.Attach(meeting);
+            MeetingContext.JournalItem.Attach(meeting);
             MeetingContext.Entry(meeting).State = EntityState.Modified;
 
             var ChangeTracker = MeetingContext.ChangeTracker;
@@ -38,15 +38,15 @@ namespace ProducvitityTools.Meetings.Commands
             MeetingContext.SaveChanges();
         }
 
-        int IMeetingCommands.Save(Meeting meeting)
+        int IMeetingCommands.Save(JournalItem meeting)
         {
             if (meeting.MeetingId == null)
             {
-                MeetingContext.Meeting.Add(meeting);
+                MeetingContext.JournalItem.Add(meeting);
             }
             else
             {
-                MeetingContext.Meeting.Attach(meeting);
+                MeetingContext.JournalItem.Attach(meeting);
                 MeetingContext.Entry(meeting).State = EntityState.Modified;
             }
             var ChangeTracker = MeetingContext.ChangeTracker;
@@ -60,15 +60,15 @@ namespace ProducvitityTools.Meetings.Commands
             return meeting.MeetingId.Value;
         }
 
-        void IMeetingCommands.Delete(Meeting meeting)
+        void IMeetingCommands.Delete(JournalItem meeting)
         {
-            MeetingContext.Meeting.Remove(meeting);
+            MeetingContext.JournalItem.Remove(meeting);
             MeetingContext.SaveChanges();
         }
 
         int IMeetingCommands.Delete(IEnumerable<int> treeIds)
         {
-            var meetings = MeetingContext.Meeting.Where(x => treeIds.Contains(x.TreeId.Value));
+            var meetings = MeetingContext.JournalItem.Where(x => treeIds.Contains(x.TreeId.Value));
             foreach (var meeting in meetings)
             {
                 meeting.Deleted = true;

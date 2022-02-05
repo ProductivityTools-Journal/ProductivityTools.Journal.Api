@@ -15,23 +15,23 @@ namespace ProducvitityTools.Meetings.Queries
             this.MeetingContext = context;
         }
 
-        public List<Meeting> GetMeetings()
+        public List<JournalItem> GetMeetings()
         {
-            var result = this.MeetingContext.Meeting.ToList();
+            var result = this.MeetingContext.JournalItem.ToList();
             return result;
         }
 
-        public List<Meeting> GetMeetings(List<int> treeNodeId)
+        public List<JournalItem> GetMeetings(List<int> treeNodeId)
         {
-            var result = this.MeetingContext.Meeting
+            var result = this.MeetingContext.JournalItem
                 .Where(x=> x.TreeId.HasValue &&  treeNodeId.Contains(x.TreeId.Value))
                 .OrderByDescending(x=>x.Date).Take(50).ToList();
             return result;
         }
 
-        public Meeting GetMeeting(int id)
+        public JournalItem GetMeeting(int id)
         {
-            var result = this.MeetingContext.Meeting.SingleOrDefault(x => x.MeetingId == id);
+            var result = this.MeetingContext.JournalItem.SingleOrDefault(x => x.MeetingId == id);
             return result;
         }
     }

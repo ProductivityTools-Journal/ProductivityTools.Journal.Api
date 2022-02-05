@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.Database.Objects
 {
-    public class Meeting
+
+    public class JournalItem
     {
         public int? MeetingId { get; set; }
         public DateTime Date { get; set; }

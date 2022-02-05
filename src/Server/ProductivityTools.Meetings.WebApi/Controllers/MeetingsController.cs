@@ -140,7 +140,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         //add validation
         public int Save(Meeting meeting)
         {
-            Database.Objects.Meeting dbMeeting = this.mapper.Map<Database.Objects.Meeting>(meeting);
+            Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
             int meetingId = MeetingCommands.Save(dbMeeting);
             return meetingId;
         }
@@ -149,7 +149,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.UpdateMeetingName)]
         public void Update(Meeting meeting)
         {
-            Database.Objects.Meeting dbMeeting = this.mapper.Map<Database.Objects.Meeting>(meeting);
+            Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
             MeetingCommands.Update(dbMeeting);
         }
 

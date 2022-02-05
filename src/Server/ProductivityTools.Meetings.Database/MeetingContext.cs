@@ -16,7 +16,7 @@ namespace ProductivityTools.Meetings.Database
             this.configuration = configuration;
         }
 
-        public DbSet<Meeting> Meeting { get; set; }
+        public DbSet<JournalItem> JournalItem { get; set; }
         public DbSet<TreeNode> Tree { get; set; }
 
 
@@ -44,8 +44,9 @@ namespace ProductivityTools.Meetings.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("mt");
-            modelBuilder.Entity<Meeting>().HasKey(x => x.MeetingId);
+            modelBuilder.HasDefaultSchema("jl");
+            modelBuilder.Entity<JournalItem>().HasKey(x => x.MeetingId);
+
             modelBuilder.Entity<TreeNode>().ToTable("Tree","mt").HasKey(x => x.TreeId);
            // modelBuilder.Entity<Tree>().HasOne(x => x.Parent).WithMany(x => x.Parent);
 
