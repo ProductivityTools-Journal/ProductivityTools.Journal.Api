@@ -40,7 +40,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         int IMeetingCommands.Save(JournalItem meeting)
         {
-            if (meeting.MeetingId == null)
+            if (meeting.JournalItemId == null)
             {
                 MeetingContext.JournalItem.Add(meeting);
             }
@@ -57,7 +57,7 @@ namespace ProducvitityTools.Meetings.Commands
 
 
             MeetingContext.SaveChanges();
-            return meeting.MeetingId.Value;
+            return meeting.JournalItemId.Value;
         }
 
         void IMeetingCommands.Delete(JournalItem meeting)

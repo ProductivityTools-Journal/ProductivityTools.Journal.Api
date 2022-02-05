@@ -1,4 +1,5 @@
-﻿using ProductivityTools.Meetings.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductivityTools.Meetings.Database;
 using ProductivityTools.Meetings.Database.Objects;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace ProducvitityTools.Meetings.Queries
 
         public List<JournalItem> GetMeetings()
         {
-            var result = this.MeetingContext.JournalItem.ToList();
+            var result = this.MeetingContext.JournalItem
+                .Include(x=>x.Notes)
+                .ToList();
             return result;
         }
 
@@ -25,13 +28,14 @@ namespace ProducvitityTools.Meetings.Queries
         {
             var result = this.MeetingContext.JournalItem
                 .Where(x=> x.TreeId.HasValue &&  treeNodeId.Contains(x.TreeId.Value))
+                .Include(x=>x.Notes)
                 .OrderByDescending(x=>x.Date).Take(50).ToList();
             return result;
         }
 
         public JournalItem GetMeeting(int id)
         {
-            var result = this.MeetingContext.JournalItem.SingleOrDefault(x => x.MeetingId == id);
+            var result = this.MeetingContext.JournalItem.SingleOrDefault(x => x.JournalItemId == id);
             return result;
         }
     }
