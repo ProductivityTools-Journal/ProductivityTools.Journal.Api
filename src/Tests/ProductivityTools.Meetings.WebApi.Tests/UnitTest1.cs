@@ -50,6 +50,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
 
         IMeetingService MeetingService => ServiceProvider.GetService<IMeetingService>();
         IMeetingQueries MeetingQueries => ServiceProvider.GetService<IMeetingQueries>();
+        IMeetingCommands MeetingCommands => ServiceProvider.GetService<IMeetingCommands>();
         IMapper Mapper => ServiceProvider.GetService<IMapper>();
 
 
@@ -77,6 +78,23 @@ namespace ProductivityTools.Meetings.WebApi.Tests
         {
             var controler = new MeetingsController(MeetingQueries, null, null, Mapper, null, null);
             var result = controler.Get(new CoreObjects.MeetingId { Id = 1 });
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void AddMeetingTest()
+        {
+            var controler = new MeetingsController(null, MeetingCommands, null, Mapper, null, null);
+            var result = controler.Save(new CoreObjects.JournalItem
+            {
+                Date = DateTime.Now,
+                Subject = "Test Journal",
+                TreeId = 1,
+                Notes = new System.Collections.Generic.List<CoreObjects.JournalItemNotes>() {
+                    new CoreObjects.JournalItemNotes {
+                        Type = "xxx",
+                        Notes = "Notes" } }
+            });
             Assert.IsNotNull(result);
         }
     }
