@@ -91,7 +91,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             //{
             //    //var apiClient = new AuthenticationApiClient("productivitytools-meeting-dev.eu.auth0.com");
             //    //var userInfod = await apiClient.GetUserInfoAsync(accessToken);
-               
+
 
             //}
             //catch (Exception ex)
@@ -109,7 +109,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             SaveToLog("Request started");
 
             //var partresult = this.MeetingService.GetMeetings(treeNodeId);
-            List<Meeting> result =  this.MeetingService.GetMeetings(meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
+            List<Meeting> result = this.MeetingService.GetMeetings(meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
             SaveToLog("Meetings mapped");
             return result;
         }
@@ -141,7 +141,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         public int Save(Meeting meeting)
         {
             Database.Objects.Meeting dbMeeting = this.mapper.Map<Database.Objects.Meeting>(meeting);
-            int meetingId=MeetingCommands.Save(dbMeeting);
+            int meetingId = MeetingCommands.Save(dbMeeting);
             return meetingId;
         }
 

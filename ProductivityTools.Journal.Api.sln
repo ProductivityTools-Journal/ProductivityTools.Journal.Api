@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29519.87
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}"
 EndProject
@@ -25,7 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.Database", "src\Server\ProductivityTools.Meetings.Database\ProductivityTools.Meetings.Database.csproj", "{B4CBC7CD-57B7-43E7-863B-3B3976325808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityTools.Meetings.Services", "src\Server\ProductivityTools.Meetings.Services\ProductivityTools.Meetings.Services.csproj", "{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.Services", "src\Server\ProductivityTools.Meetings.Services\ProductivityTools.Meetings.Services.csproj", "{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FB520989-8FE9-4601-8D79-DA864C3470E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityTools.Meetings.WebApi.Tests", "src\Tests\ProductivityTools.Meetings.WebApi.Tests\ProductivityTools.Meetings.WebApi.Tests.csproj", "{FFE22747-84AE-4F16-A8C5-48BB76EA23B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,10 @@ Global
 		{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE22747-84AE-4F16-A8C5-48BB76EA23B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE22747-84AE-4F16-A8C5-48BB76EA23B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE22747-84AE-4F16-A8C5-48BB76EA23B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE22747-84AE-4F16-A8C5-48BB76EA23B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +91,7 @@ Global
 		{14854ACA-3F16-433E-B38E-EF8C185D6BC5} = {D02DF10D-BF1E-4544-B53F-427FDB95AFD6}
 		{B4CBC7CD-57B7-43E7-863B-3B3976325808} = {A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}
 		{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866} = {A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}
+		{FFE22747-84AE-4F16-A8C5-48BB76EA23B5} = {FB520989-8FE9-4601-8D79-DA864C3470E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D37192C2-AFF3-4ACB-BB59-9BA332B0BCD8}
