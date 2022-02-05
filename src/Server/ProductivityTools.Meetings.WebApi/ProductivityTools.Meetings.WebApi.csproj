@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\ProductivityTools.Meetings.CoreObjects\ProductivityTools.Meetings.CoreObjects.csproj" />
     <ProjectReference Include="..\ProductivityTools.Meetings.Database\ProductivityTools.Meetings.Database.csproj" />
     <ProjectReference Include="..\ProductivityTools.Meetings.Services\ProductivityTools.Meetings.Services.csproj" />
     <ProjectReference Include="..\ProducvitityTools.Meetings.Commands\ProducvitityTools.Meetings.Commands.csproj" />

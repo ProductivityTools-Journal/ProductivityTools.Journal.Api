@@ -83,53 +83,22 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [HttpPost]
         [Authorize]
         [Route(Consts.ListName)]
-        public async Task<List<Meeting>> GetList(MeetingListRequest meetingListRequest)
+        public List<JournalItem> GetList(MeetingListRequest meetingListRequest)
         {
-            //var xx = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            //var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-            //try
-            //{
-            //    //var apiClient = new AuthenticationApiClient("productivitytools-meeting-dev.eu.auth0.com");
-            //    //var userInfod = await apiClient.GetUserInfoAsync(accessToken);
-
-
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    throw;
-            //}
-
-            //var userInfoUrl = "https://www.googleapis.com/oauth2/v1/userinfo";
-            //var hc = new HttpClient();
-            //hc.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            //var response = hc.GetAsync(userInfoUrl).Result;
-            //dynamic userInfo = response.Content.ReadAsStringAsync().Result;
-
+            
             SaveToLog("Request started");
-
-            //var partresult = this.MeetingService.GetMeetings(treeNodeId);
-            List<Meeting> result = this.MeetingService.GetMeetings(meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
+            List<JournalItem> result = this.MeetingService.GetMeetings(meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
             SaveToLog("Meetings mapped");
             return result;
         }
 
         [HttpPost]
         [Route(Consts.MeetingName)]
-        public Meeting Get(MeetingId meetingId)
+        [Authorize]
+        public JournalItem Get(MeetingId meetingId)
         {
-            SaveToLog("Request started");
-            var remotesecret = meetingId.Secret.ToString();
-            string s = Environment.GetEnvironmentVariable("MeetingsSecret", EnvironmentVariableTarget.Machine);
-            if (!string.IsNullOrEmpty(s))
-            {
-                if (remotesecret != s)
-                {
-                    throw new Exception("Wrong secret");
-                }
-            }
             var partresult = MeetingQueries.GetMeeting(meetingId.Id.Value);
-            Meeting result = this.mapper.Map<Meeting>(partresult);
+            JournalItem result = this.mapper.Map<JournalItem>(partresult);
             SaveToLog("Meetings mapped");
             return result;
         }
@@ -138,7 +107,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [HttpPost]
         [Route(Consts.AddMeetingName)]
         //add validation
-        public int Save(Meeting meeting)
+        public int Save(JournalItem meeting)
         {
             Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
             int meetingId = MeetingCommands.Save(dbMeeting);
@@ -147,7 +116,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpPost]
         [Route(Consts.UpdateMeetingName)]
-        public void Update(Meeting meeting)
+        public void Update(JournalItem meeting)
         {
             Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
             MeetingCommands.Update(dbMeeting);

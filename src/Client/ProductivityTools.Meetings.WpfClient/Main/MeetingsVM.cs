@@ -56,8 +56,8 @@ namespace ProductivityTools.Meetings.WpfClient
             this.AddTreeNodeCommand = new CommandHandler(AddTreeNode, () => true);
             this.LoginCommand = new CommandHandler(Login, () => true);
 
-            this.Meetings.Add(new MeetingItemVM(new CoreObjects.Meeting() { AfterNotes = "Core", BeforeNotes = "Core", DuringNotes = "Core", Subject = "fdsa" }));
-            this.Meetings.Add(new MeetingItemVM(new CoreObjects.Meeting() { AfterNotes = "Core", BeforeNotes = "Core", DuringNotes = "Core" }));
+            //this.Meetings.Add(new MeetingItemVM(new CoreObjects.JournalItem() { Notes= AfterNotes = "Core", BeforeNotes = "Core", DuringNotes = "Core", Subject = "fdsa" }));
+            //this.Meetings.Add(new MeetingItemVM(new CoreObjects.JournalItem() { AfterNotes = "Core", BeforeNotes = "Core", DuringNotes = "Core" }));
             this.Tree.Add(new TreeNode("Pawel"));
             this.Tree.Add(new TreeNode("Marcin"));
         }
@@ -137,7 +137,7 @@ namespace ProductivityTools.Meetings.WpfClient
             }
         }
 
-        private void UpdateMeetings(List<Meeting> xx)
+        private void UpdateMeetings(List<JournalItem> xx)
         {
             this.Meetings.Clear();
             foreach (var item in xx)
@@ -149,7 +149,7 @@ namespace ProductivityTools.Meetings.WpfClient
 
         private void NewMeeting()
         {
-            var meeting = new CoreObjects.Meeting();
+            var meeting = new CoreObjects.JournalItem();
             meeting.TreeId = this.TreeNodeSelected.Id;
             meeting.Subject = this.TreeNodeSelected.Name;
             var meetingvm = new MeetingItemVM(meeting);

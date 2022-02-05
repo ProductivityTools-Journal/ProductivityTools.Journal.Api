@@ -24,7 +24,7 @@ namespace ProductivityTools.Meetings.Services
             this.Mapper = mapper;
         }
 
-        public List<Meeting> GetMeetings(int? treeNodeId, bool drillDown)
+        public List<JournalItem> GetMeetings(int? treeNodeId, bool drillDown)
         {
             if (treeNodeId.HasValue)
             {
@@ -35,16 +35,16 @@ namespace ProductivityTools.Meetings.Services
             {
                 if (drillDown)
                 {
-                    return this.Mapper.Map<List<Meeting>>(this.MeetingQueries.GetMeetings());
+                    return this.Mapper.Map<List<JournalItem>>(this.MeetingQueries.GetMeetings());
                 }
                 else
                 {
-                    return new List<Meeting>();
+                    return new List<JournalItem>();
                 }
             }
         }
 
-        public List<Meeting> GetMeetingsInternal(int treeNodeId, bool drillDown)
+        public List<JournalItem> GetMeetingsInternal(int treeNodeId, bool drillDown)
         {
             var trees = new List<int>() { treeNodeId };
             if (drillDown)
@@ -54,7 +54,7 @@ namespace ProductivityTools.Meetings.Services
 
             //var result = new List<Meeting>();
             var dbResult = this.MeetingQueries.GetMeetings(trees).ToList();
-            var result = this.Mapper.Map<List<Meeting>>(dbResult);
+            var result = this.Mapper.Map<List<JournalItem>>(dbResult);
             return result;
         }
 

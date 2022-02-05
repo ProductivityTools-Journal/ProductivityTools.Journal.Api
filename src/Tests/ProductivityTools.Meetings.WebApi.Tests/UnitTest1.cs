@@ -48,13 +48,16 @@ namespace ProductivityTools.Meetings.WebApi.Tests
             }
         }
 
+        IMeetingService MeetingService => ServiceProvider.GetService<IMeetingService>();
+        IMeetingQueries MeetingQueries => ServiceProvider.GetService<IMeetingQueries>();
+        IMapper Mapper => ServiceProvider.GetService<IMapper>();
+
 
 
         [TestMethod]
         public void GetDateTest()
         {
-            IMeetingQueries meetingQueries = ServiceProvider.GetService<IMeetingQueries>();
-            var controler = new MeetingsController(meetingQueries, null, null, null, null, null);
+            var controler = new MeetingsController(MeetingQueries, null, null, null, null, null);
             var result = controler?.GetDate();
             Assert.IsNotNull(result);
         }
@@ -63,9 +66,17 @@ namespace ProductivityTools.Meetings.WebApi.Tests
         [TestMethod]
         public void GetMeetingsTest()
         {
-            IMeetingService meetingService = ServiceProvider.GetService<IMeetingService>();
-            var controler = new MeetingsController(null, null, meetingService, null, null, null);
-            var result = controler.GetList(new CoreObjects.MeetingListRequest { DrillDown = true, Id = null }).Result;
+
+            var controler = new MeetingsController(null, null, MeetingService, null, null, null);
+            var result = controler.GetList(new CoreObjects.MeetingListRequest { DrillDown = true, Id = null });
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void GetMeetingTest()
+        {
+            var controler = new MeetingsController(MeetingQueries, null, null, Mapper, null, null);
+            var result = controler.Get(new CoreObjects.MeetingId { Id = 1 });
             Assert.IsNotNull(result);
         }
     }

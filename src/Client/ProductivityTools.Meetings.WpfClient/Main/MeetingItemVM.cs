@@ -10,14 +10,14 @@ namespace ProductivityTools.Meetings.WpfClient.Controls.MeetingItem
 {
     public class MeetingItemVM
     {
-        public Meeting Meeting { get; set; }
+        public JournalItem Meeting { get; set; }
         public ICommand EditMeetingCommand { get; }
         public ICommand SaveMeetingCommand { get; }
 
 
         public string GG { get; set; }
 
-        public MeetingItemVM(Meeting meeting)
+        public MeetingItemVM(JournalItem meeting)
         {
             this.Meeting = meeting;
             EditMeetingCommand = new CommandHandler(EditMeetingClick, () => true);

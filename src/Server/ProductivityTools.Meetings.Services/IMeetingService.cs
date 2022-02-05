@@ -5,7 +5,7 @@ namespace ProductivityTools.Meetings.Services
 {
     public interface IMeetingService
     {
-        List<Meeting> GetMeetings(int? treeNodeId, bool drillDown);
+        List<JournalItem> GetMeetings(int? treeNodeId, bool drillDown);
         void DeleteMeeting(int meetingId);
     }
 }

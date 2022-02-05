@@ -19,7 +19,7 @@ namespace ProducvitityTools.Meetings.Queries
         public List<JournalItem> GetMeetings()
         {
             var result = this.MeetingContext.JournalItem
-                .Include(x=>x.Notes)
+                .Include(x => x.Notes)
                 .ToList();
             return result;
         }
@@ -27,15 +27,17 @@ namespace ProducvitityTools.Meetings.Queries
         public List<JournalItem> GetMeetings(List<int> treeNodeId)
         {
             var result = this.MeetingContext.JournalItem
-                .Where(x=> x.TreeId.HasValue &&  treeNodeId.Contains(x.TreeId.Value))
-                .Include(x=>x.Notes)
-                .OrderByDescending(x=>x.Date).Take(50).ToList();
+                .Where(x => x.TreeId.HasValue && treeNodeId.Contains(x.TreeId.Value))
+                .Include(x => x.Notes)
+                .OrderByDescending(x => x.Date).Take(50).ToList();
             return result;
         }
 
         public JournalItem GetMeeting(int id)
         {
-            var result = this.MeetingContext.JournalItem.SingleOrDefault(x => x.JournalItemId == id);
+            var result = this.MeetingContext.JournalItem
+                .Include(x => x.Notes)
+                .SingleOrDefault(x => x.JournalItemId == id);
             return result;
         }
     }

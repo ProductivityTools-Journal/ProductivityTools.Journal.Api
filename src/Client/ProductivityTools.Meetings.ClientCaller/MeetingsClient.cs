@@ -87,18 +87,18 @@ namespace ProductivityTools.Meetings.ClientCaller
 
         }
 
-        public async Task<List<Meeting>> GetMeetings(int? treeNodeId = null, bool drillDown = true)
+        public async Task<List<JournalItem>> GetMeetings(int? treeNodeId = null, bool drillDown = true)
         {
-            var r = this.HttpPostClient.PostAsync<List<Meeting>>(Consts.MeetingControllerName, Consts.ListName, new MeetingListRequest() { Id = treeNodeId, DrillDown = drillDown });
+            var r = this.HttpPostClient.PostAsync<List<JournalItem>>(Consts.MeetingControllerName, Consts.ListName, new MeetingListRequest() { Id = treeNodeId, DrillDown = drillDown });
             return await r;
         }
 
-        public async Task UpdateMeeting(Meeting meeting)
+        public async Task UpdateMeeting(JournalItem meeting)
         {
-            await this.HttpPostClient.PostAsync<Meeting>(Consts.MeetingControllerName, Consts.UpdateMeetingName, meeting);
+            await this.HttpPostClient.PostAsync<JournalItem>(Consts.MeetingControllerName, Consts.UpdateMeetingName, meeting);
         }
 
-        public async Task<int> SaveMeeting(Meeting meeting)
+        public async Task<int> SaveMeeting(JournalItem meeting)
         {
             return await this.HttpPostClient.PostAsync<int>(Consts.MeetingControllerName, Consts.AddMeetingName, meeting);
         }
