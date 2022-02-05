@@ -56,6 +56,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
             IMeetingQueries meetingQueries = ServiceProvider.GetService<IMeetingQueries>();
             var controler = new MeetingsController(meetingQueries, null, null, null, null, null);
             var result = controler?.GetDate();
+            Assert.IsNotNull(result);
         }
 
 
@@ -65,7 +66,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
             IMeetingService meetingService = ServiceProvider.GetService<IMeetingService>();
             var controler = new MeetingsController(null, null, meetingService, null, null, null);
             var result = controler.GetList(new CoreObjects.MeetingListRequest { DrillDown = true, Id = null }).Result;
-
+            Assert.IsNotNull(result);
         }
     }
 }

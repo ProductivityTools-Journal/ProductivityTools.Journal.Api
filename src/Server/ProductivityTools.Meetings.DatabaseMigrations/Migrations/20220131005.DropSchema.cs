@@ -16,7 +16,6 @@ namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
         public override void Up()
         {
             Delete.Schema("j");
-
         }
     }
 }
