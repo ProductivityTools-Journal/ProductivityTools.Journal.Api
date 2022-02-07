@@ -90,7 +90,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
                 Date = DateTime.Now,
                 Subject = "Test Journal",
                 TreeId = 1,
-                Notes = new System.Collections.Generic.List<CoreObjects.JournalItemNotes>() {
+                NotesList = new System.Collections.Generic.List<CoreObjects.JournalItemNotes>() {
                     new CoreObjects.JournalItemNotes {
                         Type = "xxx",
                         Notes = "Notes" } }

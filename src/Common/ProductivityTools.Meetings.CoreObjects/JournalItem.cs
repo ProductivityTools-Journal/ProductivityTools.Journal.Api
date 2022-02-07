@@ -12,7 +12,7 @@ namespace ProductivityTools.Meetings.CoreObjects
 
         public int? TreeId { get; set; }
 
-        public List<JournalItemNotes> Notes { get; set; }
+        public List<JournalItemNotes> NotesList { get; set; }
 
         public JournalItem()
         {

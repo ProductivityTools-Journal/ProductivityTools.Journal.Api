@@ -16,6 +16,6 @@ namespace ProductivityTools.Meetings.Database.Objects
         public int? TreeId { get; set; }
         public bool Deleted { get; set; }
 
-        public List<JournalItemNotes> Notes { get; set; }
+        public List<JournalItemNotes> NotesList { get; set; }
     }
 }
