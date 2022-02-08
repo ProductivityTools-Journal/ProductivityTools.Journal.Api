@@ -6,7 +6,7 @@ using System.Text;
 namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 {
     [Migration(20220205001)]
-    public class m20220205001 : Migration
+    public class CreateJournalItemNotesTable : Migration
     {
         public override void Down()
         {
@@ -22,7 +22,7 @@ namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
                 .InSchema("jl")
                 .WithColumn("JournalItemNotesId").AsInt32().Identity().PrimaryKey()
                 .WithColumn("JournalItemId").AsInt32().NotNullable()
-                .WithColumn("Notes").AsString().NotNullable()
+                .WithColumn("Notes").AsString(20000).NotNullable()
                 .WithColumn("Type").AsString().NotNullable();
 
 
