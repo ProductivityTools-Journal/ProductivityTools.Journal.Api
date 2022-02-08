@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\ProductivityTools.Meetings.CoreObjects\ProductivityTools.Meetings.CoreObjects.csproj" />
-    <ProjectReference Include="..\ProducvitityTools.Meetings.Commands\ProducvitityTools.Meetings.Commands.csproj" />
-    <ProjectReference Include="..\ProducvitityTools.Meetings.Queries\ProducvitityTools.Meetings.Queries.csproj" />
+    <ProjectReference Include="..\ProducvitityTools.Journal.Commands\ProducvitityTools.Journal.Commands.csproj" />
+    <ProjectReference Include="..\ProducvitityTools.Journal.Queries\ProducvitityTools.Journal.Queries.csproj" />
   </ItemGroup>
 
 </Project>

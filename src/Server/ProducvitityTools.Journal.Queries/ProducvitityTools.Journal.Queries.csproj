@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductivityTools.Meetings.Database\ProductivityTools.Meetings.Database.csproj" />
+    <ProjectReference Include="..\ProductivityTools.Journal.Database\ProductivityTools.Journal.Database.csproj" />
   </ItemGroup>
 
 </Project>

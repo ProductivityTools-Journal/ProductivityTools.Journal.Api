@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.WebApi", "src\Server\ProductivityTools.Meetings.WebApi\ProductivityTools.Meetings.WebApi.csproj", "{AF463E0F-0E55-4F48-9E8E-233AAB83FF15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Journal.WebApi", "src\Server\ProductivityTools.Journal.WebApi\ProductivityTools.Journal.WebApi.csproj", "{AF463E0F-0E55-4F48-9E8E-233AAB83FF15}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A4F031FB-387D-468A-B39F-7FC26143C5C4}"
 EndProject
@@ -15,21 +15,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{D02DF1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.WpfClient", "src\Client\ProductivityTools.Meetings.WpfClient\ProductivityTools.Meetings.WpfClient.csproj", "{0899C424-E202-43CF-80E0-352BF484093B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProducvitityTools.Meetings.Queries", "src\Server\ProducvitityTools.Meetings.Queries\ProducvitityTools.Meetings.Queries.csproj", "{F5264BC6-655D-4811-A5DA-21173CDA64B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProducvitityTools.Journal.Queries", "src\Server\ProducvitityTools.Journal.Queries\ProducvitityTools.Journal.Queries.csproj", "{F5264BC6-655D-4811-A5DA-21173CDA64B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProducvitityTools.Meetings.Commands", "src\Server\ProducvitityTools.Meetings.Commands\ProducvitityTools.Meetings.Commands.csproj", "{DEBE5225-83BF-4E96-9FEE-3BAAEF704D9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProducvitityTools.Journal.Commands", "src\Server\ProducvitityTools.Journal.Commands\ProducvitityTools.Journal.Commands.csproj", "{DEBE5225-83BF-4E96-9FEE-3BAAEF704D9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.DatabaseMigrations", "src\Server\ProductivityTools.Meetings.DatabaseMigrations\ProductivityTools.Meetings.DatabaseMigrations.csproj", "{C2DB3106-4BD1-40FA-B999-55FE8EB2E0BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Journal.DatabaseMigrations", "src\Server\ProductivityTools.Journal.DatabaseMigrations\ProductivityTools.Journal.DatabaseMigrations.csproj", "{C2DB3106-4BD1-40FA-B999-55FE8EB2E0BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.ClientCaller", "src\Client\ProductivityTools.Meetings.ClientCaller\ProductivityTools.Meetings.ClientCaller.csproj", "{14854ACA-3F16-433E-B38E-EF8C185D6BC5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.Database", "src\Server\ProductivityTools.Meetings.Database\ProductivityTools.Meetings.Database.csproj", "{B4CBC7CD-57B7-43E7-863B-3B3976325808}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Journal.Database", "src\Server\ProductivityTools.Journal.Database\ProductivityTools.Journal.Database.csproj", "{B4CBC7CD-57B7-43E7-863B-3B3976325808}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.Services", "src\Server\ProductivityTools.Meetings.Services\ProductivityTools.Meetings.Services.csproj", "{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Journal.Services", "src\Server\ProductivityTools.Journal.Services\ProductivityTools.Journal.Services.csproj", "{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FB520989-8FE9-4601-8D79-DA864C3470E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityTools.Meetings.WebApi.Tests", "src\Tests\ProductivityTools.Meetings.WebApi.Tests\ProductivityTools.Meetings.WebApi.Tests.csproj", "{FFE22747-84AE-4F16-A8C5-48BB76EA23B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.WebApi.Tests", "src\Tests\ProductivityTools.Meetings.WebApi.Tests\ProductivityTools.Meetings.WebApi.Tests.csproj", "{FFE22747-84AE-4F16-A8C5-48BB76EA23B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
