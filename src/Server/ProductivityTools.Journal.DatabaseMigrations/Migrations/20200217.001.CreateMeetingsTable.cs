@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 {
-    [Migration(20200217)]
+    [Migration(20200217001)]
     public class CreateMeetingsTable : Migration
     {
         public override void Down()
