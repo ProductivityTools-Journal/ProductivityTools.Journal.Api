@@ -29,18 +29,18 @@ pipeline {
         }
         stage('deleteDbMigratorDir') {
             steps {
-                bat('if exist "C:\\Bin\\MeetingsDdbMigration" RMDIR /Q/S "C:\\Bin\\MeetingsDdbMigration"')
+                bat('if exist "C:\\Bin\\JournalApiDdbMigration" RMDIR /Q/S "C:\\Bin\\JournalApiDdbMigration"')
             }
         }
         stage('copyDbMigratdorFiles') {
             steps {
-                bat('xcopy "C:\\Program Files (x86)\\Jenkins\\workspace\\Journal.Api\\src\\Server\\ProductivityTools.Meetings.DatabaseMigrations\\bin\\Release\\netcoreapp3.1\\publish" "C:\\Bin\\MeetingsDdbMigration\\" /O /X /E /H /K')
+                bat('xcopy "C:\\Program Files (x86)\\Jenkins\\workspace\\Journal.Api\\src\\Server\\ProductivityTools.Meetings.DatabaseMigrations\\bin\\Release\\netcoreapp3.1\\publish" "C:\\Bin\\JournalApiDdbMigration\\" /O /X /E /H /K')
             }
         }
 
         stage('runDbMigratorFiles') {
             steps {
-                bat('C:\\Bin\\MeetingsDdbMigration\\ProductivityTools.Meetings.DatabaseMigrations.exe')
+                bat('C:\\Bin\\JournalApiDdbMigration\\ProductivityTools.Meetings.DatabaseMigrations.exe')
             }
         }
 
