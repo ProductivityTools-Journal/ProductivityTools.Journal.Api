@@ -40,7 +40,7 @@ pipeline {
 
         stage('runDbMigratorFiles') {
             steps {
-                bat('C:\\Bin\\JournalApiDdbMigration\\ProductivityTools.Meetings.DatabaseMigrations.exe')
+                bat('C:\\Bin\\JournalApiDdbMigration\\ProductivityTools.Journal.DatabaseMigrations.exe')
             }
         }
 
@@ -53,7 +53,7 @@ pipeline {
         stage('deleteIisDir') {
             steps {
                 retry(5) {
-                    bat('if exist "C:\\Bin\\Meetings" RMDIR /Q/S "C:\\Bin\\Meetings"')
+                    bat('if exist "C:\\Bin\\Journal" RMDIR /Q/S "C:\\Bin\\Journal"')
                 }
 
             }
