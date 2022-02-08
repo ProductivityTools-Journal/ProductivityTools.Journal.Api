@@ -6,7 +6,7 @@ using System.Text;
 namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 {
     [Migration(20220205001)]
-    public class CreateJournalItemNotesTable2 : Migration
+    public class m20220205001 : Migration
     {
         public override void Down()
         {
