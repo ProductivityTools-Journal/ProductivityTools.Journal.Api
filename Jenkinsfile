@@ -73,7 +73,7 @@ pipeline {
         stage('byebye') {
             steps {
                 // Get some code from a GitHub repository
-                echo 'byebye'
+                echo 'byebye1'
             }
         }
     }
