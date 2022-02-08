@@ -32,7 +32,7 @@ pipeline {
                 bat('if exist "C:\\Bin\\MeetingsDdbMigration" RMDIR /Q/S "C:\\Bin\\MeetingsDdbMigration"')
             }
         }
-        stage('copyDbMigratorFiles') {
+        stage('copyDbMigratdorFiles') {
             steps {
                 bat('xcopy "C:\\Program Files (x86)\\Jenkins\\workspace\\Journal.Api\\src\\Server\\ProductivityTools.Meetings.DatabaseMigrations\\bin\\Release\\netcoreapp3.1\\publish" "C:\\Bin\\MeetingsDdbMigration\\" /O /X /E /H /K')
             }
