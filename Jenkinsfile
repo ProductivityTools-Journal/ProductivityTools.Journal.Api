@@ -46,7 +46,7 @@ pipeline {
 
         stage('stopMeetingsOnIis') {
             steps {
-                bat('%windir%\\system32\\inetsrv\\appcmd stop site /site.name:meetings')
+                bat('%windir%\\system32\\inetsrv\\appcmd stop site /site.name:journal')
             }
         }
 
@@ -60,14 +60,14 @@ pipeline {
         }
         stage('copyIisFiles') {
             steps {
-                bat('xcopy "C:\\Program Files (x86)\\Jenkins\\workspace\\Journal.Api\\src\\Server\\ProductivityTools.Meetings.WebApi\\bin\\Release\\netcoreapp3.1\\publish" "C:\\Bin\\Meetings\\" /O /X /E /H /K')
+                bat('xcopy "C:\\Program Files (x86)\\Jenkins\\workspace\\Journal.Api\\src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\Journal\\" /O /X /E /H /K')
 				                      
             }
         }
 
         stage('startMeetingsOnIis') {
             steps {
-                bat('%windir%\\system32\\inetsrv\\appcmd start site /site.name:meetings')
+                bat('%windir%\\system32\\inetsrv\\appcmd start site /site.name:Journal')
             }
         }
         stage('byebye') {
