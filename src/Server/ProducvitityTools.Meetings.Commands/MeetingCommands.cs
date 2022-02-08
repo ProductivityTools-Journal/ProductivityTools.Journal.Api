@@ -25,9 +25,14 @@ namespace ProducvitityTools.Meetings.Commands
         }
 
         void IMeetingCommands.Update(JournalItem meeting)
-        {//pw: not used
+        {
             MeetingContext.JournalItem.Attach(meeting);
             MeetingContext.Entry(meeting).State = EntityState.Modified;
+            meeting.NotesList.ForEach(x =>
+            {
+                MeetingContext.Entry(x).State = EntityState.Modified;
+            });
+            
 
             var ChangeTracker = MeetingContext.ChangeTracker;
 
