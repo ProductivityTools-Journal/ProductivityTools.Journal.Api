@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 {
-    [Migration(202201310002)]
+    [Migration(20220131002)]
     public class RenameTable : Migration
     {
         public override void Down()

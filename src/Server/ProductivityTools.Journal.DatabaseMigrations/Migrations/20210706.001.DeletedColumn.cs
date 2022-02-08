@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 {
-    [Migration(202107060001)]
+    [Migration(20210706001)]
     public class DeleteColumn: Migration
     {
         public override void Down()

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 {
-    [Migration(202007010001)]
+    [Migration(20200701001)]
     public class UpdateTreeValues : Migration
     {
         public override void Down()
