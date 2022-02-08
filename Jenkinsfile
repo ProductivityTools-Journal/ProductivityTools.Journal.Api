@@ -15,7 +15,6 @@ pipeline {
                 deleteDir()
             }
         }
-
         stage('clone') {
             steps {
                 // Get some code from a GitHub repository
@@ -25,7 +24,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                bat(script: "dotnet publish ProductivityTools.Meetings.sln -c Release ", returnStdout: true)
+                bat(script: "dotnet publish ProductivityTools.Journal.Api.sln -c Release ", returnStdout: true)
             }
         }
         stage('deleteDbMigratorDir') {
