@@ -30,7 +30,14 @@ namespace ProducvitityTools.Meetings.Commands
             MeetingContext.Entry(meeting).State = EntityState.Modified;
             meeting.NotesList.ForEach(x =>
             {
-                MeetingContext.Entry(x).State = EntityState.Modified;
+                if (x.JournalItemNotesId == 0)
+                {
+                    MeetingContext.Entry(x).State = EntityState.Added;
+                }
+                else
+                {
+                    MeetingContext.Entry(x).State = EntityState.Modified;
+                }
             });
             
 
