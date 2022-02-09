@@ -48,6 +48,7 @@ namespace ProductivityTools.Meetings.Database
             modelBuilder.HasDefaultSchema("jl");
             modelBuilder.Entity<JournalItem>().HasKey(x => x.JournalItemId);
             modelBuilder.Entity<JournalItemNotes>().HasKey(x => x.JournalItemNotesId);
+            modelBuilder.Entity<JournalItemNotes>().Ignore(x=>x.Status);
 
             modelBuilder.Entity<TreeNode>().ToTable("Tree","mt").HasKey(x => x.TreeId);
 

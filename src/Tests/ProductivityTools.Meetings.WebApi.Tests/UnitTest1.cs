@@ -7,6 +7,7 @@ using ProductivityTools.Meetings.WebApi.Controllers;
 using ProducvitityTools.Meetings.Commands;
 using ProducvitityTools.Meetings.Queries;
 using System;
+using System.Linq;
 
 namespace ProductivityTools.Meetings.WebApi.Tests
 {
@@ -96,6 +97,19 @@ namespace ProductivityTools.Meetings.WebApi.Tests
                         Notes = "Notes" } }
             });
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void DeleteJournalItemDetails()
+        {
+            var controler = new MeetingsController(MeetingQueries, MeetingCommands,MeetingService, Mapper, null, null);
+            var journalList = controler.GetList(new CoreObjects.MeetingListRequest { DrillDown = true, Id = null });
+            var journalElement = journalList[0];
+            var lastElement = journalElement.NotesList.Last();
+            lastElement.Status = "Deleted";
+
+            controler.Update(journalElement);
+            
         }
     }
 }

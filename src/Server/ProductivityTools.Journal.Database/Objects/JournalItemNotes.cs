@@ -11,6 +11,11 @@ namespace ProductivityTools.Meetings.Database.Objects
         public string Notes { get; set; }
         public string Type { get; set; }
 
+        /// <summary>
+        /// used to know if object has been deleted
+        /// </summary>
+        public string Status { get; set; }  
+
         public int JournalItemId { get; set; }
         public JournalItem JournalItem { get; set; }
 
