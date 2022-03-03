@@ -58,5 +58,10 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         {
             return "pawel";
         }
+
+        public IActionResult MoveTree()
+        {
+            return Ok();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -52,6 +53,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
         IMeetingService MeetingService => ServiceProvider.GetService<IMeetingService>();
         IMeetingQueries MeetingQueries => ServiceProvider.GetService<IMeetingQueries>();
         IMeetingCommands MeetingCommands => ServiceProvider.GetService<IMeetingCommands>();
+        ITreeService TreeService => ServiceProvider.GetService<ITreeService>();
         IMapper Mapper => ServiceProvider.GetService<IMapper>();
 
 
@@ -110,6 +112,15 @@ namespace ProductivityTools.Meetings.WebApi.Tests
 
             controler.Update(journalElement);
             
+        }
+
+        [TestMethod]
+        public void MoveTreeItem()
+        {
+            var controler = new TreeController(TreeService,Mapper);
+            var r=controler.MoveTree();
+            Assert.IsInstanceOfType(r, typeof(OkResult));
+
         }
     }
 }
