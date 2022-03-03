@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProductivityTools.Meetings.CoreObjects;
 using ProductivityTools.Meetings.Services;
 using ProductivityTools.Meetings.WebApi.Controllers;
 using ProducvitityTools.Meetings.Commands;
@@ -117,8 +118,19 @@ namespace ProductivityTools.Meetings.WebApi.Tests
         [TestMethod]
         public void MoveTreeItem()
         {
-            var controler = new TreeController(TreeService,Mapper);
-            var r=controler.MoveTree();
+            var treeController = new TreeController(TreeService,Mapper);
+
+
+            var tree=treeController.GetTree();
+            var parent = tree.First().Nodes.Last();
+
+            var treeId=treeController.AddTreeNode(new NewTreeNodeRequest() {  Name = "Test", ParentId = parent.Id });
+
+            MoveTreeRequest request = new MoveTreeRequest();
+            request.SourceId = treeId;
+            request.TargetId = tree.First().Id;
+
+            var r= treeController.MoveTree(request);
             Assert.IsInstanceOfType(r, typeof(OkResult));
 
         }

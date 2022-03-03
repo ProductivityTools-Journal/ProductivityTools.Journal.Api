@@ -68,9 +68,10 @@ namespace ProductivityTools.Meetings.Services
             return result;
         }
 
-        public void AddTreeNode(int parentId, string name)
+        public int AddTreeNode(int parentId, string name)
         {
-            this.TreeCommands.AddTreeNode(parentId, name);
+            var result=this.TreeCommands.AddTreeNode(parentId, name);
+            return result.TreeId;
         }
 
         public int Delete(int treeId)

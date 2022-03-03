@@ -9,7 +9,7 @@ namespace ProducvitityTools.Meetings.Commands
 
     public interface ITreeCommands
     {
-        void AddTreeNode(int parentId, string name);
+        TreeNode AddTreeNode(int parentId, string name);
         int Delete(IEnumerable<int> treeIds);
         void Move(int sourceId, int targetId);
     }
@@ -23,11 +23,12 @@ namespace ProducvitityTools.Meetings.Commands
             this.MeetingContext = context;
         }
 
-        public void AddTreeNode(int parentId, string name)
+        public TreeNode AddTreeNode(int parentId, string name)
         {
             TreeNode tree = new TreeNode() { ParentId = parentId, Name = name };
             this.MeetingContext.Tree.Add(tree);
             this.MeetingContext.SaveChanges();
+            return tree;
         }
 
         public int Delete(IEnumerable<int> treeIds)

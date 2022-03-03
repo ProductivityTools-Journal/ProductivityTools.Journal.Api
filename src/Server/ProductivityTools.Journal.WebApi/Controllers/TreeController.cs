@@ -17,7 +17,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
     public class TreeController : ControllerBase
     {
         readonly IMapper Mapper;
-        readonly  ITreeService TreeServices;
+        readonly ITreeService TreeServices;
 
         public TreeController(ITreeService treeService, IMapper mapper)
         {
@@ -36,9 +36,10 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [HttpPost]
         [Authorize]
         [Route(Consts.TreeControlerNewNode)]
-        public void AddTreeNode(NewTreeNodeRequest request)
+        public int AddTreeNode(NewTreeNodeRequest request)
         {
-            this.TreeServices.AddTreeNode(request.ParentId, request.Name);
+            var result=this.TreeServices.AddTreeNode(request.ParentId, request.Name);
+            return result;
         }
 
 
@@ -59,9 +60,12 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             return "pawel";
         }
 
-        public IActionResult MoveTree()
+        [HttpPost]
+        [Authorize]
+        [Route(Consts.TreeControllerMoveName)]
+        public IActionResult MoveTree(MoveTreeRequest request)
         {
-            this.TreeServices.MoveTree(10, 1);
+            this.TreeServices.MoveTree(request.SourceId, request.TargetId);
             return Ok();
         }
     }

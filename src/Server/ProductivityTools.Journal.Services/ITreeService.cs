@@ -6,7 +6,7 @@ namespace ProductivityTools.Meetings.Services
     public interface ITreeService
     {
         List<TreeNode> GetTree();
-        void AddTreeNode(int parentId, string name);
+        int AddTreeNode(int parentId, string name);
         int Delete(int treeId);
         List<int> GetFlatChildsId(int parent);
 
