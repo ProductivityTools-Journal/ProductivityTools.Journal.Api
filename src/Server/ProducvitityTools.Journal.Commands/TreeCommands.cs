@@ -11,6 +11,7 @@ namespace ProducvitityTools.Meetings.Commands
     {
         void AddTreeNode(int parentId, string name);
         int Delete(IEnumerable<int> treeIds);
+        void Move(int sourceId, int targetId);
     }
 
     public class TreeCommands : ITreeCommands
@@ -32,7 +33,7 @@ namespace ProducvitityTools.Meetings.Commands
         public int Delete(IEnumerable<int> treeIds)
         {
             var trees = this.MeetingContext.Tree.Where(x => treeIds.Contains(x.TreeId));
-            foreach(var tree in trees)
+            foreach (var tree in trees)
             {
                 tree.Deleted = true;
                 MeetingContext.Update(tree);
@@ -40,6 +41,14 @@ namespace ProducvitityTools.Meetings.Commands
 
             this.MeetingContext.SaveChanges();
             return trees.Count();
+        }
+
+        public void Move(int source, int target)
+        {
+            var sourceElement = this.MeetingContext.Tree.Where(x => x.TreeId == source).FirstOrDefault();
+            sourceElement.ParentId = target;
+            MeetingContext.Update(sourceElement);
+            MeetingContext.SaveChanges();
         }
     }
 }

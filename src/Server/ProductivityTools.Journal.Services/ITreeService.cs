@@ -9,5 +9,7 @@ namespace ProductivityTools.Meetings.Services
         void AddTreeNode(int parentId, string name);
         int Delete(int treeId);
         List<int> GetFlatChildsId(int parent);
+
+        void MoveTree(int sourceId, int targetId);
     }
 }

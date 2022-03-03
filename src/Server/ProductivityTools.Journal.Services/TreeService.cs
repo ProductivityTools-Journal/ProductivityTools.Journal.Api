@@ -82,5 +82,11 @@ namespace ProductivityTools.Meetings.Services
             int treeNodeRemoved=this.TreeCommands.Delete(treesIds);
             return meetingRemoved + treeNodeRemoved;
         }
+
+        public void MoveTree(int sourceId, int targetId)
+        {
+            this.TreeCommands.Move(sourceId, targetId);
+        }
+
     }
 }

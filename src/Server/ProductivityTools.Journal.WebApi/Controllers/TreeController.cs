@@ -61,6 +61,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         public IActionResult MoveTree()
         {
+            this.TreeServices.MoveTree(10, 1);
             return Ok();
         }
     }
