@@ -7,6 +7,6 @@ namespace ProductivityTools.Meetings.CoreObjects
     public class MoveTreeRequest
     {
         public int SourceId {get;set;}
-        public int TargetId{ get; set; }
+        public int ParentTargetId{ get; set; }
     }
 }

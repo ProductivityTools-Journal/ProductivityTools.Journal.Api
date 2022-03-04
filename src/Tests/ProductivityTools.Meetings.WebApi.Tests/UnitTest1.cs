@@ -128,7 +128,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
 
             MoveTreeRequest request = new MoveTreeRequest();
             request.SourceId = treeId;
-            request.TargetId = tree.First().Id;
+            request.ParentTargetId = tree.First().Id;
 
             var r= treeController.MoveTree(request);
             Assert.IsInstanceOfType(r, typeof(OkResult));

@@ -65,7 +65,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.TreeControllerMoveName)]
         public IActionResult MoveTree(MoveTreeRequest request)
         {
-            this.TreeServices.MoveTree(request.SourceId, request.TargetId);
+            this.TreeServices.MoveTree(request.SourceId, request.ParentTargetId);
             return Ok();
         }
     }
