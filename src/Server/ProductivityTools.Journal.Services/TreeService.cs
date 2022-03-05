@@ -32,6 +32,7 @@ namespace ProductivityTools.Meetings.Services
             foreach (var dbTreeNode in dbTreeNodes)
             {
                 TreeNode treeNode = this.Mapper.Map<TreeNode>(dbTreeNode);
+                treeNode.ParentId = parent;
                 treeNode.Nodes = GetNodes(dbTreeNode.TreeId);
                 result.Add(treeNode);
             }
