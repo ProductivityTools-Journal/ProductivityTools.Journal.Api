@@ -55,7 +55,7 @@ namespace ProductivityTools.Meetings.Services
         public List<int> GetFlatChildsId(int parent)
         {
             var nodes = GetNodes(parent);
-            List<int> result = GetIds(nodes);
+            List<int> result = GetIds(nodes); 
             return result;
         }
 
