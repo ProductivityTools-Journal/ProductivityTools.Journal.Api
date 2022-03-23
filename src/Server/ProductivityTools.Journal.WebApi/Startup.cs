@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using ProductivityTools.Meetings.Services;
 using ProducvitityTools.Meetings.Commands;
 using ProducvitityTools.Meetings.Queries;
@@ -52,12 +53,16 @@ namespace ProductivityTools.Meetings.WebApi
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.Authority = "https://identityserver.productivitytools.tech:8010";
-                options.Audience = "ProductivityTools.Meetings.API";
-                //options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                //{
-                //    NameClaimType = ClaimTypes.NameIdentifier
-                //};
+                //options.Authority = "https://identityserver.productivitytools.tech:8010";
+                options.Authority = "https://securetoken.google.com/ptlearning-95d51";
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = "https://securetoken.google.com/ptlearning-95d51",
+                    ValidateAudience = true,
+                    ValidAudience = "ptlearning-95d51",
+                    ValidateLifetime = true
+                };
             });
 
             services.AddMvc(opt=>opt.EnableEndpointRouting=false);//pw:maybe delete after auth will work
