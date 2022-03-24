@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ProductivityTools.Meetings.CoreObjects;
@@ -30,14 +31,16 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         IMeetingService MeetingService;
         private readonly IConfiguration configuration;
         private IHttpContextAccessor _httpContextAccessor;
+        UserManager<IdentityUser> _userManager;
 
-        public MeetingsController(IMeetingQueries meetingQueries, IMeetingCommands meetingCommands, IMeetingService meetingService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public MeetingsController(IMeetingQueries meetingQueries, IMeetingCommands meetingCommands, IMeetingService meetingService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, UserManager<IdentityUser> userManager)
         {
             this.MeetingQueries = meetingQueries;
             this.mapper = mapper;
             this.MeetingService = meetingService;
             this.MeetingCommands = meetingCommands;
             this.configuration = configuration;
+            this._userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -79,13 +82,17 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             //    eventLog.WriteEntry(message, EventLogEntryType.Information, 101, 1);
             //}
         }
+        
+
+
 
         [HttpPost]
         [Authorize]
         [Route(Consts.ListName)]
         public List<JournalItem> GetList(MeetingListRequest meetingListRequest)
         {
-            
+            var x=_userManager.GetUserAsync(HttpContext.User);
+
             SaveToLog("Request started");
             List<JournalItem> result = this.MeetingService.GetMeetings(meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
             SaveToLog("Meetings mapped");

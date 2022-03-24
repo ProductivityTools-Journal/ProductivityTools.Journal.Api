@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using ProductivityTools.Meetings.Services;
+using ProductivityTools.Meetings.WebApi.Controllers;
 using ProducvitityTools.Meetings.Commands;
 using ProducvitityTools.Meetings.Queries;
 
@@ -64,6 +66,7 @@ namespace ProductivityTools.Meetings.WebApi
                     ValidateLifetime = true
                 };
             });
+            services.AddDefaultIdentity<IdentityUser>();
 
             services.AddMvc(opt=>opt.EnableEndpointRouting=false);//pw:maybe delete after auth will work
 
@@ -78,7 +81,7 @@ namespace ProductivityTools.Meetings.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
