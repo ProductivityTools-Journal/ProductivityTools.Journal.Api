@@ -66,7 +66,7 @@ namespace ProductivityTools.Meetings.WebApi
                     ValidateLifetime = true
                 };
             });
-            services.AddDefaultIdentity<IdentityUser>();
+           // services.AddDefaultIdentity<IdentityUser>();
 
             services.AddMvc(opt=>opt.EnableEndpointRouting=false);//pw:maybe delete after auth will work
 
@@ -81,7 +81,7 @@ namespace ProductivityTools.Meetings.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

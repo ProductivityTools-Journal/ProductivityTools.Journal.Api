@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using ProductivityTools.Journal.WebApi;
 using ProductivityTools.Meetings.CoreObjects;
 using ProductivityTools.Meetings.Services;
 using ProducvitityTools.Meetings.Commands;
@@ -31,16 +32,16 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         IMeetingService MeetingService;
         private readonly IConfiguration configuration;
         private IHttpContextAccessor _httpContextAccessor;
-        UserManager<IdentityUser> _userManager;
+       // UserManager<IdentityUser> _userManager;
 
-        public MeetingsController(IMeetingQueries meetingQueries, IMeetingCommands meetingCommands, IMeetingService meetingService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, UserManager<IdentityUser> userManager)
+        public MeetingsController(IMeetingQueries meetingQueries, IMeetingCommands meetingCommands, IMeetingService meetingService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.MeetingQueries = meetingQueries;
             this.mapper = mapper;
             this.MeetingService = meetingService;
             this.MeetingCommands = meetingCommands;
             this.configuration = configuration;
-            this._userManager = userManager;
+           // this._userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -88,10 +89,15 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
+        [AuthenticatedUsers]
         [Route(Consts.ListName)]
         public List<JournalItem> GetList(MeetingListRequest meetingListRequest)
         {
-            var x=_userManager.GetUserAsync(HttpContext.User);
+            var x1 = HttpContext.User;
+            var identity = (ClaimsIdentity)HttpContext.User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+            var email = claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+             //var x=_userManager.GetUserAsync(HttpContext.User);
 
             SaveToLog("Request started");
             List<JournalItem> result = this.MeetingService.GetMeetings(meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
