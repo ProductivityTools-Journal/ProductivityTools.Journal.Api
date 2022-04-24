@@ -12,5 +12,7 @@ namespace ProductivityTools.Meetings.CoreObjects
         /// It is used to say if the element is deleted
         /// </summary>
         public string Status { get; set; }
+
+        public string NotesType { get; set; }
     }
 }
