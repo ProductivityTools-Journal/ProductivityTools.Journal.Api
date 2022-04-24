@@ -20,5 +20,5 @@ jl.JournalItemNotes|JournalItemId|
 jl.JournalItemNotes|JournalItemNotesId|
 jl.JournalItemNotes|Notes|
 jl.JournalItemNotes|NotesType|Technical type of item notes, it could be empty or Slate
-jl.JournalItemNotes|Type|
+jl.JournalItemNotes|Type|It is a type of notes, it could be for example email, before meeting notes, during notes
 

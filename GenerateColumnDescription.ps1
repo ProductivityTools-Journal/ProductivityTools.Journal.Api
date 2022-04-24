@@ -6,4 +6,4 @@ cd $PSScriptRoot
 
 #Get-ColumnsDescription -Verbose -ServerInstance ".\SQL2019" -Database PTMeetings
 Get-ColumnsDescription -Verbose -ServerInstance ".\SQL2019" -Database PTMeetings -OutMd
-move-Item ColumnDescription.MD docs
+move-Item ColumnDescription.MD docs -Force
