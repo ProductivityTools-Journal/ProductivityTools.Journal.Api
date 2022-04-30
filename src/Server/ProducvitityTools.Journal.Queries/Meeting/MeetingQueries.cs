@@ -16,6 +16,14 @@ namespace ProducvitityTools.Meetings.Queries
             this.MeetingContext = context;
         }
 
+        private ValidateTreeOwners(string user, List<int> treeNodeIds)
+        {
+            foreach(int nodeId in treeNodeIds)
+            {
+                if
+            }
+        }
+
         public List<JournalItem> GetMeetings()
         {
             var result = this.MeetingContext.JournalItem
