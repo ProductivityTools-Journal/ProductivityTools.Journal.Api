@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ProductivityTools.Meetings.Database.Objects;
+using System.Data;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ProductivityTools.Meetings.Database
@@ -56,5 +58,7 @@ namespace ProductivityTools.Meetings.Database
 
             base.OnModelCreating(modelBuilder);
         }
+
+
     }
 }

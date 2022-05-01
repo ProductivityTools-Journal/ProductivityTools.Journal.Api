@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 {
-    [Migration(20220430003)]
+    [Migration(20220430004)]
     public class USerValidation: Migration
     {
         public override void Down()
@@ -30,10 +30,14 @@ namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 	                            RETURN;
                             END
                             ");
-            Execute.Sql(@"CREATE FUNCTION jl.VerifyOwnership (@email VARCHAR(100),@TreeIds [jl].[TreeArray] READONLY)
-						RETURNS BIT
+            Execute.Sql(@"CREATE PROCEDURE jl.VerifyOwnership 
+							@email VARCHAR(100),
+							@TreeIds [jl].[TreeArray] READONLY,
+							@HasPermission BIT OUTPUT
 						AS
 						BEGIN
+							SET @HasPermission=1
+	
 							DECLARE @TreeIdsTemp [jl].[TreeArray]
 							INSERT @TreeIdsTemp(TreeId)
 							SELECT TreeId from @TreeIds
@@ -52,10 +56,16 @@ namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 								inner join [jl].GetTreePath(@TreeId) TP ON TP.TreeId=T.TreeId
 								WHERE U.email=@email
 
-								IF (@recordCount=0) RETURN 0
+								IF (@recordCount=0)
+								BEGIN
+									SET @HasPermission=0
+									RETURN
+								END
 							END
 							RETURN 1
-						END;");
+						END;
+						GO
+						");
         }
     }
 }

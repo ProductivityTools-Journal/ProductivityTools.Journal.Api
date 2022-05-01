@@ -1,6 +1,8 @@
-﻿using ProductivityTools.Meetings.Database;
+﻿using ProductivityTools.Journal.Database;
+using ProductivityTools.Meetings.Database;
 using ProductivityTools.Meetings.Database.Objects;
 using System.Collections;
+
 using System.Collections.Generic;
 using System.Linq;
 
