@@ -52,7 +52,7 @@ namespace ProductivityTools.Meetings.Database
             modelBuilder.Entity<JournalItemNotes>().HasKey(x => x.JournalItemNotesId);
             modelBuilder.Entity<JournalItemNotes>().Ignore(x=>x.Status);
 
-            modelBuilder.Entity<TreeNode>().ToTable("Tree","mt").HasKey(x => x.TreeId);
+            modelBuilder.Entity<TreeNode>().ToTable("Tree","jl").HasKey(x => x.TreeId);
 
            // modelBuilder.Entity<Tree>().HasOne(x => x.Parent).WithMany(x => x.Parent);
 

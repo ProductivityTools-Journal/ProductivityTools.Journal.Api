@@ -93,16 +93,24 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.ListName)]
         public List<JournalItem> GetList(MeetingListRequest meetingListRequest)
         {
-            var x1 = HttpContext.User;
-            var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            IEnumerable<Claim> claims = identity.Claims;
-            var email = claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
-             //var x=_userManager.GetUserAsync(HttpContext.User);
+            //var x=_userManager.GetUserAsync(HttpContext.User);
 
             SaveToLog("Request started");
-            List<JournalItem> result = this.MeetingService.GetMeetings(meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
+            List<JournalItem> result = this.MeetingService.GetMeetings(UserEmail, meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
             SaveToLog("Meetings mapped");
             return result;
+        }
+
+        private string UserEmail
+        {
+            get
+            {
+                var x1 = HttpContext.User;
+                var identity = (ClaimsIdentity)HttpContext.User.Identity;
+                IEnumerable<Claim> claims = identity.Claims;
+                var email = claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+                return email;
+            }
         }
 
         [HttpPost]
@@ -110,7 +118,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Authorize]
         public JournalItem Get(MeetingId meetingId)
         {
-            var partresult = MeetingQueries.GetMeeting(meetingId.Id.Value);
+            var partresult = MeetingQueries.GetMeeting(UserEmail, meetingId.Id.Value);
             JournalItem result = this.mapper.Map<JournalItem>(partresult);
             SaveToLog("Meetings mapped");
             return result;
@@ -139,7 +147,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.DeleteMeetingName)]
         public void Delete(MeetingId meeting)
         {
-            MeetingService.DeleteMeeting(meeting.Id.Value);
+            MeetingService.DeleteMeeting(UserEmail, meeting.Id.Value);
         }
     }
 }

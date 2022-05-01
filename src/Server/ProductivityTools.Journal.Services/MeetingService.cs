@@ -24,11 +24,11 @@ namespace ProductivityTools.Meetings.Services
             this.Mapper = mapper;
         }
 
-        public List<JournalItem> GetMeetings(int? treeNodeId, bool drillDown)
+        public List<JournalItem> GetMeetings(string email, int? treeNodeId, bool drillDown)
         {
             if (treeNodeId.HasValue)
             {
-                return GetMeetingsInternal(treeNodeId.Value, drillDown);
+                return GetMeetingsInternal(email, treeNodeId.Value, drillDown);
 
             }
             else
@@ -44,7 +44,7 @@ namespace ProductivityTools.Meetings.Services
             }
         }
 
-        public List<JournalItem> GetMeetingsInternal(int treeNodeId, bool drillDown)
+        public List<JournalItem> GetMeetingsInternal(string email, int treeNodeId, bool drillDown)
         {
             var trees = new List<int>() { treeNodeId };
             if (drillDown)
@@ -53,14 +53,14 @@ namespace ProductivityTools.Meetings.Services
             }
 
             //var result = new List<Meeting>();
-            var dbResult = this.MeetingQueries.GetMeetings(trees).ToList();
+            var dbResult = this.MeetingQueries.GetMeetings(email, trees).ToList();
             var result = this.Mapper.Map<List<JournalItem>>(dbResult);
             return result;
         }
 
-        public void DeleteMeeting(int meetingId)
+        public void DeleteMeeting(string email, int meetingId)
         {
-            var meeting = this.MeetingQueries.GetMeeting(meetingId);
+            var meeting = this.MeetingQueries.GetMeeting(email,meetingId);
             this.MeetingCommand.Delete(meeting);
         }
     }
