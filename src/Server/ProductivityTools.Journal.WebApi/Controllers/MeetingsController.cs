@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ProductivityTools.Journal.WebApi;
+using ProductivityTools.Journal.WebApi.Controllers;
 using ProductivityTools.Meetings.CoreObjects;
 using ProductivityTools.Meetings.Services;
 using ProducvitityTools.Meetings.Commands;
@@ -24,7 +25,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MeetingsController : ControllerBase
+    public class MeetingsController : JlController 
     {
         private readonly IMapper mapper;
         IMeetingQueries MeetingQueries;
@@ -101,17 +102,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             return result;
         }
 
-        private string UserEmail
-        {
-            get
-            {
-                var x1 = HttpContext.User;
-                var identity = (ClaimsIdentity)HttpContext.User.Identity;
-                IEnumerable<Claim> claims = identity.Claims;
-                var email = claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
-                return email;
-            }
-        }
+
 
         [HttpPost]
         [Route(Consts.MeetingName)]

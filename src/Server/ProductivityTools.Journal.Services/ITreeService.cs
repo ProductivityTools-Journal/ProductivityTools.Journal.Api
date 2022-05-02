@@ -5,10 +5,10 @@ namespace ProductivityTools.Meetings.Services
 {
     public interface ITreeService
     {
-        List<TreeNode> GetTree();
+        List<TreeNode> GetTree(string email);
         int AddTreeNode(int parentId, string name);
-        int Delete(int treeId);
-        List<int> GetFlatChildsId(int parent);
+        int Delete(string email, int treeId);
+        List<int> GetFlatChildsId(string email,int parent);
 
         void MoveTree(int sourceId, int targetId);
     }

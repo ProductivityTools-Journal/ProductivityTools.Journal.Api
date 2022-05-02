@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProductivityTools.Journal.WebApi.Controllers;
 using ProductivityTools.Meetings.CoreObjects;
 using ProductivityTools.Meetings.Services;
 using ProducvitityTools.Meetings.Queries;
@@ -14,7 +15,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TreeController : ControllerBase
+    public class TreeController : JlController
     {
         readonly IMapper Mapper;
         readonly ITreeService TreeServices;
@@ -29,7 +30,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.TreeControlerGet)]
         public List<TreeNode> GetTree()
         {
-            var result = TreeServices.GetTree();
+            var result = TreeServices.GetTree("pwujczyk@gmail.com");
             return result;
         }
 
@@ -48,7 +49,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.TreeControlerDelete)]
         public int Delete(RemoveTreeNodeRequest removeTreeNodeRequest)
         {
-            int removed = this.TreeServices.Delete(removeTreeNodeRequest.TreeId);
+            int removed = this.TreeServices.Delete(UserEmail, removeTreeNodeRequest.TreeId);
             return removed;
         }
 

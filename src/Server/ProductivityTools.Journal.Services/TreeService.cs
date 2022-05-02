@@ -25,16 +25,19 @@ namespace ProductivityTools.Meetings.Services
             this.Mapper = mapper;
         }
 
-        private List<TreeNode> GetNodes(int parent)
+        private List<TreeNode> GetNodes(string email, int parent)
         {
             List<TreeNode> result = new List<TreeNode>();
-            var dbTreeNodes = this.TreeQueries.GetTree(parent);
+            var dbTreeNodes = this.TreeQueries.GetTree(email,parent);
             foreach (var dbTreeNode in dbTreeNodes)
             {
                 TreeNode treeNode = this.Mapper.Map<TreeNode>(dbTreeNode);
                 treeNode.ParentId = parent;
-                treeNode.Nodes = GetNodes(dbTreeNode.TreeId);
-                result.Add(treeNode);
+                treeNode.Nodes = GetNodes(email,dbTreeNode.TreeId);
+                if (this.TreeQueries.ValidateOnershipCall(email, new int[] { treeNode.Id }))
+                {
+                    result.Add(treeNode);
+                }
             }
             return result;
         }
@@ -52,18 +55,18 @@ namespace ProductivityTools.Meetings.Services
             return result;
         }
 
-        public List<int> GetFlatChildsId(int parent)
+        public List<int> GetFlatChildsId(string email,int parent)
         {
-            var nodes = GetNodes(parent);
+            var nodes = GetNodes(email,parent);
             List<int> result = GetIds(nodes); 
             return result;
         }
 
-        public List<TreeNode> GetTree()
+        public List<TreeNode> GetTree(string email)
         {
             var rootdb = TreeQueries.GetRoot();
             TreeNode root = Mapper.Map<TreeNode>(rootdb);
-            root.Nodes = GetNodes(rootdb.TreeId);
+            root.Nodes = GetNodes(email,rootdb.TreeId);
             List<TreeNode> result = new List<TreeNode>();
             result.Add(root);
             return result;
@@ -75,9 +78,9 @@ namespace ProductivityTools.Meetings.Services
             return result.TreeId;
         }
 
-        public int Delete(int treeId)
+        public int Delete(string email, int treeId)
         {
-            List<TreeNode> subTreeNodes = GetNodes(treeId);
+            List<TreeNode> subTreeNodes = GetNodes(email, treeId);
             subTreeNodes.Add(this.Mapper.Map < TreeNode >(this.TreeQueries.GetTreeNode(treeId)));
             var treesIds = subTreeNodes.Select(x => x.Id);
             int meetingRemoved=this.MeetingCommands.Delete(treesIds);

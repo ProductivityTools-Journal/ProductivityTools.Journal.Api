@@ -49,7 +49,7 @@ namespace ProductivityTools.Meetings.Services
             var trees = new List<int>() { treeNodeId };
             if (drillDown)
             {
-                trees.AddRange(this.TreeService.GetFlatChildsId(treeNodeId));
+                trees.AddRange(this.TreeService.GetFlatChildsId(email,treeNodeId));
             }
 
             //var result = new List<Meeting>();

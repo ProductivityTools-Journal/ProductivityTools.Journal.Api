@@ -2,6 +2,7 @@
 using ProductivityTools.Journal.Database;
 using ProductivityTools.Meetings.Database;
 using ProductivityTools.Meetings.Database.Objects;
+using ProducvitityTools.Journal.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,22 +27,12 @@ namespace ProducvitityTools.Meetings.Queries
         //}
 
 
-        private T ValidateOnershipCall<T>(string email, int[] treeIds, Func<T> f)
-        {
 
-            var o = DatabaseHelpers.ExecutVerifyOwnership(this.MeetingContext, email, treeIds);
-            if (o)
-            {
-                return f();
-            }
-            else
-            {
-                throw new UnauthorizedAccessException();
-            }
-        }
 
         public List<JournalItem> GetMeetings()
         {
+            //do not know when it is used, so throw it.
+            throw new UnauthorizedAccessException();
             var result = this.MeetingContext.JournalItem
                 .Include(x => x.NotesList)
                 .ToList();
@@ -50,26 +41,25 @@ namespace ProducvitityTools.Meetings.Queries
 
         public List<JournalItem> GetMeetings(string email, List<int> treeNodeId)
         {
-            return ValidateOnershipCall(email, treeNodeId.ToArray(), () =>
-             {
-                 var result = this.MeetingContext.JournalItem
-                 .Where(x => x.TreeId.HasValue && treeNodeId.Contains(x.TreeId.Value))
-                 .Include(x => x.NotesList)
-                 .OrderByDescending(x => x.Date).Take(50).ToList();
-                 return result;
-             }
-            );
+            QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, treeNodeId.ToArray());
+
+            var result = this.MeetingContext.JournalItem
+            .Where(x => x.TreeId.HasValue && treeNodeId.Contains(x.TreeId.Value))
+            .Include(x => x.NotesList)
+            .OrderByDescending(x => x.Date).Take(50).ToList();
+            return result;
+
+
         }
 
         public JournalItem GetMeeting(string email, int id)
         {
-            return ValidateOnershipCall(email, new int[] { id }, () =>
-              {
-                  var result = this.MeetingContext.JournalItem
-                      .Include(x => x.NotesList)
-                      .SingleOrDefault(x => x.JournalItemId == id);
-                  return result;
-              });
+            QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, new int[] { id });
+
+            var result = this.MeetingContext.JournalItem
+                .Include(x => x.NotesList)
+                .SingleOrDefault(x => x.JournalItemId == id);
+            return result;
         }
     }
 }
