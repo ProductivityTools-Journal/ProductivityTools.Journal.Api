@@ -14,14 +14,16 @@ namespace ProductivityTools.Meetings.Services
         private readonly ITreeQueries TreeQueries;
         private readonly ITreeCommands TreeCommands;
         private readonly IMeetingCommands MeetingCommands;
+        private readonly IPermissionCommands PermissionCommands;
 
         readonly IMapper Mapper;
 
-        public TreeService(ITreeQueries treeQueries, ITreeCommands treeCommands, IMeetingCommands meetingCommands, IMapper mapper)
+        public TreeService(ITreeQueries treeQueries, ITreeCommands treeCommands, IMeetingCommands meetingCommands, IPermissionCommands permissionCommands, IMapper mapper)
         {
             this.TreeQueries = treeQueries;
             this.TreeCommands = treeCommands;
             this.MeetingCommands = meetingCommands;
+            this.PermissionCommands = permissionCommands;
             this.Mapper = mapper;
         }
 
@@ -72,9 +74,30 @@ namespace ProductivityTools.Meetings.Services
             return result;
         }
 
-        public int AddTreeNode(int parentId, string name)
+        public int AddTreeNode(string email,int parentId, string name)
         {
             var result=this.TreeCommands.AddTreeNode(parentId, name);
+            if(parentId==1)
+            {
+                int userId = -1;
+                if (email == "pwujczyk@google.com")
+                {
+                    userId = 3;
+                }
+                if (email == "pwujczyk@gmail.com")
+                {
+                    userId =1;
+                }
+                if (email == "gopara@gmail.com")
+                {
+                    userId = 2;
+                }
+                if (email == "gopara@gmail.com")
+                {
+                    userId = 2;
+                }
+                this.PermissionCommands.AddOwner(userId,result.TreeId);
+            }
             return result.TreeId;
         }
 

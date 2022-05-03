@@ -41,6 +41,7 @@ namespace ProducvitityTools.Meetings.Queries
 
         public List<JournalItem> GetMeetings(string email, List<int> treeNodeId)
         {
+            treeNodeId.RemoveAll(x => x == 1);
             QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, treeNodeId.ToArray());
 
             var result = this.MeetingContext.JournalItem

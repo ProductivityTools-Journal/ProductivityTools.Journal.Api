@@ -19,7 +19,6 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
     {
         readonly IMapper Mapper;
         readonly ITreeService TreeServices;
-
         public TreeController(ITreeService treeService, IMapper mapper)
         {
             this.TreeServices = treeService;
@@ -30,7 +29,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.TreeControlerGet)]
         public List<TreeNode> GetTree()
         {
-            var result = TreeServices.GetTree("pwujczyk@gmail.com");
+            var result = TreeServices.GetTree(UserEmail);
             return result;
         }
 
@@ -39,7 +38,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.TreeControlerNewNode)]
         public int AddTreeNode(NewTreeNodeRequest request)
         {
-            var result=this.TreeServices.AddTreeNode(request.ParentId, request.Name);
+            var result=this.TreeServices.AddTreeNode(base.UserEmail, request.ParentId, request.Name);
             return result;
         }
 

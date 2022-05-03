@@ -12,6 +12,7 @@ namespace ProducvitityTools.Meetings.Commands
         {
             services.AddScoped<IMeetingCommands, MeetingCommands>();
             services.AddScoped<ITreeCommands, TreeCommands>();
+            services.AddScoped<IPermissionCommands, PermissionCommands>();
             services.ConfigureServicesDatabase();
             return services;
         }
