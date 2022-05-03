@@ -14,7 +14,7 @@ namespace ProductivityTools.Meetings.DatabaseMigrations.Migrations
 
         public override void Up()
         {
-          //  Alter.Table("Tree").InSchema("mt").ToSchema("jl");
+            Alter.Table("Tree").InSchema("mt").ToSchema("jl");
 
             Create.Table("User")
                 .InSchema("jl")
