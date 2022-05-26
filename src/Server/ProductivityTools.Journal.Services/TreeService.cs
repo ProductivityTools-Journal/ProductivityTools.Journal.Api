@@ -88,11 +88,7 @@ namespace ProductivityTools.Meetings.Services
                 {
                     userId =1;
                 }
-                if (email == "gopara@gmail.com")
-                {
-                    userId = 2;
-                }
-                if (email == "gopara@gmail.com")
+                if (email == "grzegorz.opara@gmail.com")
                 {
                     userId = 2;
                 }
