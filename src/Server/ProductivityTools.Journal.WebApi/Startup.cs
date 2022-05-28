@@ -56,13 +56,13 @@ namespace ProductivityTools.Meetings.WebApi
             }).AddJwtBearer(options =>
             {
                 //options.Authority = "https://identityserver.productivitytools.tech:8010";
-                options.Authority = "https://securetoken.google.com/ptlearning-95d51";
+                options.Authority = "https://securetoken.google.com/ptjournal-b53b0";
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = "https://securetoken.google.com/ptlearning-95d51",
+                    ValidIssuer = "https://securetoken.google.com/ptjournal-b53b0",
                     ValidateAudience = true,
-                    ValidAudience = "ptlearning-95d51",
+                    ValidAudience = "ptjournal-b53b0",
                     ValidateLifetime = true
                 };
             });
