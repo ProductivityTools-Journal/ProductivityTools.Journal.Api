@@ -13,12 +13,12 @@ namespace ProductivityTools.Meetings.Services
     {
         private readonly ITreeQueries TreeQueries;
         private readonly ITreeCommands TreeCommands;
-        private readonly IMeetingCommands MeetingCommands;
+        private readonly IJournalCommands MeetingCommands;
         private readonly IPermissionCommands PermissionCommands;
 
         readonly IMapper Mapper;
 
-        public TreeService(ITreeQueries treeQueries, ITreeCommands treeCommands, IMeetingCommands meetingCommands, IPermissionCommands permissionCommands, IMapper mapper)
+        public TreeService(ITreeQueries treeQueries, ITreeCommands treeCommands, IJournalCommands meetingCommands, IPermissionCommands permissionCommands, IMapper mapper)
         {
             this.TreeQueries = treeQueries;
             this.TreeCommands = treeCommands;

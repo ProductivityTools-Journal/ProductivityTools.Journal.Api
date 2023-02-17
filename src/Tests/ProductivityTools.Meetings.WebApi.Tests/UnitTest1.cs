@@ -53,7 +53,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
 
         IMeetingService MeetingService => ServiceProvider.GetService<IMeetingService>();
         IMeetingQueries MeetingQueries => ServiceProvider.GetService<IMeetingQueries>();
-        IMeetingCommands MeetingCommands => ServiceProvider.GetService<IMeetingCommands>();
+        IJournalCommands MeetingCommands => ServiceProvider.GetService<IJournalCommands>();
         ITreeService TreeService => ServiceProvider.GetService<ITreeService>();
         IMapper Mapper => ServiceProvider.GetService<IMapper>();
 

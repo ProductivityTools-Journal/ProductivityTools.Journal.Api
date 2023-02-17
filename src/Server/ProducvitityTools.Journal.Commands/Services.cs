@@ -10,7 +10,7 @@ namespace ProducvitityTools.Meetings.Commands
     {
         public static IServiceCollection ConfigureServicesCommands(this IServiceCollection services)
         {
-            services.AddScoped<IMeetingCommands, MeetingCommands>();
+            services.AddScoped<IJournalCommands, MeetingCommands>();
             services.AddScoped<ITreeCommands, TreeCommands>();
             services.AddScoped<IPermissionCommands, PermissionCommands>();
             services.ConfigureServicesDatabase();

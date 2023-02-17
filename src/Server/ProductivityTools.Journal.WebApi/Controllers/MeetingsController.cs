@@ -29,13 +29,13 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
     {
         private readonly IMapper mapper;
         IMeetingQueries MeetingQueries;
-        IMeetingCommands MeetingCommands;
+        IJournalCommands MeetingCommands;
         IMeetingService MeetingService;
         private readonly IConfiguration configuration;
         private IHttpContextAccessor _httpContextAccessor;
        // UserManager<IdentityUser> _userManager;
 
-        public MeetingsController(IMeetingQueries meetingQueries, IMeetingCommands meetingCommands, IMeetingService meetingService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public MeetingsController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IMeetingService meetingService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.MeetingQueries = meetingQueries;
             this.mapper = mapper;
@@ -119,11 +119,12 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [HttpPost]
         [Route(Consts.AddMeetingName)]
         //add validation
-        public int Save(JournalItem meeting)
+        public JournalItem Save(JournalItem meeting)
         {
             Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
-            int meetingId = MeetingCommands.Save(dbMeeting);
-            return meetingId;
+            Database.Objects.JournalItem savedMeeting = MeetingCommands.Save(dbMeeting);
+            var result = this.mapper.Map<JournalItem>(savedMeeting);
+            return result;
         }
 
         [HttpPost]

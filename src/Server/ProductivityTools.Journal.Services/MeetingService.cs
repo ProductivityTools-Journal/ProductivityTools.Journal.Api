@@ -12,11 +12,11 @@ namespace ProductivityTools.Meetings.Services
     class MeetingService : IMeetingService
     {
         IMeetingQueries MeetingQueries;
-        IMeetingCommands MeetingCommand;
+        IJournalCommands MeetingCommand;
         ITreeService TreeService;
         readonly IMapper Mapper;
 
-        public MeetingService(IMeetingQueries meetingQueries, IMeetingCommands meetingCommands, ITreeService treeService, IMapper mapper)
+        public MeetingService(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, ITreeService treeService, IMapper mapper)
         {
             this.MeetingQueries = meetingQueries;
             this.TreeService = treeService;
