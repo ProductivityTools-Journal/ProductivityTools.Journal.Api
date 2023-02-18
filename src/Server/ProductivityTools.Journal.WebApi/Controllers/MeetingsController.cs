@@ -107,9 +107,9 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [HttpPost]
         [Route(Consts.MeetingName)]
         [Authorize]
-        public JournalItem Get(MeetingId meetingId)
+        public JournalItem Get(JournalId meetingId)
         {
-            var partresult = MeetingQueries.GetMeeting(UserEmail, meetingId.Id.Value);
+            var partresult = MeetingQueries.GetPage(UserEmail, meetingId.Id.Value);
             JournalItem result = this.mapper.Map<JournalItem>(partresult);
             SaveToLog("Meetings mapped");
             return result;
@@ -136,10 +136,10 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route(Consts.DeleteMeetingName)]
-        public void Delete(MeetingId meeting)
+        [Route(Consts.DeletePageName)]
+        public void Delete(PageId page)
         {
-            MeetingService.DeleteMeeting(UserEmail, meeting.Id.Value);
+            MeetingService.DeletePage(UserEmail, page.Id);
         }
     }
 }

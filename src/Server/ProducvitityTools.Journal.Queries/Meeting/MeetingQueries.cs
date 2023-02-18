@@ -29,7 +29,7 @@ namespace ProducvitityTools.Meetings.Queries
 
 
 
-        public List<JournalItem> GetMeetings()
+        public List<JournalItem> GetPages()
         {
             //do not know when it is used, so throw it.
             throw new UnauthorizedAccessException();
@@ -39,7 +39,7 @@ namespace ProducvitityTools.Meetings.Queries
             return result;
         }
 
-        public List<JournalItem> GetMeetings(string email, List<int> treeNodeId)
+        public List<JournalItem> GetPages(string email, List<int> treeNodeId)
         {
             treeNodeId.RemoveAll(x => x == 1);
             QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, treeNodeId.ToArray());
@@ -53,13 +53,13 @@ namespace ProducvitityTools.Meetings.Queries
 
         }
 
-        public JournalItem GetMeeting(string email, int id)
+        public JournalItem GetPage(string email, int pageId)
         {
-            QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, new int[] { id });
-
             var result = this.MeetingContext.JournalItem
                 .Include(x => x.NotesList)
-                .SingleOrDefault(x => x.JournalItemId == id);
+                .SingleOrDefault(x => x.JournalItemId == pageId);
+            QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, new int[] { result.TreeId.Value });
+
             return result;
         }
     }

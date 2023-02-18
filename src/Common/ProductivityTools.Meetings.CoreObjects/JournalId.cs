@@ -4,9 +4,8 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.CoreObjects
 {
-    public class MeetingId
+    public class JournalId
     {
         public int? Id { get; set; }
-        public string Secret { get; set; }
     }
 }

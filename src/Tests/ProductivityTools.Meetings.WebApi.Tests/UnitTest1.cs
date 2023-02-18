@@ -81,7 +81,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
         public void GetMeetingTest()
         {
             var controler = new MeetingsController(MeetingQueries, null, null, Mapper, null, null);
-            var result = controler.Get(new CoreObjects.MeetingId { Id = 1 });
+            var result = controler.Get(new CoreObjects.JournalId { Id = 1 });
             Assert.IsNotNull(result);
         }
 

@@ -35,7 +35,7 @@ namespace ProductivityTools.Meetings.Services
             {
                 if (drillDown)
                 {
-                    return this.Mapper.Map<List<JournalItem>>(this.MeetingQueries.GetMeetings());
+                    return this.Mapper.Map<List<JournalItem>>(this.MeetingQueries.GetPages());
                 }
                 else
                 {
@@ -53,14 +53,14 @@ namespace ProductivityTools.Meetings.Services
             }
 
             //var result = new List<Meeting>();
-            var dbResult = this.MeetingQueries.GetMeetings(email, trees).ToList();
+            var dbResult = this.MeetingQueries.GetPages(email, trees).ToList();
             var result = this.Mapper.Map<List<JournalItem>>(dbResult);
             return result;
         }
 
-        public void DeleteMeeting(string email, int meetingId)
+        public void DeletePage(string email, int meetingId)
         {
-            var meeting = this.MeetingQueries.GetMeeting(email,meetingId);
+            var meeting = this.MeetingQueries.GetPage(email,meetingId);
             this.MeetingCommand.Delete(meeting);
         }
     }

@@ -31,7 +31,7 @@ namespace ProductivityTools.Meetings.WpfClient.Controls
         private async void DeleteMeetingClick()
         {
             MeetingsClient client = new MeetingsClient(null);
-            await client.DeleteMeeting(new MeetingId() { Id = this.Meeting.JournalItemId });
+            await client.DeleteMeeting(new JournalId() { Id = this.Meeting.JournalItemId });
         }
     }
 }

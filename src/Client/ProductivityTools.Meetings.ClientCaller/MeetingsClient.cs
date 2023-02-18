@@ -103,9 +103,9 @@ namespace ProductivityTools.Meetings.ClientCaller
             return await this.HttpPostClient.PostAsync<int>(Consts.MeetingControllerName, Consts.AddMeetingName, meeting);
         }
 
-        public async Task DeleteMeeting(MeetingId meetingId)
+        public async Task DeleteMeeting(JournalId meetingId)
         {
-            await this.HttpPostClient.PostAsync<object>(Consts.MeetingControllerName, Consts.DeleteMeetingName, meetingId);
+            await this.HttpPostClient.PostAsync<object>(Consts.MeetingControllerName, Consts.DeletePageName, meetingId);
         }
 
         public async Task<List<TreeNode>> GetTree()
