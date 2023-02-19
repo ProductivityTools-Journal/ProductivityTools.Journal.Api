@@ -41,6 +41,7 @@ namespace ProductivityTools.Meetings.Services
                     result.Add(treeNode);
                 }
             }
+            result = result.OrderBy(x => x.Name).ToList();
             return result;
         }
 
