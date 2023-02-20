@@ -1,11 +1,10 @@
 ﻿using DbUp;
 using System.Reflection;
 
-static int Main(string[] args)
-{
+
     var connectionString =
         args.FirstOrDefault()
-        ?? "Server=.\\SQL2019; Database=PTJournal; Trusted_connection=true";
+        ?? "Server=localhost\\SQL2019; Database=PTJournal; Trusted_connection=true; TrustServerCertificate=True";
     EnsureDatabase.For.SqlDatabase(connectionString);
 
     var upgrader =
@@ -32,4 +31,3 @@ static int Main(string[] args)
     Console.WriteLine("Success!");
     Console.ResetColor();
     return 0;
-}
