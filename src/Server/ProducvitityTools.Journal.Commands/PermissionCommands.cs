@@ -34,7 +34,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         public int Delete(IEnumerable<int> treeIds)
         {
-            var trees = this.MeetingContext.Tree.Where(x => treeIds.Contains(x.TreeId));
+            var trees = this.MeetingContext.Tree.Where(x => treeIds.Contains(x.JournalId));
             foreach (var tree in trees)
             {
                 tree.Deleted = true;
@@ -47,7 +47,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         public void Move(int source, int target)
         {
-            var sourceElement = this.MeetingContext.Tree.Where(x => x.TreeId == source).FirstOrDefault();
+            var sourceElement = this.MeetingContext.Tree.Where(x => x.JournalId == source).FirstOrDefault();
             sourceElement.ParentId = target;
             MeetingContext.Update(sourceElement);
             MeetingContext.SaveChanges();

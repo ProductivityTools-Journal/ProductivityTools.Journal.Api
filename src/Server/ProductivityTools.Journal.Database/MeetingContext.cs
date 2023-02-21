@@ -18,9 +18,9 @@ namespace ProductivityTools.Meetings.Database
             this.configuration = configuration;
         }
 
-        public DbSet<JournalItem> JournalItem { get; set; }
-        public DbSet<JournalItemNotes> JournalItemNotes { get; set; }
-        public DbSet<TreeNode> Tree { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        //public DbSet<JournalItemNotes> JournalItemNotes { get; set; }
+        public DbSet<Objects.Journal> Tree { get; set; }
         public DbSet<TreeOwner> TreeOwner { get; set; }
 
 
@@ -39,7 +39,7 @@ namespace ProductivityTools.Meetings.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(configuration.GetConnectionString("Meetings"));
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("PTJournal"));
                 optionsBuilder.UseLoggerFactory(GetLoggerFactory());
                 optionsBuilder.EnableSensitiveDataLogging();
                 base.OnConfiguring(optionsBuilder);
@@ -48,12 +48,12 @@ namespace ProductivityTools.Meetings.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("jl");
-            modelBuilder.Entity<JournalItem>().HasKey(x => x.JournalItemId);
-            modelBuilder.Entity<JournalItemNotes>().HasKey(x => x.JournalItemNotesId);
-            modelBuilder.Entity<JournalItemNotes>().Ignore(x=>x.Status);
+            modelBuilder.HasDefaultSchema("j");
+            modelBuilder.Entity<Page>().HasKey(x => x.PageId);
+            //modelBuilder.Entity<JournalItemNotes>().HasKey(x => x.JournalItemNotesId);
+            //modelBuilder.Entity<JournalItemNotes>().Ignore(x=>x.Status);
 
-            modelBuilder.Entity<TreeNode>().ToTable("Tree","jl").HasKey(x => x.TreeId);
+            modelBuilder.Entity<Journal>().ToTable("Journal","j").HasKey(x => x.TreeId);
 
             modelBuilder.Entity<TreeOwner>().HasKey("TreeId", "UserId");
            // modelBuilder.Entity<Tree>().HasOne(x => x.Parent).WithMany(x => x.Parent);

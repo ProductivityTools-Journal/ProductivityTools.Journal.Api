@@ -121,8 +121,8 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         //add validation
         public JournalItem Save(JournalItem meeting)
         {
-            Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
-            Database.Objects.JournalItem savedMeeting = MeetingCommands.Save(dbMeeting);
+            Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(meeting);
+            Database.Objects.Page savedMeeting = MeetingCommands.Save(dbMeeting);
             var result = this.mapper.Map<JournalItem>(savedMeeting);
             return result;
         }
@@ -131,7 +131,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.UpdateMeetingName)]
         public void Update(JournalItem meeting)
         {
-            Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
+            Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(meeting);
             MeetingCommands.Update(dbMeeting);
         }
 

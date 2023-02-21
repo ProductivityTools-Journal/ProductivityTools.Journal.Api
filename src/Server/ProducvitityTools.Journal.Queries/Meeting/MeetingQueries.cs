@@ -18,47 +18,36 @@ namespace ProducvitityTools.Meetings.Queries
             this.MeetingContext = context;
         }
 
-        //private ValidateTreeOwners(string user, List<int> treeNodeIds)
-        //{
-        //    foreach(int nodeId in treeNodeIds)
-        //    {
-        //        if
-        //    }
-        //}
-
-
-
-
-        public List<JournalItem> GetPages()
+        public List<Page> GetPages()
         {
             //do not know when it is used, so throw it.
             throw new UnauthorizedAccessException();
-            var result = this.MeetingContext.JournalItem
-                .Include(x => x.NotesList)
+            var result = this.MeetingContext.Pages
+              //  .Include(x => x.NotesList)
                 .ToList();
             return result;
         }
 
-        public List<JournalItem> GetPages(string email, List<int> treeNodeId)
+        public List<Page> GetPages(string email, List<int> treeNodeId)
         {
             treeNodeId.RemoveAll(x => x == 1);
             QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, treeNodeId.ToArray());
 
-            var result = this.MeetingContext.JournalItem
-            .Where(x => x.TreeId.HasValue && treeNodeId.Contains(x.TreeId.Value))
-            .Include(x => x.NotesList)
+            var result = this.MeetingContext.Pages
+            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value))
+           // .Include(x => x.NotesList)
             .OrderByDescending(x => x.Date).Take(50).ToList();
             return result;
 
 
         }
 
-        public JournalItem GetPage(string email, int pageId)
+        public Page GetPage(string email, int pageId)
         {
-            var result = this.MeetingContext.JournalItem
-                .Include(x => x.NotesList)
-                .SingleOrDefault(x => x.JournalItemId == pageId);
-            QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, new int[] { result.TreeId.Value });
+            var result = this.MeetingContext.Pages
+               // .Include(x => x.NotesList)
+                .SingleOrDefault(x => x.PageId == pageId);
+            QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, new int[] { result.JournalId.Value });
 
             return result;
         }

@@ -9,8 +9,8 @@ namespace ProductivityTools.Meetings.Services.AutoMapper
     {
         public TreeProfile()
         {
-            CreateMap<ProductivityTools.Meetings.Database.Objects.TreeNode, ProductivityTools.Meetings.CoreObjects.TreeNode>()
-                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.TreeId))
+            CreateMap<ProductivityTools.Meetings.Database.Objects.Journal, ProductivityTools.Meetings.CoreObjects.TreeNode>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.JournalId))
                 .ReverseMap();
         }
     }

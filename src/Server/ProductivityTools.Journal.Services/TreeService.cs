@@ -35,7 +35,7 @@ namespace ProductivityTools.Meetings.Services
             {
                 TreeNode treeNode = this.Mapper.Map<TreeNode>(dbTreeNode);
                 treeNode.ParentId = parent;
-                treeNode.Nodes = GetNodes(email,dbTreeNode.TreeId);
+                treeNode.Nodes = GetNodes(email,dbTreeNode.JournalId);
                 if (this.TreeQueries.ValidateOnershipCall(email, new int[] { treeNode.Id }))
                 {
                     result.Add(treeNode);
@@ -69,7 +69,7 @@ namespace ProductivityTools.Meetings.Services
         {
             var rootdb = TreeQueries.GetRoot();
             TreeNode root = Mapper.Map<TreeNode>(rootdb);
-            root.Nodes = GetNodes(email,rootdb.TreeId);
+            root.Nodes = GetNodes(email,rootdb.JournalId);
             List<TreeNode> result = new List<TreeNode>();
             result.Add(root);
             return result;
@@ -93,9 +93,9 @@ namespace ProductivityTools.Meetings.Services
                 {
                     userId = 2;
                 }
-                this.PermissionCommands.AddOwner(userId,result.TreeId);
+                this.PermissionCommands.AddOwner(userId,result.JournalId);
             }
-            return result.TreeId;
+            return result.JournalId;
         }
 
         public int Delete(string email, int treeId)

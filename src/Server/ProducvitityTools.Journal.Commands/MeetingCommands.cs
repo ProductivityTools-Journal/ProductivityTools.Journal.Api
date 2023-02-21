@@ -9,9 +9,9 @@ namespace ProducvitityTools.Meetings.Commands
 {
     public interface IJournalCommands
     {
-        JournalItem Save(JournalItem meeting);
-        void Update(JournalItem meeting);
-        void Delete(JournalItem meetingId);
+        Page Save(Page meeting);
+        void Update(Page meeting);
+        void Delete(Page meetingId);
         int Delete(IEnumerable<int> treeIds);
     }
 
@@ -24,22 +24,22 @@ namespace ProducvitityTools.Meetings.Commands
             this.MeetingContext = context;
         }
 
-        void IJournalCommands.Update(JournalItem meeting)
+        void IJournalCommands.Update(Page meeting)
         {
-            MeetingContext.JournalItem.Attach(meeting);
+            MeetingContext.Pages.Attach(meeting);
             MeetingContext.Entry(meeting).State = EntityState.Modified;
-            meeting.NotesList.ForEach(x =>
-            {
-                switch (x.Status)
-                {
-                    case "New": MeetingContext.Entry(x).State = EntityState.Added; break;
-                    case "Deleted": MeetingContext.Entry(x).State = EntityState.Deleted; break;
+            //meeting.NotesList.ForEach(x =>
+            //{
+            //    switch (x.Status)
+            //    {
+            //        case "New": MeetingContext.Entry(x).State = EntityState.Added; break;
+            //        case "Deleted": MeetingContext.Entry(x).State = EntityState.Deleted; break;
 
-                    default:
-                        MeetingContext.Entry(x).State = EntityState.Modified;
-                        break;
-                }
-            });
+            //        default:
+            //            MeetingContext.Entry(x).State = EntityState.Modified;
+            //            break;
+            //    }
+            //});
 
 
             var ChangeTracker = MeetingContext.ChangeTracker;
@@ -51,15 +51,15 @@ namespace ProducvitityTools.Meetings.Commands
             MeetingContext.SaveChanges();
         }
 
-        JournalItem IJournalCommands.Save(JournalItem journal)
+        Page IJournalCommands.Save(Page journal)
         {
-            if (journal.JournalItemId == null)
+            if (journal.PageId == null)
             {
-                MeetingContext.JournalItem.Add(journal);
+                MeetingContext.Pages.Add(journal);
             }
             else
             {
-                MeetingContext.JournalItem.Attach(journal);
+                MeetingContext.Pages.Attach(journal);
                 MeetingContext.Entry(journal).State = EntityState.Modified;
             }
             var ChangeTracker = MeetingContext.ChangeTracker;
@@ -73,15 +73,15 @@ namespace ProducvitityTools.Meetings.Commands
             return journal;
         }
 
-        void IJournalCommands.Delete(JournalItem meeting)
+        void IJournalCommands.Delete(Page meeting)
         {
-            MeetingContext.JournalItem.Remove(meeting);
+            MeetingContext.Pages.Remove(meeting);
             MeetingContext.SaveChanges();
         }
 
         int IJournalCommands.Delete(IEnumerable<int> treeIds)
         {
-            var meetings = MeetingContext.JournalItem.Where(x => treeIds.Contains(x.TreeId.Value));
+            var meetings = MeetingContext.Pages.Where(x => treeIds.Contains(x.JournalId.Value));
             foreach (var meeting in meetings)
             {
                 meeting.Deleted = true;
