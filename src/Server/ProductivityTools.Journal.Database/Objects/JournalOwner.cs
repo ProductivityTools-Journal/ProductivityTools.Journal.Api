@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.Database.Objects
 {
-    public class TreeOwner
+    public class JournalOwner
     {
         public int TreeId { get; set; }
        

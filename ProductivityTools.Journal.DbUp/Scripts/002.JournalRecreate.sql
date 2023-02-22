@@ -56,8 +56,9 @@ CREATE TABLE [j].[Page](
 	[PageId] [int] IDENTITY(1,1) NOT NULL,
 	[JournalId] [int] NOT NULL,
 	[Subject] [nvarchar](200) NOT NULL,
+	[Date] Date NOT NULL,
 	[Notes] [nvarchar](max) NOT NULL,
-	[Type] [nvarchar](8) NULL,
+	[NotesType] [nvarchar](8) NULL,
 	[Deleted] BIT NOT NULL,
  CONSTRAINT [PK_Page] PRIMARY KEY CLUSTERED ([PageId]))
 
@@ -67,7 +68,7 @@ GO
 
 
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Technical type of item notes, it could be empty or Slate' , @level0type=N'SCHEMA',@level0name=N'j', @level1type=N'TABLE',@level1name=N'Page', @level2type=N'COLUMN',@level2name=N'Type'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Technical type of item notes, it could be empty or Slate' , @level0type=N'SCHEMA',@level0name=N'j', @level1type=N'TABLE',@level1name=N'Page', @level2type=N'COLUMN',@level2name=N'NotesType'
 GO
 
 

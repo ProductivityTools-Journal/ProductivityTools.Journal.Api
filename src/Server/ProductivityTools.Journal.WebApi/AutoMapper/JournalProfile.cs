@@ -12,8 +12,8 @@ namespace ProductivityTools.Meetings.WebApi.AutoMapper
         {
             CreateMap<ProductivityTools.Meetings.Database.Objects.Page, ProductivityTools.Meetings.CoreObjects.JournalItem>()
                 .ReverseMap();
-            CreateMap<ProductivityTools.Meetings.Database.Objects.JournalItemNotes, ProductivityTools.Meetings.CoreObjects.JournalItemNotes>()
-                .ReverseMap();
+            //CreateMap<ProductivityTools.Meetings.Database.Objects.JournalItemNotes, ProductivityTools.Meetings.CoreObjects.JournalItemNotes>()
+            //    .ReverseMap();
         }
     }
 }

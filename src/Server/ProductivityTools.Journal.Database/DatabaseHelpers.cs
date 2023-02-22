@@ -19,7 +19,7 @@ namespace ProductivityTools.Journal.Database
             using (var command = connection.CreateCommand())
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "jl.VerifyOwnership";
+                command.CommandText = "j.VerifyOwnership";
 
                 SqlParameter emailparameter = command.Parameters.Add("@email", SqlDbType.Text);
                 emailparameter.Direction = ParameterDirection.Input;

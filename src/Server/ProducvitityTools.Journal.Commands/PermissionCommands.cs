@@ -25,7 +25,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         public void AddOwner(int userId, int treeID)
         {
-            TreeOwner to = new TreeOwner();
+            JournalOwner to = new JournalOwner();
             to.TreeId = treeID;
             to.UserId = userId;
             this.MeetingContext.TreeOwner.Add(to);
