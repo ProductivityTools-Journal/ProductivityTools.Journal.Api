@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProductivityTools.Meetings.WebApi.AutoMapper
 {
-    public class JournalProfile :Profile
+    public class PageProfile :Profile
     {
-        public JournalProfile()
+        public PageProfile()
         {
-            CreateMap<ProductivityTools.Meetings.Database.Objects.Page, ProductivityTools.Meetings.CoreObjects.JournalItem>()
+            CreateMap<ProductivityTools.Meetings.Database.Objects.Page, ProductivityTools.Meetings.CoreObjects.Page>()
                 .ReverseMap();
             //CreateMap<ProductivityTools.Meetings.Database.Objects.JournalItemNotes, ProductivityTools.Meetings.CoreObjects.JournalItemNotes>()
             //    .ReverseMap();

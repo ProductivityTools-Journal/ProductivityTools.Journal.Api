@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.CoreObjects
 {
-    class Tree
+    class JournalList
     {
-        public List<TreeNode> Nodes { get; set; }
+        public List<Journal> Nodes { get; set; }
     }
 }

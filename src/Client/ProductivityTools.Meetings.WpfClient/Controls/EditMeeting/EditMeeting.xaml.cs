@@ -21,7 +21,7 @@ namespace ProductivityTools.Meetings.WpfClient.Controls
             InitializeComponent();
         }
 
-        public EditMeeting(JournalItem meeting) : this()
+        public EditMeeting(CoreObjects.Page meeting) : this()
         {
             this.DataContext = new EditMeetingVM(meeting);
         }

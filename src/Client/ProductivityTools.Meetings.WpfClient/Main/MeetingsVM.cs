@@ -18,7 +18,7 @@ namespace ProductivityTools.Meetings.WpfClient
     public class MeetingsVM
     {
         public ObservableCollection<MeetingItemVM> Meetings { get; set; }
-        public ObservableCollection<TreeNode> Tree { get; set; }
+        public ObservableCollection<Journal> Tree { get; set; }
         public bool DrillDown { get; set; }
         public string Message { get; set; } 
 
@@ -43,13 +43,13 @@ namespace ProductivityTools.Meetings.WpfClient
                 return this.client;
             }
         }
-        TreeNode TreeNodeSelected { get; set; }
+        Journal TreeNodeSelected { get; set; }
 
         public MeetingsVM()
         {
             this.Message = "init";
             this.Meetings = new ObservableCollection<MeetingItemVM>();
-            this.Tree = new ObservableCollection<TreeNode>();
+            this.Tree = new ObservableCollection<Journal>();
             this.GetMeetingsCommand = new CommandHandler(GetMeetings, () => true);
             this.NewMeetingCommand = new CommandHandler(NewMeeting, () => true);
             this.FilterMeetingsCommand = new CommandHandler(FilterMeeting, () => true);
@@ -58,8 +58,8 @@ namespace ProductivityTools.Meetings.WpfClient
 
             //this.Meetings.Add(new MeetingItemVM(new CoreObjects.JournalItem() { Notes= AfterNotes = "Core", BeforeNotes = "Core", DuringNotes = "Core", Subject = "fdsa" }));
             //this.Meetings.Add(new MeetingItemVM(new CoreObjects.JournalItem() { AfterNotes = "Core", BeforeNotes = "Core", DuringNotes = "Core" }));
-            this.Tree.Add(new TreeNode("Pawel"));
-            this.Tree.Add(new TreeNode("Marcin"));
+            this.Tree.Add(new Journal("Pawel"));
+            this.Tree.Add(new Journal("Marcin"));
         }
 
         private OidcClient _oidcClient = null;
@@ -112,7 +112,7 @@ namespace ProductivityTools.Meetings.WpfClient
 
             if (parameter != null)
             {
-                TreeNode selectedItem = (TreeNode)args.NewValue;
+                Journal selectedItem = (Journal)args.NewValue;
                 var xx = await Client.GetMeetings(selectedItem.Id, DrillDown);
                 this.TreeNodeSelected = selectedItem;
                 UpdateMeetings(xx);
@@ -137,7 +137,7 @@ namespace ProductivityTools.Meetings.WpfClient
             }
         }
 
-        private void UpdateMeetings(List<JournalItem> xx)
+        private void UpdateMeetings(List<Page> xx)
         {
             this.Meetings.Clear();
             foreach (var item in xx)
@@ -149,8 +149,8 @@ namespace ProductivityTools.Meetings.WpfClient
 
         private void NewMeeting()
         {
-            var meeting = new CoreObjects.JournalItem();
-            meeting.TreeId = this.TreeNodeSelected.Id;
+            var meeting = new CoreObjects.Page();
+            meeting.JournalId = this.TreeNodeSelected.Id;
             meeting.Subject = this.TreeNodeSelected.Name;
             var meetingvm = new MeetingItemVM(meeting);
             this.Meetings.Add(meetingvm);

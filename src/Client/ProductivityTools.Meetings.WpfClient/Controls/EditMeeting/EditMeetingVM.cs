@@ -10,11 +10,11 @@ namespace ProductivityTools.Meetings.WpfClient.Controls
 {
     public class EditMeetingVM
     {
-        public JournalItem Meeting { get; set; }
+        public Page Meeting { get; set; }
         public ICommand SaveMeetingCommand { get; }
         public ICommand DeleteMeetingCommand { get; }
 
-        public EditMeetingVM(JournalItem meeting)
+        public EditMeetingVM(Page meeting)
         {
             this.Meeting = meeting;
             SaveMeetingCommand = new CommandHandler(SaveMeetingClick, () => true);
@@ -25,13 +25,13 @@ namespace ProductivityTools.Meetings.WpfClient.Controls
         {
             MeetingsClient client = new MeetingsClient(null);
             int meetingId=await client.SaveMeeting(this.Meeting);
-            this.Meeting.JournalItemId = meetingId;
+            this.Meeting.PageId = meetingId;
         }
 
         private async void DeleteMeetingClick()
         {
             MeetingsClient client = new MeetingsClient(null);
-            await client.DeleteMeeting(new JournalId() { Id = this.Meeting.JournalItemId });
+            await client.DeleteMeeting(new JournalId() { Id = this.Meeting.PageId });
         }
     }
 }

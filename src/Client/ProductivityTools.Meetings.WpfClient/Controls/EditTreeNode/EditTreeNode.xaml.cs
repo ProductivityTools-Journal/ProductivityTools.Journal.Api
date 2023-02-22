@@ -16,14 +16,14 @@ namespace ProductivityTools.Meetings.WpfClient.Controls
 {
     public partial class EditTreeNode : Window
     {
-        private TreeNode ParentTreeNode;
+        private Journal ParentTreeNode;
 
         public EditTreeNode()
         {
             InitializeComponent();
         }
 
-        public EditTreeNode(TreeNode treeNode) : this()
+        public EditTreeNode(Journal treeNode) : this()
         {
             this.DataContext = new EditTreeNodeVM(treeNode);
         }

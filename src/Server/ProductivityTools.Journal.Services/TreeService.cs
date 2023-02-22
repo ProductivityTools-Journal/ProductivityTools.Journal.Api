@@ -27,13 +27,13 @@ namespace ProductivityTools.Meetings.Services
             this.Mapper = mapper;
         }
 
-        private List<TreeNode> GetNodes(string email, int parent)
+        private List<CoreObjects.Journal> GetNodes(string email, int parent)
         {
-            List<TreeNode> result = new List<TreeNode>();
+            List<CoreObjects.Journal> result = new List<CoreObjects.Journal>();
             var dbTreeNodes = this.TreeQueries.GetTree(email,parent);
             foreach (var dbTreeNode in dbTreeNodes)
             {
-                TreeNode treeNode = this.Mapper.Map<TreeNode>(dbTreeNode);
+                CoreObjects.Journal treeNode = this.Mapper.Map<CoreObjects.Journal>(dbTreeNode);
                 treeNode.ParentId = parent;
                 treeNode.Nodes = GetNodes(email,dbTreeNode.JournalId);
                 if (this.TreeQueries.ValidateOnershipCall(email, new int[] { treeNode.Id }))
@@ -45,7 +45,7 @@ namespace ProductivityTools.Meetings.Services
             return result;
         }
 
-        private List<int> GetIds(List<TreeNode> nodes)
+        private List<int> GetIds(List<CoreObjects.Journal> nodes)
         {
             List<int> result = new List<int>();
 
@@ -65,12 +65,12 @@ namespace ProductivityTools.Meetings.Services
             return result;
         }
 
-        public List<TreeNode> GetTree(string email)
+        public List<CoreObjects.Journal> GetTree(string email)
         {
             var rootdb = TreeQueries.GetRoot();
-            TreeNode root = Mapper.Map<TreeNode>(rootdb);
+            CoreObjects.Journal root = Mapper.Map<CoreObjects.Journal>(rootdb);
             root.Nodes = GetNodes(email,rootdb.JournalId);
-            List<TreeNode> result = new List<TreeNode>();
+            List<CoreObjects.Journal> result = new List<CoreObjects.Journal>();
             result.Add(root);
             return result;
         }
@@ -100,8 +100,8 @@ namespace ProductivityTools.Meetings.Services
 
         public int Delete(string email, int treeId)
         {
-            List<TreeNode> subTreeNodes = GetNodes(email, treeId);
-            subTreeNodes.Add(this.Mapper.Map < TreeNode >(this.TreeQueries.GetTreeNode(treeId)));
+            List<CoreObjects.Journal> subTreeNodes = GetNodes(email, treeId);
+            subTreeNodes.Add(this.Mapper.Map <CoreObjects.Journal >(this.TreeQueries.GetTreeNode(treeId)));
             var treesIds = subTreeNodes.Select(x => x.Id);
             int meetingRemoved=this.MeetingCommands.Delete(treesIds);
             int treeNodeRemoved=this.TreeCommands.Delete(treesIds);
