@@ -12,14 +12,18 @@
     <None Remove="Scripts\001.ColumnDescription.sql" />
     <None Remove="Scripts\002.JournalRecreate.sql" />
     <None Remove="Scripts\003.Ownership.sql" />
-    <None Remove="Scripts\03.DataMigration.sql" />
+    <None Remove="Scripts\101.DataMigrationUserJournal.sql" />
+    <None Remove="Scripts\102.DataMigrationPages.sql" />
+    <None Remove="Scripts\103.DataMigrationOwnership.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\000.Schema.sql" />
     <EmbeddedResource Include="Scripts\001.ColumnDescription.sql" />
     <EmbeddedResource Include="Scripts\003.Ownership.sql" />
-    <EmbeddedResource Include="Scripts\03.DataMigration.sql" />
+    <EmbeddedResource Include="Scripts\103.DataMigrationOwnership.sql" />
+    <EmbeddedResource Include="Scripts\102.DataMigrationPages.sql" />
+    <EmbeddedResource Include="Scripts\101.DataMigrationUserJournal.sql" />
     <EmbeddedResource Include="Scripts\002.JournalRecreate.sql" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@ using System.Reflection;
 
     var connectionString =
         args.FirstOrDefault()
-        ?? "Server=localhost\\SQL2019; Database=PTJournal; Trusted_connection=true; TrustServerCertificate=True";
+        ?? "Server=localhost\\SQL2019; Database=PTJournal; Trusted_connection=true; TrustServerCertificate=True; Connection Timeout=12000";
     EnsureDatabase.For.SqlDatabase(connectionString);
 
     var upgrader =
