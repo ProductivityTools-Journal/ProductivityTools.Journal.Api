@@ -10,8 +10,8 @@ namespace ProductivityTools.Meetings.CoreObjects
         public DateTime Date { get; set; }
         public string Subject { get; set; }
 
-        public string Notes { get; set; }
-        public string NotesType { get; set; }
+        public string Content { get; set; }
+        public string ContentType { get; set; }
        
         /// <summary>
         /// It is used to say if the element is deleted
