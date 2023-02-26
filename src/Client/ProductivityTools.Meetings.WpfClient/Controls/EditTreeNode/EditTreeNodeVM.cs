@@ -9,13 +9,13 @@ namespace ProductivityTools.Meetings.WpfClient.Controls
 {
     public class EditTreeNodeVM
     {
-        private TreeNode ParentTreeNode;
+        private Journal ParentTreeNode;
 
 
         public ICommand AddCommand { get; set; }
         public string NewTreeNodeName { get; set; }
 
-        public EditTreeNodeVM(TreeNode treeNode)
+        public EditTreeNodeVM(Journal treeNode)
         {
             this.ParentTreeNode = treeNode;
             this.AddCommand = new CommandHandler(Add, () => true);

@@ -11,7 +11,7 @@ namespace ProducvitityTools.Meetings.Commands
 
     public interface ITreeCommands
     {
-        TreeNode AddTreeNode(int parentId, string name);
+        Journal AddTreeNode(int parentId, string name);
         int Delete(IEnumerable<int> treeIds);
         void Move(int sourceId, int targetId);
     }
@@ -25,9 +25,9 @@ namespace ProducvitityTools.Meetings.Commands
             this.MeetingContext = context;
         }
 
-        public TreeNode AddTreeNode(int parentId, string name)
+        public Journal AddTreeNode(int parentId, string name)
         {
-            TreeNode tree = new TreeNode() { ParentId = parentId, Name = name };
+            Journal tree = new Journal() { ParentId = parentId, Name = name };
             this.MeetingContext.Tree.Add(tree);
             this.MeetingContext.SaveChanges();
             return tree;
@@ -35,7 +35,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         public int Delete(IEnumerable<int> treeIds)
         {
-            var trees = this.MeetingContext.Tree.Where(x => treeIds.Contains(x.TreeId));
+            var trees = this.MeetingContext.Tree.Where(x => treeIds.Contains(x.JournalId));
             foreach (var tree in trees)
             {
                 tree.Deleted = true;
@@ -48,7 +48,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         public void Move(int source, int target)
         {
-            var sourceElement = this.MeetingContext.Tree.Where(x => x.TreeId == source).FirstOrDefault();
+            var sourceElement = this.MeetingContext.Tree.Where(x => x.JournalId == source).FirstOrDefault();
             sourceElement.ParentId = target;
             MeetingContext.Update(sourceElement);
             MeetingContext.SaveChanges();

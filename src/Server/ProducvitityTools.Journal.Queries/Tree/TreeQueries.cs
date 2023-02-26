@@ -12,9 +12,9 @@ namespace ProducvitityTools.Meetings.Queries
 {
     public interface ITreeQueries
     {
-        TreeNode GetRoot();
-        List<TreeNode> GetTree(string email, int parentId);
-        TreeNode GetTreeNode(int id);
+        ProductivityTools.Meetings.Database.Objects.Journal GetRoot();
+        List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId);
+        ProductivityTools.Meetings.Database.Objects.Journal GetTreeNode(int id);
         bool ValidateOnershipCall(string email, int[] treeIds);
     }
 
@@ -27,21 +27,21 @@ namespace ProducvitityTools.Meetings.Queries
             this.MeetingContext = context;
         }
 
-        public TreeNode GetRoot()
+        public ProductivityTools.Meetings.Database.Objects.Journal GetRoot()
         {
-            TreeNode root = this.MeetingContext.Tree.Where(x => x.Name == "Root").First();
+            ProductivityTools.Meetings.Database.Objects.Journal root = this.MeetingContext.Tree.Where(x => x.Name == "Root").First();
             return root;
         }
 
-        public List<TreeNode> GetTree(string email, int parentId)
+        public List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId)
         {
-            var result = this.MeetingContext.Tree.Where(x => x.ParentId == parentId && x.TreeId != x.ParentId && x.Deleted == false).ToList();
+            var result = this.MeetingContext.Tree.Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false).ToList();
             return result;
         }
 
-        public TreeNode GetTreeNode(int id)
+        public ProductivityTools.Meetings.Database.Objects.Journal GetTreeNode(int id)
         {
-            var result = this.MeetingContext.Tree.SingleOrDefault(x => x.TreeId == id);
+            var result = this.MeetingContext.Tree.SingleOrDefault(x => x.JournalId == id);
             return result;
         }
 

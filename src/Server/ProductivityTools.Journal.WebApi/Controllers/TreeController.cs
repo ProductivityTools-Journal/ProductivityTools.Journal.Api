@@ -27,7 +27,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpPost]
         [Route(Consts.TreeControlerGet)]
-        public List<TreeNode> GetTree()
+        public List<CoreObjects.Journal> GetTree()
         {
             var result = TreeServices.GetTree(UserEmail);
             return result;

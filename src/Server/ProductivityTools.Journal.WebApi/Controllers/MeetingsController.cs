@@ -92,12 +92,12 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Authorize]
         [AuthenticatedUsers]
         [Route(Consts.ListName)]
-        public List<JournalItem> GetList(MeetingListRequest meetingListRequest)
+        public List<CoreObjects.Page> GetList(MeetingListRequest meetingListRequest)
         {
             //var x=_userManager.GetUserAsync(HttpContext.User);
 
             SaveToLog("Request started");
-            List<JournalItem> result = this.MeetingService.GetMeetings(UserEmail, meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
+            List<CoreObjects.Page> result = this.MeetingService.GetMeetings(UserEmail, meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
             SaveToLog("Meetings mapped");
             return result;
         }
@@ -107,10 +107,10 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [HttpPost]
         [Route(Consts.MeetingName)]
         [Authorize]
-        public JournalItem Get(JournalId meetingId)
+        public CoreObjects.Page Get(JournalId meetingId)
         {
             var partresult = MeetingQueries.GetPage(UserEmail, meetingId.Id.Value);
-            JournalItem result = this.mapper.Map<JournalItem>(partresult);
+            CoreObjects.Page result = this.mapper.Map<CoreObjects.Page>(partresult);
             SaveToLog("Meetings mapped");
             return result;
         }
@@ -119,19 +119,19 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [HttpPost]
         [Route(Consts.AddMeetingName)]
         //add validation
-        public JournalItem Save(JournalItem meeting)
+        public CoreObjects.Page Save(CoreObjects.Page meeting)
         {
-            Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
-            Database.Objects.JournalItem savedMeeting = MeetingCommands.Save(dbMeeting);
-            var result = this.mapper.Map<JournalItem>(savedMeeting);
+            Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(meeting);
+            Database.Objects.Page savedMeeting = MeetingCommands.Save(dbMeeting);
+            var result = this.mapper.Map<CoreObjects.Page>(savedMeeting);
             return result;
         }
 
         [HttpPost]
         [Route(Consts.UpdateMeetingName)]
-        public void Update(JournalItem meeting)
+        public void Update(CoreObjects.Page meeting)
         {
-            Database.Objects.JournalItem dbMeeting = this.mapper.Map<Database.Objects.JournalItem>(meeting);
+            Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(meeting);
             MeetingCommands.Update(dbMeeting);
         }
 

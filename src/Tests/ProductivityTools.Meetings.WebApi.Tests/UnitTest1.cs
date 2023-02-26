@@ -89,11 +89,11 @@ namespace ProductivityTools.Meetings.WebApi.Tests
         public void AddMeetingTest()
         {
             var controler = new MeetingsController(null, MeetingCommands, null, Mapper, null, null);
-            var result = controler.Save(new CoreObjects.JournalItem
+            var result = controler.Save(new CoreObjects.Page
             {
                 Date = DateTime.Now,
                 Subject = "Test Journal",
-                TreeId = 1,
+                JournalId = 1,
                 NotesList = new System.Collections.Generic.List<CoreObjects.JournalItemNotes>() {
                     new CoreObjects.JournalItemNotes {
                         Type = "xxx",

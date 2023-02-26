@@ -87,18 +87,18 @@ namespace ProductivityTools.Meetings.ClientCaller
 
         }
 
-        public async Task<List<JournalItem>> GetMeetings(int? treeNodeId = null, bool drillDown = true)
+        public async Task<List<Page>> GetMeetings(int? treeNodeId = null, bool drillDown = true)
         {
-            var r = this.HttpPostClient.PostAsync<List<JournalItem>>(Consts.MeetingControllerName, Consts.ListName, new MeetingListRequest() { Id = treeNodeId, DrillDown = drillDown });
+            var r = this.HttpPostClient.PostAsync<List<Page>>(Consts.MeetingControllerName, Consts.ListName, new MeetingListRequest() { Id = treeNodeId, DrillDown = drillDown });
             return await r;
         }
 
-        public async Task UpdateMeeting(JournalItem meeting)
+        public async Task UpdateMeeting(Page meeting)
         {
-            await this.HttpPostClient.PostAsync<JournalItem>(Consts.MeetingControllerName, Consts.UpdateMeetingName, meeting);
+            await this.HttpPostClient.PostAsync<Page>(Consts.MeetingControllerName, Consts.UpdateMeetingName, meeting);
         }
 
-        public async Task<int> SaveMeeting(JournalItem meeting)
+        public async Task<int> SaveMeeting(Page meeting)
         {
             return await this.HttpPostClient.PostAsync<int>(Consts.MeetingControllerName, Consts.AddMeetingName, meeting);
         }
@@ -108,9 +108,9 @@ namespace ProductivityTools.Meetings.ClientCaller
             await this.HttpPostClient.PostAsync<object>(Consts.MeetingControllerName, Consts.DeletePageName, meetingId);
         }
 
-        public async Task<List<TreeNode>> GetTree()
+        public async Task<List<Journal>> GetTree()
         {
-            var r = await this.HttpPostClient.PostAsync<List<TreeNode>>(Consts.TreeControllerName, Consts.TreeControlerGet);
+            var r = await this.HttpPostClient.PostAsync<List<Journal>>(Consts.TreeControllerName, Consts.TreeControlerGet);
             return r;
         }
 

@@ -34,13 +34,13 @@ pipeline {
         }
         stage('copyDbMigratdorFiles') {
             steps {
-                bat('xcopy "C:\\Program Files (x86)\\Jenkins\\workspace\\Journal.Api\\src\\Server\\ProductivityTools.Journal.DatabaseMigrations\\bin\\Release\\net6.0\\publish" "C:\\Bin\\JournalApiDdbMigration\\" /O /X /E /H /K')
+                bat('xcopy "ProductivityTools.Journal.DbUp\\bin\\Release\\net6.0\\publish" "C:\\Bin\\JournalApiDdbMigration\\" /O /X /E /H /K')
             }
         }
 
         stage('runDbMigratorFiles') {
             steps {
-                bat('C:\\Bin\\JournalApiDdbMigration\\ProductivityTools.Journal.DatabaseMigrations.exe')
+                bat('C:\\Bin\\JournalApiDdbMigration\\ProductivityTools.Journal.DbUp.exe')
             }
         }
 

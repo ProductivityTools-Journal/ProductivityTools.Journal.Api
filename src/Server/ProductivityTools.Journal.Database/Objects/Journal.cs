@@ -4,14 +4,13 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.Database.Objects
 {
-    public class TreeNode
+    public class Journal
     {
-        public int TreeId { get; set; }
+        public int JournalId { get; set; }
         public int ParentId { get; set; }
         public string Name { get; set; }
         public bool Deleted { get; set; }
-
-        public TreeNode Parent { get; set; }
+        public Journal Parent { get; set; }
 
     }
 }
