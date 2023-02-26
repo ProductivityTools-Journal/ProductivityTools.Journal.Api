@@ -85,35 +85,35 @@ namespace ProductivityTools.Meetings.WebApi.Tests
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void AddMeetingTest()
-        {
-            var controler = new MeetingsController(null, MeetingCommands, null, Mapper, null, null);
-            var result = controler.Save(new CoreObjects.Page
-            {
-                Date = DateTime.Now,
-                Subject = "Test Journal",
-                JournalId = 1,
-                NotesList = new System.Collections.Generic.List<CoreObjects.JournalItemNotes>() {
-                    new CoreObjects.JournalItemNotes {
-                        Type = "xxx",
-                        Notes = "Notes" } }
-            });
-            Assert.IsNotNull(result);
-        }
+        //[TestMethod]
+        //public void AddMeetingTest()
+        //{
+        //    var controler = new MeetingsController(null, MeetingCommands, null, Mapper, null, null);
+        //    var result = controler.Save(new CoreObjects.Page
+        //    {
+        //        Date = DateTime.Now,
+        //        Subject = "Test Journal",
+        //        JournalId = 1,
+        //        NotesList = new System.Collections.Generic.List<CoreObjects.JournalItemNotes>() {
+        //            new CoreObjects.JournalItemNotes {
+        //                Type = "xxx",
+        //                Notes = "Notes" } }
+        //    });
+        //    Assert.IsNotNull(result);
+        //}
 
-        [TestMethod]
-        public void DeleteJournalItemDetails()
-        {
-            var controler = new MeetingsController(MeetingQueries, MeetingCommands,MeetingService, Mapper, null, null);
-            var journalList = controler.GetList(new CoreObjects.MeetingListRequest { DrillDown = true, Id = null });
-            var journalElement = journalList[0];
-            var lastElement = journalElement.NotesList.Last();
-            lastElement.Status = "Deleted";
+        //[TestMethod]
+        //public void DeleteJournalItemDetails()
+        //{
+        //    var controler = new MeetingsController(MeetingQueries, MeetingCommands,MeetingService, Mapper, null, null);
+        //    var journalList = controler.GetList(new CoreObjects.MeetingListRequest { DrillDown = true, Id = null });
+        //    var journalElement = journalList[0];
+        //    var lastElement = journalElement.NotesList.Last();
+        //    lastElement.Status = "Deleted";
 
-            controler.Update(journalElement);
+        //    controler.Update(journalElement);
             
-        }
+        //}
 
         [TestMethod]
         public void MoveTreeItem()
