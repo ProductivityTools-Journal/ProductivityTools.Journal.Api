@@ -56,7 +56,7 @@ CREATE TABLE [j].[Page](
 	[PageId] [int] IDENTITY(1,1) NOT NULL,
 	[JournalId] [int] NOT NULL,
 	[Subject] [nvarchar](200) NOT NULL,
-	[Date] Date NOT NULL,
+	[Date] DateTime NOT NULL,
 	[Content] [nvarchar](max) NOT NULL,
 	[ContentType] [nvarchar](8) NULL,
 	[Deleted] BIT NOT NULL,
@@ -65,6 +65,8 @@ CREATE TABLE [j].[Page](
 ALTER TABLE [j].[Page] WITH CHECK ADD  CONSTRAINT [FK_Page_Journal] FOREIGN KEY([JournalId])
 REFERENCES [j].[Journal] ([JournalId])
 GO
+
+ALTER TABLE [j].[Page] ADD CONSTRAINT D_Date DEFAULT GETDATE() FOR [Date]
 
 
 

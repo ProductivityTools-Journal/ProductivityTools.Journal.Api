@@ -12,8 +12,8 @@ namespace ProductivityTools.Meetings.Database.Objects
         public DateTime Date { get; set; }
         public string Subject { get; set; }
 
-        public string Notes { get; set; }
-        public string NotesType { get; set; }
+        public string Content { get; set; }
+        public string ContentType { get; set; }
         public bool Deleted { get; set; }
 
        // public List<JournalItemNotes> NotesList { get; set; }
