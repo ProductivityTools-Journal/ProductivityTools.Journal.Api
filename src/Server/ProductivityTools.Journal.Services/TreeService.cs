@@ -65,14 +65,12 @@ namespace ProductivityTools.Meetings.Services
             return result;
         }
 
-        public List<CoreObjects.Journal> GetTree(string email)
+        public CoreObjects.Journal GetTree(string email)
         {
             var rootdb = TreeQueries.GetRoot();
             CoreObjects.Journal root = Mapper.Map<CoreObjects.Journal>(rootdb);
             root.Nodes = GetNodes(email,rootdb.JournalId);
-            List<CoreObjects.Journal> result = new List<CoreObjects.Journal>();
-            result.Add(root);
-            return result;
+            return root;
         }
 
         public int AddTreeNode(string email,int parentId, string name)

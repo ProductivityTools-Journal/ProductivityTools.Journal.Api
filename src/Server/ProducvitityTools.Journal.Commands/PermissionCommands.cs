@@ -26,15 +26,15 @@ namespace ProducvitityTools.Meetings.Commands
         public void AddOwner(int userId, int treeID)
         {
             JournalOwner to = new JournalOwner();
-            to.TreeId = treeID;
+            to.JournalId = treeID;
             to.UserId = userId;
-            this.MeetingContext.TreeOwner.Add(to);
+            this.MeetingContext.JournalOwner.Add(to);
             this.MeetingContext.SaveChanges();
         }
 
         public int Delete(IEnumerable<int> treeIds)
         {
-            var trees = this.MeetingContext.Tree.Where(x => treeIds.Contains(x.JournalId));
+            var trees = this.MeetingContext.Journal.Where(x => treeIds.Contains(x.JournalId));
             foreach (var tree in trees)
             {
                 tree.Deleted = true;
@@ -47,7 +47,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         public void Move(int source, int target)
         {
-            var sourceElement = this.MeetingContext.Tree.Where(x => x.JournalId == source).FirstOrDefault();
+            var sourceElement = this.MeetingContext.Journal.Where(x => x.JournalId == source).FirstOrDefault();
             sourceElement.ParentId = target;
             MeetingContext.Update(sourceElement);
             MeetingContext.SaveChanges();

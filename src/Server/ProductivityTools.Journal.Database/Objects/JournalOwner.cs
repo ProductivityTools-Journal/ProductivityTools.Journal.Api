@@ -6,7 +6,7 @@ namespace ProductivityTools.Meetings.Database.Objects
 {
     public class JournalOwner
     {
-        public int TreeId { get; set; }
+        public int JournalId { get; set; }
        
         public int UserId { get; set; }
 

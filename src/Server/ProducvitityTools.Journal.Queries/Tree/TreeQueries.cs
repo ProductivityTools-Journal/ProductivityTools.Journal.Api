@@ -29,19 +29,19 @@ namespace ProducvitityTools.Meetings.Queries
 
         public ProductivityTools.Meetings.Database.Objects.Journal GetRoot()
         {
-            ProductivityTools.Meetings.Database.Objects.Journal root = this.MeetingContext.Tree.Where(x => x.Name == "Root").First();
+            ProductivityTools.Meetings.Database.Objects.Journal root = this.MeetingContext.Journal.Where(x => x.Name == "Root").First();
             return root;
         }
 
         public List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId)
         {
-            var result = this.MeetingContext.Tree.Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false).ToList();
+            var result = this.MeetingContext.Journal.Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false).ToList();
             return result;
         }
 
         public ProductivityTools.Meetings.Database.Objects.Journal GetTreeNode(int id)
         {
-            var result = this.MeetingContext.Tree.SingleOrDefault(x => x.JournalId == id);
+            var result = this.MeetingContext.Journal.SingleOrDefault(x => x.JournalId == id);
             return result;
         }
 

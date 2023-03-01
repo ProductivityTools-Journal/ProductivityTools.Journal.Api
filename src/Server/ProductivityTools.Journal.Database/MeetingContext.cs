@@ -20,8 +20,8 @@ namespace ProductivityTools.Meetings.Database
 
         public DbSet<Page> Pages { get; set; }
         //public DbSet<JournalItemNotes> JournalItemNotes { get; set; }
-        public DbSet<Objects.Journal> Tree { get; set; }
-        public DbSet<JournalOwner> TreeOwner { get; set; }
+        public DbSet<Objects.Journal> Journal { get; set; }
+        public DbSet<JournalOwner> JournalOwner { get; set; }
 
 
         private ILoggerFactory GetLoggerFactory()
@@ -56,7 +56,7 @@ namespace ProductivityTools.Meetings.Database
 
             modelBuilder.Entity<ProductivityTools.Meetings.Database.Objects.Journal>().ToTable("Journal","j").HasKey(x => x.JournalId);
 
-            modelBuilder.Entity<JournalOwner>().HasKey("TreeId", "UserId");
+            modelBuilder.Entity<JournalOwner>().HasKey("JournalId", "UserId");
            // modelBuilder.Entity<Tree>().HasOne(x => x.Parent).WithMany(x => x.Parent);
 
             base.OnModelCreating(modelBuilder);
