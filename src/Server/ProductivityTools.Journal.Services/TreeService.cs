@@ -111,5 +111,11 @@ namespace ProductivityTools.Meetings.Services
             this.TreeCommands.Move(sourceId, targetId);
         }
 
+        public CoreObjects.Journal RenameJournal(int journalId, string newName)
+        {
+            var r=this.TreeCommands.RenameJournal(journalId, newName);
+            return this.Mapper.Map < CoreObjects.Journal >(r);
+        }
+
     }
 }

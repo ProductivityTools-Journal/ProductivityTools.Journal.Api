@@ -14,6 +14,8 @@ namespace ProducvitityTools.Meetings.Commands
         Journal AddTreeNode(int parentId, string name);
         int Delete(IEnumerable<int> treeIds);
         void Move(int sourceId, int targetId);
+
+        Journal RenameJournal(int journalId, string newName);
     }
 
     public class TreeCommands : ITreeCommands
@@ -52,6 +54,15 @@ namespace ProducvitityTools.Meetings.Commands
             sourceElement.ParentId = target;
             MeetingContext.Update(sourceElement);
             MeetingContext.SaveChanges();
+        }
+
+        public Journal RenameJournal(int journalId, string newName)
+        {
+            var sourceElement = this.MeetingContext.Journal.Where(x => x.JournalId == journalId).FirstOrDefault();
+            sourceElement.Name = newName;
+            MeetingContext.Update(sourceElement);
+            MeetingContext.SaveChanges();
+            return sourceElement;
         }
     }
 }

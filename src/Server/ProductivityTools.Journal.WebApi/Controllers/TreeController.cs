@@ -68,5 +68,14 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             this.TreeServices.MoveTree(request.SourceId, request.ParentTargetId);
             return Ok();
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("Rename")]
+        public CoreObjects.Journal Rename(RenameJournalRequst request)
+        {
+            var r = this.TreeServices.RenameJournal(request.JournalId, request.NewName);
+            return r;
+        }
     }
 }

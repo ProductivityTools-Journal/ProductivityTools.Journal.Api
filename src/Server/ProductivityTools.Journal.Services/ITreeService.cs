@@ -11,5 +11,7 @@ namespace ProductivityTools.Meetings.Services
         List<int> GetFlatChildsId(string email,int parent);
 
         void MoveTree(int sourceId, int targetId);
+
+        CoreObjects.Journal RenameJournal(int journalId, string newName);
     }
 }
