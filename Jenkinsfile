@@ -19,7 +19,7 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                 git branch: 'master',
-                url: 'https://github.com/pwujczyk/ProductivityTools.Journal.Api.git'
+                url: 'https://github.com/ProductivityTools-Journal/ProductivityTools.Journal.Api.git'
             }
         }
         stage('build') {
