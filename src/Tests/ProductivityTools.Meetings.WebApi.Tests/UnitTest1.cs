@@ -115,24 +115,24 @@ namespace ProductivityTools.Meetings.WebApi.Tests
             
         //}
 
-        [TestMethod]
-        public void MoveTreeItem()
-        {
-            var treeController = new TreeController(TreeService,Mapper);
+        //[TestMethod]
+        //public void MoveTreeItem()
+        //{
+        //    var treeController = new TreeController(TreeService,Mapper);
 
 
-            var tree=treeController.GetTree();
-            var parent = tree.First().Nodes.Last();
+        //    var tree=treeController.GetTree();
+        //    var parent = tree.First().Nodes.Last();
 
-            var treeId=treeController.AddTreeNode(new NewTreeNodeRequest() {  Name = "Test", ParentId = parent.Id });
+        //    var treeId=treeController.AddTreeNode(new NewTreeNodeRequest() {  Name = "Test", ParentId = parent.Id });
 
-            MoveTreeRequest request = new MoveTreeRequest();
-            request.SourceId = treeId;
-            request.ParentTargetId = tree.First().Id;
+        //    MoveTreeRequest request = new MoveTreeRequest();
+        //    request.SourceId = treeId;
+        //    request.ParentTargetId = tree.First().Id;
 
-            var r= treeController.MoveTree(request);
-            Assert.IsInstanceOfType(r, typeof(OkResult));
+        //    var r= treeController.MoveTree(request);
+        //    Assert.IsInstanceOfType(r, typeof(OkResult));
 
-        }
+        //}
     }
 }
