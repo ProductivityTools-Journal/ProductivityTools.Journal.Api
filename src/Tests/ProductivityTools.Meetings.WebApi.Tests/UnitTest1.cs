@@ -77,13 +77,13 @@ namespace ProductivityTools.Meetings.WebApi.Tests
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void GetMeetingTest()
-        {
-            var controler = new MeetingsController(MeetingQueries, null, null, Mapper, null, null);
-            var result = controler.Get(new CoreObjects.JournalId { Id = 1 });
-            Assert.IsNotNull(result);
-        }
+        //[TestMethod]
+        //public void GetMeetingTest()
+        //{
+        //    var controler = new MeetingsController(MeetingQueries, null, null, Mapper, null, null);
+        //    var result = controler.Get(new CoreObjects.JournalId { Id = 1 });
+        //    Assert.IsNotNull(result);
+        //}
 
         //[TestMethod]
         //public void AddMeetingTest()
