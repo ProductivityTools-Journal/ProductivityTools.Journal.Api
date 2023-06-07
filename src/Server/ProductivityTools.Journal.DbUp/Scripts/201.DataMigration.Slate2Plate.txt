@@ -1,0 +1,74 @@
+﻿At first in this project I used slate. Next I moved to plate. 
+Slate and plate have different types.
+This function lists all types in the DB so we know how the conversion should look like 
+drop function dbo.getTypes
+go
+CREATE FUNCTION dbo.getTypes(@input varchar(8000))
+
+RETURNS @types TABLE (N varchar(8000))
+AS
+BEGIN
+ DECLARE @ROW VARCHAR(8000)
+ SET @ROW=@input
+ DECLARE @STRPOS INT
+
+ DECLARE @TYPEENDPOS INT
+
+ DECLARE @TYPELENGTH INT
+ SET @TYPELENGTH=15
+ DECLARE @TEMPTYPE VARCHAR(200)
+ SELECT @STRPOS=CHARINDEX('type',@ROW)
+ --print @STRPOS
+ WHILE @STRPOS >0
+ BEGIN
+ 	 SET @ROW=SUBSTRING(@ROW,@STRPOS+7,len(@ROW)-@STRPOS-7+1)
+	-- PRINT @ROW
+
+	 SELECT @TYPEENDPOS=CHARINDEX('"',@ROW);
+	 SELECT @TEMPTYPE=SUBSTRING(@ROW,0,@TYPEENDPOS)
+	-- PRINT @TEMPTYPE
+	 INSERT @types VALUES (@TEMPTYPE);
+
+	 SET @ROW=SUBSTRING(@ROW,@TYPEENDPOS,len(@ROW)-@TYPEENDPOS+1)
+	-- PRINT @ROW
+
+	 ------INSERT @types VALUES (@TEMPTYPE);
+	 --SET @ROW=SUBSTRING(@ROW,@STRPOS+10,len(@ROW)-@STRPOS-10+1)
+	 SELECT @STRPOS=CHARINDEX('type',@ROW)
+
+	-- PRINT @ROW
+ END
+
+ RETURN;
+
+END
+
+
+
+
+SELECT distinct x.n
+FROM [PTJournal].[j].[Page] p
+cross apply  dbo.getTypes(p.content) as x
+where 1=1
+--and PageId  in (4208,4209)
+and ContentType='Slate'
+--and PageId>3500
+
+
+
+Result:
+paragraph
+table
+table-row
+headingTwo
+unorderedList
+headingThree
+table-cell
+headingOne
+link
+list-item
+title
+p
+increaseIndent
+orderedList
+list-item-text
