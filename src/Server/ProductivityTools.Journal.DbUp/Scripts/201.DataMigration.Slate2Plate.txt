@@ -71,8 +71,8 @@ orderedList => ol
 unorderedList => li
  list-item => lic
 
-list-item-text
-increaseIndent
+list-item-text - ignore
+increaseIndent - ignore
 
 
 
