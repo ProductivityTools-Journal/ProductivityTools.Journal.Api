@@ -15,6 +15,15 @@
     <None Remove="Scripts\101.DataMigrationUserJournal.sql" />
     <None Remove="Scripts\102.DataMigrationPages.sql" />
     <None Remove="Scripts\103.DataMigrationOwnership.sql" />
+    <None Remove="Scripts\201.DataMigration.Slate2Plate.txt" />
+    <None Remove="Scripts\202.ListMigration.txt" />
+    <None Remove="Scripts\203.ListMigration-Function.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Scripts\201.DataMigration.Slate2Plate.txt" />
+    <Compile Include="Scripts\202.ListMigration.txt" />
+    <Compile Include="Scripts\203.ListMigration-Function.txt" />
   </ItemGroup>
 
   <ItemGroup>

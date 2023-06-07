@@ -57,18 +57,42 @@ and ContentType='Slate'
 
 
 Result:
-paragraph
+title - not needed the same in both
+link - done 
+paragraph - done
+
+headingOne - done
+headingTwo - done
+headingThree - done
+
+orderedList => ol
+ list-item  =>li
+
+unorderedList => li
+ list-item => lic
+
+list-item-text
+increaseIndent
+
+
+
+
+
 table
 table-row
-headingTwo
-unorderedList
-headingThree
 table-cell
-headingOne
-link
-list-item
-title
-p
-increaseIndent
-orderedList
-list-item-text
+
+
+
+
+
+
+
+  Update [PTJournal].[j].[Page] set Content=REPLACE Content,'"type":"link","href":','"type":"a","url":') 
+  Update [PTJournal].[j].[Page] set Content=REPLACE(Content,'"type":"paragraph"','"type":"p"') 
+
+  Update [PTJournal].[j].[Page] set Content=REPLACE(Content,'"type":"headingOne"','"type":"h1"') 
+  Update [PTJournal].[j].[Page] set Content=REPLACE(Content,'"type":"headingTwo"','"type":"h2"')
+  Update [PTJournal].[j].[Page] set Content=REPLACE(Content,'"type":"headingThree"','"type":"h3"')
+  Update [PTJournal].[j].[Page] set Content=REPLACE(Content,'"type":"orderedList"','"type":"li"')
+  Update [PTJournal].[j].[Page] set Content=REPLACE(Content,'"type":"unorderedList"','"type":"li"')

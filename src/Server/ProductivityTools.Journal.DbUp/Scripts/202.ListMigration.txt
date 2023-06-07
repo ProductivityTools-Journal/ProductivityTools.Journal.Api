@@ -1,0 +1,40 @@
+﻿DECLARE @ROW VARCHAR(2000)
+SET @ROW='[{"type":"title","children":[{"text":"Customer Affinity Routes"}]},{"type":"paragraph","children":[{"text":""},{"type":"link","href":"https://docs.gdit#","children":[{"text":"document"}]},{"text":""}]},{"type":"unorderedList","children":[{"type":"list-item","children":[{"text":"Kiedyś affinity routes przekazywało casa do TSE który posiadał doświadczenie z klientem"}]},{"type":"list-item","children":[{"text":"Przejście na vectora popsuło affinity"}]},{"type":"list-item","children":[{"text":"od 2022.12.06 w wektorze został naprawiony affinity routing i teraz następuje nauka"}]},{"type":"list-item","children":[{"text":"Complexity routing również wpłynął na affinity routing, ponieważ zmieniła się liczba TSG i TSR"}]},{"type":"list-item","children":[{"text":"Affintiy routing bazuje na parze customerId,TSGId"}]},{"type":"list-item","children":[{"text":"Propozycja jest aby wprowadzić bardzo granualne treningi w depuuty (appengine zamiast serverless)"}]},{"type":"list-item","children":[{"text":"Propozycja jest aby z kluczowymi klientami pracowali tylko najbardziej tenured ludzie"}]}]},{"type":"paragraph","children":[{"text":"Dokument opisuje jeszcz dużo analizy i mówi dużo o affinity routing. "}]}]'
+
+DECLARE @SEARCHPHRASE VARCHAR(200)
+SET @SEARCHPHRASE='"type":"list-item","children":'
+
+DECLARE @LISTITEMPOS INT
+SELECT @LISTITEMPOS=CHARINDEX(@SEARCHPHRASE,@ROW)
+
+DECLARE @NEWFORMAT VARCHAR(200)
+SET @NEWFORMAT='"type":"li","children":[{"type":"lic","children":'
+
+PRINT @LISTITEMPOS
+IF @LISTITEMPOS>0
+	BEGIN
+		DECLARE @BEFORE VARCHAR(8000)
+		SET @BEFORE=SUBSTRING(@ROW,0,@LISTITEMPOS)
+		PRINT @BEFORE
+		SET @BEFORE=@BEFORE+@NEWFORMAT
+		PRINT @BEFORE
+
+		DECLARE @CLOSINGELEMENT INT
+		SELECT @CLOSINGELEMENT = CHARINDEX('"}]}',@ROW,@LISTITEMPOS+LEN(@SEARCHPHRASE))
+		PRINT @CLOSINGELEMENT
+
+		DECLARE @CONTENT VARCHAR(2000)
+		SELECT @CONTENT=SUBSTRING(@ROW,@LISTITEMPOS+LEN(@SEARCHPHRASE),4+@CLOSINGELEMENT-(@LISTITEMPOS+LEN(@SEARCHPHRASE)))
+		PRINT @CONTENT
+
+		SET @BEFORE=@BEFORE+@CONTENT+']}'
+
+		DECLARE @RESTDOCUMENT VARCHAR(2000)
+		SELECT @RESTDOCUMENT=SUBSTRING(@ROW,@CLOSINGELEMENT+4,LEN(@ROW)-@CLOSINGELEMENT-3)
+		PRINT 'RESTDOCUMENT'
+		PRINT @RESTDOCUMENT
+
+		SET @BEFORE=@BEFORE+@RESTDOCUMENT
+		PRINT @BEFORE
+		
+	END
