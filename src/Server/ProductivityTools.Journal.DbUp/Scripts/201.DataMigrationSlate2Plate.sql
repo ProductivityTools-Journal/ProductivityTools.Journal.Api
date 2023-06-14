@@ -1,0 +1,1 @@
+﻿  ALTER TABLE [j].[Page] ADD ContentSlateText NVARCHAR(max)
