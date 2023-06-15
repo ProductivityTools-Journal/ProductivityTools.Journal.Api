@@ -17,12 +17,16 @@
     <None Remove="Scripts\103.DataMigrationOwnership.sql" />
     <None Remove="Scripts\201.DataMigrationSlate2Plate.sql" />
     <None Remove="Scripts\202.DataMigrationSlate2Plate.sql" />
+    <None Remove="Scripts\203.ListMigration-Function.sql" />
+    <None Remove="Scripts\204.DataMigrationSlate2PlateConvertPlate.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\000.Schema.sql" />
     <EmbeddedResource Include="Scripts\001.ColumnDescription.sql" />
     <EmbeddedResource Include="Scripts\003.Ownership.sql" />
+    <EmbeddedResource Include="Scripts\203.ListMigration-Function.sql" />
+    <EmbeddedResource Include="Scripts\204.DataMigrationSlate2PlateConvertPlate.sql" />
     <EmbeddedResource Include="Scripts\202.DataMigrationSlate2Plate.sql" />
     <EmbeddedResource Include="Scripts\201.DataMigrationSlate2Plate.sql" />
     <EmbeddedResource Include="Scripts\103.DataMigrationOwnership.sql" />

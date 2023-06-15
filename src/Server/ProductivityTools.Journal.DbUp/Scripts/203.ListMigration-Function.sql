@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-CREATE FUNCTION UpdateList(@value AS NVARCHAR(Max))
+﻿CREATE FUNCTION UpdateList(@value AS NVARCHAR(Max))
 RETURNS NVARCHAR(Max)
 AS
 BEGIN
