@@ -12,17 +12,26 @@ namespace ProductivityTools.Journal.Images
             this.StorageClient = StorageClient.Create();
         }
 
-        private const string bucketPrefix= "ptjournal";
+        private const string bucketPrefix = "ptjournal";
         private const string projectName = "PTJournalDev";
 
-        public void UploadImageToStorage(Stream source, string userEmail, string fileName, string imageType)
+        public string UploadImageToStorage(Stream source, string userEmail, string fileName, string imageType)
         {
-            string bucketName = string.Format($"{bucketPrefix}_{userEmail.Replace("@", "-").Replace(".","-")}");
-            if(CheckIfBucketExists(bucketName)==false)
+            string bucketName = string.Format($"{bucketPrefix}_{userEmail.Replace("@", "-").Replace(".", "-")}");
+            if (CheckIfBucketExists(bucketName) == false)
             {
                 CreateRegionalBucket(projectName, bucketName, "europe-central2");
             }
-            var x = this.StorageClient.UploadObject(bucketName, fileName, imageType, source);
+            int randomNumber = new Random().Next(100);
+            string fName = Path.GetFileNameWithoutExtension(fileName);
+            string fExt = Path.GetExtension(fileName);
+            var filenameRandomized = String.Concat(fName, "-", randomNumber.ToString().PadLeft(3, '0'), fExt);
+            while (filenameRandomized.Contains(" "))
+            {
+                filenameRandomized = filenameRandomized.Replace(" ", "");
+            }
+            var x = this.StorageClient.UploadObject(bucketName, filenameRandomized, imageType, source);
+            return string.Format($"https://storage.cloud.google.com/{bucketName}/{filenameRandomized}");
         }
 
         private bool CheckIfBucketExists(string bucketName)
@@ -35,7 +44,7 @@ namespace ProductivityTools.Journal.Images
             catch (Exception ex)
             {
                 return false;
-            }         
+            }
         }
 
 
@@ -53,7 +62,7 @@ namespace ProductivityTools.Journal.Images
 
                 throw;
             }
-           
+
         }
         public Bucket CreateRegionalBucketInternal(string projectId, string bucketName, string location, string storageClass = "REGIONAL")
         {

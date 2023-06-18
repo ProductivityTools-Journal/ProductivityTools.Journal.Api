@@ -25,9 +25,9 @@ namespace ProductivityTools.Journal.WebApi.Controllers
                 string FileName = file.FileName;
                 Stream s = file.OpenReadStream();
                 ImageManager imageManager = new ImageManager();
-                imageManager.UploadImageToStorage(s,base.UserEmail,FileName,"image/jpg");
-                
-                return "File Uploaded Successfully";
+                var path=imageManager.UploadImageToStorage(s,base.UserEmail,FileName,"image/jpg");
+
+                return path;
             }
             catch (Exception ex)
             {
