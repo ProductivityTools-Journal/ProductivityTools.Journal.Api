@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\ProductivityTools.Journal.Images\ProductivityTools.Journal.Images.csproj" />
     <ProjectReference Include="..\ProductivityTools.Journal.Database\ProductivityTools.Journal.Database.csproj" />
     <ProjectReference Include="..\ProductivityTools.Journal.Services\ProductivityTools.Journal.Services.csproj" />
     <ProjectReference Include="..\ProducvitityTools.Journal.Commands\ProducvitityTools.Journal.Commands.csproj" />

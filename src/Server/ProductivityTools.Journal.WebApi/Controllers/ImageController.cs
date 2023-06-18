@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using ProductivityTools.Journal.Images;
 
 namespace ProductivityTools.Journal.WebApi.Controllers
 {
@@ -22,16 +23,10 @@ namespace ProductivityTools.Journal.WebApi.Controllers
             {
                 // getting file original name
                 string FileName = file.FileName;
-
-                // combining GUID to create unique name before saving in wwwroot
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + FileName;
-
-                // getting full path inside wwwroot/images
-                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", FileName);
-
-                // copying file
-                file.CopyTo(new FileStream(imagePath, FileMode.Create));
-
+                Stream s = file.OpenReadStream();
+                ImageManager imageManager = new ImageManager();
+                imageManager.UploadImageToStorage(s);
+                
                 return "File Uploaded Successfully";
             }
             catch (Exception ex)
