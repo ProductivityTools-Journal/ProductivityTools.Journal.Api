@@ -6,7 +6,7 @@
       "launchUrl": "weatherforecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "GOOGLE_APPLICATION_CREDENTIALS": "D:\\Bitbucket\\all.configuration\\ptjournaldev-serviceaccount.json"
+        "GOOGLE_APPLICATION_CREDENTIALS": "D:\\Bitbucket\\all.configuration\\ptjournal-serviceaccount.json"
       }
     },
     "ProductivityTools.Meetings.WebApi": {

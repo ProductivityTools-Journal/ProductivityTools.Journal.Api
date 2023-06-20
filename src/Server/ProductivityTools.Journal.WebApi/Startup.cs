@@ -4,6 +4,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Firebase.Auth;
+using Firebase.Auth.Providers;
+using FirebaseAdmin;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,8 +50,9 @@ namespace ProductivityTools.Meetings.WebApi
             services.ConfigureServicesCommands();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            FirebaseApp.Create();
 
-           // string domain = $"https://demo.identityserver.io/api/";
+            // string domain = $"https://demo.identityserver.io/api/";
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
