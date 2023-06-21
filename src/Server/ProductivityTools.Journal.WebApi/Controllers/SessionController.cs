@@ -40,7 +40,7 @@ namespace ProductivityTools.Journal.WebApi.Controllers
                 var cookieOptions = new CookieOptions()
                 {
                     Expires = DateTimeOffset.UtcNow.Add(options.ExpiresIn),
-                    HttpOnly = true,
+                    HttpOnly = false,
                     Secure = true,
                 };
                 this.Response.Cookies.Append("session", sessionCookie, cookieOptions);
