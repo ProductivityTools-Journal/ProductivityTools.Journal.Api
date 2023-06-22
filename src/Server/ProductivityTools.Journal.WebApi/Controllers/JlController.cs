@@ -18,5 +18,16 @@ namespace ProductivityTools.Journal.WebApi.Controllers
                 return email;
             }
         }
+
+        protected string UserId
+        {
+            get {
+                var x1 = HttpContext.User;
+                var identity = (ClaimsIdentity)HttpContext.User.Identity;
+                IEnumerable<Claim> claims = identity.Claims;
+                var userId = claims.First(x => x.Type == "user_id").Value;
+                return userId;
+            }
+        }
     }
 }

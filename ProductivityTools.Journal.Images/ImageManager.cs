@@ -15,17 +15,36 @@ namespace ProductivityTools.Journal.Images
         private const string bucketPrefix = "ptjournal";
         private const string projectName = "PTJournalDev";
 
-        public string UploadImageToStorage(Stream source, string userEmail, string fileName, string imageType)
+        //public string UploadImageToStorage(Stream source, string userEmail, string fileName, string imageType)
+        //{
+        //    string bucketName = string.Format($"{bucketPrefix}_{userEmail.Replace("@", "-").Replace(".", "-")}");
+        //    if (CheckIfBucketExists(bucketName) == false)
+        //    {
+        //        CreateRegionalBucket(projectName, bucketName, "europe-central2");
+        //    }
+        //    int randomNumber = new Random().Next(100);
+        //    string fName = Path.GetFileNameWithoutExtension(fileName);
+        //    string fExt = Path.GetExtension(fileName);
+        //    var filenameRandomized = String.Concat(fName, "-", randomNumber.ToString().PadLeft(3, '0'), fExt);
+        //    while (filenameRandomized.Contains(" "))
+        //    {
+        //        filenameRandomized = filenameRandomized.Replace(" ", "");
+        //    }
+        //    var x = this.StorageClient.UploadObject(bucketName, filenameRandomized, imageType, source);
+        //    return string.Format($"https://storage.cloud.google.com/{bucketName}/{filenameRandomized}");
+        //}
+
+        public string UploadImageToStorage(Stream source, string userId, string fileName, string imageType)
         {
-            string bucketName = string.Format($"{bucketPrefix}_{userEmail.Replace("@", "-").Replace(".", "-")}");
-            if (CheckIfBucketExists(bucketName) == false)
-            {
-                CreateRegionalBucket(projectName, bucketName, "europe-central2");
-            }
+            string bucketName = "ptjournal-b53b0.appspot.com";
+            //if (CheckIfBucketExists(bucketName) == false)
+            //{
+            //    CreateRegionalBucket(projectName, bucketName, "europe-central2");
+            //}
             int randomNumber = new Random().Next(100);
             string fName = Path.GetFileNameWithoutExtension(fileName);
             string fExt = Path.GetExtension(fileName);
-            var filenameRandomized = String.Concat(fName, "-", randomNumber.ToString().PadLeft(3, '0'), fExt);
+            var filenameRandomized = String.Concat("user/",userId,"/",fName, "-", randomNumber.ToString().PadLeft(3, '0'), fExt);
             while (filenameRandomized.Contains(" "))
             {
                 filenameRandomized = filenameRandomized.Replace(" ", "");
