@@ -40,9 +40,9 @@ namespace ProductivityTools.Journal.WebApi.Controllers
                 var cookieOptions = new CookieOptions()
                 {
                     Expires = DateTimeOffset.UtcNow.Add(options.ExpiresIn),
-                    HttpOnly = true,
-                    Secure = true,
-                    Domain= "firebasestorage.googleapis.com"
+                   // HttpOnly = true,
+                   // Secure = true,
+                   // Domain= "firebasestorage.googleapis.com"
                 };
                 this.Response.Cookies.Append("session", sessionCookie, cookieOptions);
                 this.Response.Cookies.Append("journalsession", sessionCookie, cookieOptions);

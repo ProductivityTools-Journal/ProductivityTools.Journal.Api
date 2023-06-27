@@ -12,8 +12,9 @@ namespace ProductivityTools.Journal.Images
             this.StorageClient = StorageClient.Create();
         }
 
-        private const string bucketPrefix = "ptjournal";
-        private const string projectName = "PTJournalDev";
+        private const string projectId = "ptjournal-b53b0";
+        private const string region= "europe-central2";
+        private const string masterbucket = "ptjournalimages";
 
         //public string UploadImageToStorage(Stream source, string userEmail, string fileName, string imageType)
         //{
@@ -34,23 +35,31 @@ namespace ProductivityTools.Journal.Images
         //    return string.Format($"https://storage.cloud.google.com/{bucketName}/{filenameRandomized}");
         //}
 
-        public string UploadImageToStorage(Stream source, string userId, string fileName, string imageType)
+
+        public string UploadImageToStorage(Stream source, string userEmail, string fileName, string imageType)
         {
-            string bucketName = "ptjournal-b53b0.appspot.com";
+            if (CheckIfBucketExists(masterbucket) == false)
+            {
+                CreateRegionalBucket(projectId, masterbucket, region);
+            }
+            //string bucketName = string.Format($"{masterbucket}/{userEmail.Replace("@", "-").Replace(".", "-")}");
+
             //if (CheckIfBucketExists(bucketName) == false)
             //{
-            //    CreateRegionalBucket(projectName, bucketName, "europe-central2");
+            //    CreateRegionalBucket(projectId, bucketName, region);
             //}
             int randomNumber = new Random().Next(100);
             string fName = Path.GetFileNameWithoutExtension(fileName);
             string fExt = Path.GetExtension(fileName);
-            var filenameRandomized = String.Concat("user/",userId,"/",fName, "-", randomNumber.ToString().PadLeft(3, '0'), fExt);
+            string user = userEmail.Replace("@", "-").Replace(".", "-");
+            var filenameRandomized = String.Concat(fName, "-", randomNumber.ToString().PadLeft(3, '0'), fExt);
             while (filenameRandomized.Contains(" "))
             {
                 filenameRandomized = filenameRandomized.Replace(" ", "");
             }
-            var x = this.StorageClient.UploadObject(bucketName, filenameRandomized, imageType, source);
-            return string.Format($"https://storage.cloud.google.com/{bucketName}/{filenameRandomized}");
+            var fileNameWithUser = string.Concat(user, "/", filenameRandomized);
+            var x = this.StorageClient.UploadObject(masterbucket, fileNameWithUser, imageType, source);
+            return string.Format($"https://us-central1-ptjournal-b53b0.cloudfunctions.net/CloudBuildFunction?fileName={filenameRandomized}");
         }
 
         private bool CheckIfBucketExists(string bucketName)
