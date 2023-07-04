@@ -50,6 +50,11 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route("Date")]
         public object GetDate()
         {
+            var cookieOptions = new CookieOptions();
+            cookieOptions.SameSite = SameSiteMode.None;
+            cookieOptions.Expires = DateTime.Now.AddDays(1);
+            //cookieOptions.Path = "/";
+            Response.Cookies.Append("Date", "SomeValue2", cookieOptions);
             return DateTime.Now;
         }
 
