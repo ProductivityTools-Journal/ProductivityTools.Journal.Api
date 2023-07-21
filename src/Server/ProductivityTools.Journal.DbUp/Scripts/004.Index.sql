@@ -1,0 +1,1 @@
+﻿CREATE NONCLUSTERED INDEX JournalIdIndex on [j].[Page] (JournalId)

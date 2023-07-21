@@ -12,6 +12,7 @@
     <None Remove="Scripts\001.ColumnDescription.sql" />
     <None Remove="Scripts\002.JournalRecreate.sql" />
     <None Remove="Scripts\003.Ownership.sql" />
+    <None Remove="Scripts\004.Index.sql" />
     <None Remove="Scripts\101.DataMigrationUserJournal.sql" />
     <None Remove="Scripts\102.DataMigrationPages.sql" />
     <None Remove="Scripts\103.DataMigrationOwnership.sql" />
@@ -24,6 +25,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\000.Schema.sql" />
     <EmbeddedResource Include="Scripts\001.ColumnDescription.sql" />
+    <EmbeddedResource Include="Scripts\004.Index.sql" />
     <EmbeddedResource Include="Scripts\003.Ownership.sql" />
     <EmbeddedResource Include="Scripts\203.ListMigration-Function.sql" />
     <EmbeddedResource Include="Scripts\204.DataMigrationSlate2PlateConvertPlate.sql" />
