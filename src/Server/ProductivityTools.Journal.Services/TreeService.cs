@@ -77,11 +77,11 @@ namespace ProductivityTools.Meetings.Services
         public CoreObjects.Journal GetTreePath(string email, int treeId)
         {
             var lowestElement = TreeQueries.GetTreeNode(treeId);
-            while(lowestElement!=null)
+            while (lowestElement != null)
             {
                 lowestElement = TreeQueries.GetTreeNode(lowestElement.Parent.ParentId);
             }
-            return new CoreObjects.Journal();
+            return Mapper.Map<CoreObjects.Journal>(lowestElement);
         }
 
         public int AddTreeNode(string email, int parentId, string name)
