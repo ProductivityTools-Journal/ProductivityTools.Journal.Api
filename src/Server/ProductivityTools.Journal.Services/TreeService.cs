@@ -81,6 +81,7 @@ namespace ProductivityTools.Meetings.Services
             {
                 lowestElement = TreeQueries.GetTreeNode(lowestElement.Parent.ParentId);
             }
+            return new CoreObjects.Journal();
         }
 
         public int AddTreeNode(string email, int parentId, string name)
