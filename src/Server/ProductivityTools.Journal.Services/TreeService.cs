@@ -30,12 +30,12 @@ namespace ProductivityTools.Meetings.Services
         private List<CoreObjects.Journal> GetNodes(string email, int parent)
         {
             List<CoreObjects.Journal> result = new List<CoreObjects.Journal>();
-            var dbTreeNodes = this.TreeQueries.GetTree(email,parent);
+            var dbTreeNodes = this.TreeQueries.GetTree(email, parent);
             foreach (var dbTreeNode in dbTreeNodes)
             {
                 CoreObjects.Journal treeNode = this.Mapper.Map<CoreObjects.Journal>(dbTreeNode);
                 treeNode.ParentId = parent;
-                treeNode.Nodes = GetNodes(email,dbTreeNode.JournalId);
+                treeNode.Nodes = GetNodes(email, dbTreeNode.JournalId);
                 if (this.TreeQueries.ValidateOnershipCall(email, new int[] { treeNode.Id }))
                 {
                     result.Add(treeNode);
@@ -58,10 +58,10 @@ namespace ProductivityTools.Meetings.Services
             return result;
         }
 
-        public List<int> GetFlatChildsId(string email,int parent)
+        public List<int> GetFlatChildsId(string email, int parent)
         {
-            var nodes = GetNodes(email,parent);
-            List<int> result = GetIds(nodes); 
+            var nodes = GetNodes(email, parent);
+            List<int> result = GetIds(nodes);
             return result;
         }
 
@@ -69,14 +69,24 @@ namespace ProductivityTools.Meetings.Services
         {
             var rootdb = TreeQueries.GetRoot();
             CoreObjects.Journal root = Mapper.Map<CoreObjects.Journal>(rootdb);
-            root.Nodes = GetNodes(email,rootdb.JournalId);
+            root.Nodes = GetNodes(email, rootdb.JournalId);
             return root;
         }
 
-        public int AddTreeNode(string email,int parentId, string name)
+        //gets and returns path to given page
+        public CoreObjects.Journal GetTreePath(string email, int treeId)
         {
-            var result=this.TreeCommands.AddTreeNode(parentId, name);
-            if(parentId==1)
+            var lowestElement = TreeQueries.GetTreeNode(treeId);
+            while(lowestElement!=null)
+            {
+                lowestElement = TreeQueries.GetTreeNode(lowestElement.Parent.ParentId);
+            }
+        }
+
+        public int AddTreeNode(string email, int parentId, string name)
+        {
+            var result = this.TreeCommands.AddTreeNode(parentId, name);
+            if (parentId == 1)
             {
                 int userId = -1;
                 if (email == "pwujczyk@google.com")
@@ -85,13 +95,13 @@ namespace ProductivityTools.Meetings.Services
                 }
                 if (email == "pwujczyk@gmail.com")
                 {
-                    userId =1;
+                    userId = 1;
                 }
                 if (email == "grzegorz.opara@gmail.com")
                 {
                     userId = 2;
                 }
-                this.PermissionCommands.AddOwner(userId,result.JournalId);
+                this.PermissionCommands.AddOwner(userId, result.JournalId);
             }
             return result.JournalId;
         }
@@ -99,10 +109,10 @@ namespace ProductivityTools.Meetings.Services
         public int Delete(string email, int treeId)
         {
             List<CoreObjects.Journal> subTreeNodes = GetNodes(email, treeId);
-            subTreeNodes.Add(this.Mapper.Map <CoreObjects.Journal >(this.TreeQueries.GetTreeNode(treeId)));
+            subTreeNodes.Add(this.Mapper.Map<CoreObjects.Journal>(this.TreeQueries.GetTreeNode(treeId)));
             var treesIds = subTreeNodes.Select(x => x.Id);
-            int meetingRemoved=this.MeetingCommands.Delete(treesIds);
-            int treeNodeRemoved=this.TreeCommands.Delete(treesIds);
+            int meetingRemoved = this.MeetingCommands.Delete(treesIds);
+            int treeNodeRemoved = this.TreeCommands.Delete(treesIds);
             return meetingRemoved + treeNodeRemoved;
         }
 
@@ -113,8 +123,8 @@ namespace ProductivityTools.Meetings.Services
 
         public CoreObjects.Journal RenameJournal(int journalId, string newName)
         {
-            var r=this.TreeCommands.RenameJournal(journalId, newName);
-            return this.Mapper.Map < CoreObjects.Journal >(r);
+            var r = this.TreeCommands.RenameJournal(journalId, newName);
+            return this.Mapper.Map<CoreObjects.Journal>(r);
         }
 
     }
