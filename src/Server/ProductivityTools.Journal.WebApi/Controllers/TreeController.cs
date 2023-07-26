@@ -34,6 +34,14 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("GetJournalPath")]
+        public CoreObjects.Journal GetJournalPath(GetJournalPathRequest request)
+        {
+            var result = TreeServices.GetTreePath(UserEmail, request.JournalId)
+            return result;
+        }
+
+        [HttpPost]
         [Authorize]
         [Route(Consts.TreeControlerNewNode)]
         public int AddTreeNode(NewTreeNodeRequest request)

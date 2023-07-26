@@ -76,12 +76,28 @@ namespace ProductivityTools.Meetings.Services
         //gets and returns path to given page
         public CoreObjects.Journal GetTreePath(string email, int treeId)
         {
+            List<CoreObjects.Journal> flatPath = new List<CoreObjects.Journal>();
             var lowestElement = TreeQueries.GetTreeNode(treeId);
+            this.TreeQueries.ValidateOnershipCall(email, new int[] { lowestElement.JournalId });
             while (lowestElement != null)
             {
+                flatPath.Add(Mapper.Map<CoreObjects.Journal>(lowestElement));
                 lowestElement = TreeQueries.GetTreeNode(lowestElement.Parent.ParentId);
             }
-            return Mapper.Map<CoreObjects.Journal>(lowestElement);
+            flatPath.Reverse();
+            CoreObjects.Journal result = null;
+            foreach (var item in flatPath)
+            {
+                if (result==null)
+                {
+                    result = item;
+                }
+                else
+                {
+                    result.Nodes.Add(item);
+                }
+            }
+            return result;
         }
 
         public int AddTreeNode(string email, int parentId, string name)
