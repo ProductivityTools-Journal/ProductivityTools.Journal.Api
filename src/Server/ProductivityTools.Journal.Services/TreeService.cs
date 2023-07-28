@@ -79,16 +79,16 @@ namespace ProductivityTools.Meetings.Services
             List<CoreObjects.Journal> flatPath = new List<CoreObjects.Journal>();
             var lowestElement = TreeQueries.GetTreeNode(treeId);
             this.TreeQueries.ValidateOnershipCall(email, new int[] { lowestElement.JournalId });
-            while (lowestElement != null)
+            while (lowestElement != null && lowestElement.Name != "Root")
             {
                 flatPath.Add(Mapper.Map<CoreObjects.Journal>(lowestElement));
-                lowestElement = TreeQueries.GetTreeNode(lowestElement.Parent.ParentId);
+                lowestElement = TreeQueries.GetTreeNode(lowestElement.ParentId);
             }
             flatPath.Reverse();
             CoreObjects.Journal result = null;
             foreach (var item in flatPath)
             {
-                if (result==null)
+                if (result == null)
                 {
                     result = item;
                 }

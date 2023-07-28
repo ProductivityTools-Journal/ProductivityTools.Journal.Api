@@ -37,7 +37,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route("GetJournalPath")]
         public CoreObjects.Journal GetJournalPath(GetJournalPathRequest request)
         {
-            var result = TreeServices.GetTreePath(UserEmail, request.JournalId)
+            var result = TreeServices.GetTreePath(UserEmail, request.JournalId);
             return result;
         }
 
