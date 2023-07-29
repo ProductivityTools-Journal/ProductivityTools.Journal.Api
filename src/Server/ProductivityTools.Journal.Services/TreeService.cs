@@ -73,8 +73,19 @@ namespace ProductivityTools.Meetings.Services
             return root;
         }
 
+        public List<CoreObjects.Journal> GetTreePaths(string email, List<int> treeIds)
+        {
+            var result= new List<CoreObjects.Journal>();
+            foreach(var  id in treeIds)
+            {
+                var treePath=GetTreePath(email, id);
+                result.Add(treePath);
+            }
+            return result;
+        }
+
         //gets and returns path to given page
-        public CoreObjects.Journal GetTreePath(string email, int treeId)
+        private CoreObjects.Journal GetTreePath(string email, int treeId)
         {
             List<CoreObjects.Journal> flatPath = new List<CoreObjects.Journal>();
             var lowestElement = TreeQueries.GetTreeNode(treeId);
@@ -86,15 +97,18 @@ namespace ProductivityTools.Meetings.Services
             }
             flatPath.Reverse();
             CoreObjects.Journal result = null;
+            CoreObjects.Journal resultIterator = null;
             foreach (var item in flatPath)
             {
                 if (result == null)
                 {
                     result = item;
+                    resultIterator = item;
                 }
                 else
                 {
-                    result.Nodes.Add(item);
+                    resultIterator.Nodes.Add(item);
+                    resultIterator = item;
                 }
             }
             return result;

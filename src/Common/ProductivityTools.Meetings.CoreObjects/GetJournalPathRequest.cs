@@ -6,6 +6,6 @@ namespace ProductivityTools.Meetings.CoreObjects
 {
     public class GetJournalPathRequest
     {
-        public int JournalId { get; set; }
+        public List<int> JournalIds { get; set; }
     }
 }
