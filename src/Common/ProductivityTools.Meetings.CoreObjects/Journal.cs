@@ -9,6 +9,8 @@ namespace ProductivityTools.Meetings.CoreObjects
         public int Id { get; set; }
         public string Name { get; set; }
         public int ParentId { get; set; }
+        //not always filled
+        public Journal Parent { get; set; }
         public List<Journal> Nodes { get; set; }
 
         public Journal(string name)

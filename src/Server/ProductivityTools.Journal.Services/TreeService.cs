@@ -93,7 +93,7 @@ namespace ProductivityTools.Meetings.Services
             while (lowestElement != null && lowestElement.Name != "Root")
             {
                 flatPath.Add(Mapper.Map<CoreObjects.Journal>(lowestElement));
-                lowestElement = TreeQueries.GetTreeNode(lowestElement.ParentId);
+                lowestElement = TreeQueries.GetTreeNode(lowestElement.ParentId.Value);
             }
             flatPath.Reverse();
             CoreObjects.Journal result = null;
