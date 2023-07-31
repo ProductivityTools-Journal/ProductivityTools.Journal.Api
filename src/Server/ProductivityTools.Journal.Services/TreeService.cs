@@ -104,11 +104,14 @@ namespace ProductivityTools.Meetings.Services
                 {
                     result = item;
                     resultIterator = item;
+                    result.Parent = null;//I do not need it
+                    //dbcontext if contains the value it will place it automatically
                 }
                 else
                 {
                     resultIterator.Nodes.Add(item);
                     resultIterator = item;
+                    item.Parent = null;
                 }
             }
             return result;
