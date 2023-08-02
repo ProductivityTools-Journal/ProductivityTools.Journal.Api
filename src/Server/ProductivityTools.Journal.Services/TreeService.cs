@@ -118,9 +118,9 @@ namespace ProductivityTools.Meetings.Services
                 {
                     userId = 2;
                 }
-                if (email == "grzegorz.fdsafafa@gmail.com")
+                if (email == "gosia.wujczyk@gmail.com")
                 {
-                    userId = 2;
+                    userId = 4;
                 }
                 this.PermissionCommands.AddOwner(userId, result.JournalId);
             }
