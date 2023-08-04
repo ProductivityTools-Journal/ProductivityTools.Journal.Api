@@ -33,13 +33,13 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             return result;
         }
 
-        [HttpPost]
-        [Route("GetJournalsPath")]
-        public List<CoreObjects.Journal> GetJournalPath(GetJournalPathRequest request)
-        {
-            var result = TreeServices.GetTreePaths(UserEmail, request.JournalIds);
-            return result;
-        }
+        //[HttpPost]
+        //[Route("GetJournalsPath")]
+        //public List<CoreObjects.Journal> GetJournalPath(GetJournalPathRequest request)
+        //{
+        //    var result = TreeServices.GetTreePaths(UserEmail, request.JournalIds);
+        //    return result;
+        //}
 
         [HttpPost]
         [Authorize]

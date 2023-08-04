@@ -73,49 +73,49 @@ namespace ProductivityTools.Meetings.Services
             return root;
         }
 
-        public List<CoreObjects.Journal> GetTreePaths(string email, List<int> treeIds)
-        {
-            var result= new List<CoreObjects.Journal>();
-            foreach(var  id in treeIds)
-            {
-                var treePath=GetTreePath(email, id);
-                result.Add(treePath);
-            }
-            return result;
-        }
+        //public List<CoreObjects.Journal> GetTreePaths(string email, List<int> treeIds)
+        //{
+        //    var result= new List<CoreObjects.Journal>();
+        //    foreach(var  id in treeIds)
+        //    {
+        //        var treePath=GetTreePath(email, id);
+        //        result.Add(treePath);
+        //    }
+        //    return result;
+        //}
 
-        //gets and returns path to given page
-        private CoreObjects.Journal GetTreePath(string email, int treeId)
-        {
-            List<CoreObjects.Journal> flatPath = new List<CoreObjects.Journal>();
-            var lowestElement = TreeQueries.GetTreeNode(treeId);
-            this.TreeQueries.ValidateOnershipCall(email, new int[] { lowestElement.JournalId });
-            while (lowestElement != null && lowestElement.Name != "Root")
-            {
-                flatPath.Add(Mapper.Map<CoreObjects.Journal>(lowestElement));
-                lowestElement = TreeQueries.GetTreeNode(lowestElement.ParentId.Value);
-            }
-            flatPath.Reverse();
-            CoreObjects.Journal result = null;
-            CoreObjects.Journal resultIterator = null;
-            foreach (var item in flatPath)
-            {
-                if (result == null)
-                {
-                    result = item;
-                    resultIterator = item;
-                    result.Parent = null;//I do not need it
-                    //dbcontext if contains the value it will place it automatically
-                }
-                else
-                {
-                    resultIterator.Nodes.Add(item);
-                    resultIterator = item;
-                    item.Parent = null;
-                }
-            }
-            return result;
-        }
+        ////gets and returns path to given page
+        //private CoreObjects.Journal GetTreePath(string email, int treeId)
+        //{
+        //    List<CoreObjects.Journal> flatPath = new List<CoreObjects.Journal>();
+        //    var lowestElement = TreeQueries.GetTreeNode(treeId);
+        //    this.TreeQueries.ValidateOnershipCall(email, new int[] { lowestElement.JournalId });
+        //    while (lowestElement != null && lowestElement.Name != "Root")
+        //    {
+        //        flatPath.Add(Mapper.Map<CoreObjects.Journal>(lowestElement));
+        //        lowestElement = TreeQueries.GetTreeNode(lowestElement.ParentId.Value);
+        //    }
+        //    flatPath.Reverse();
+        //    CoreObjects.Journal result = null;
+        //    CoreObjects.Journal resultIterator = null;
+        //    foreach (var item in flatPath)
+        //    {
+        //        if (result == null)
+        //        {
+        //            result = item;
+        //            resultIterator = item;
+        //            result.Parent = null;//I do not need it
+        //            //dbcontext if contains the value it will place it automatically
+        //        }
+        //        else
+        //        {
+        //            resultIterator.Nodes.Add(item);
+        //            resultIterator = item;
+        //            item.Parent = null;
+        //        }
+        //    }
+        //    return result;
+        //}
 
         public int AddTreeNode(string email, int parentId, string name)
         {
