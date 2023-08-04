@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProductivityTools.Journal.WebApi;
 using ProductivityTools.Journal.WebApi.Controllers;
 using ProductivityTools.Meetings.CoreObjects;
 using ProductivityTools.Meetings.Services;
@@ -26,6 +27,8 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [AuthenticatedUsers]
         [Route(Consts.TreeControlerGet)]
         public CoreObjects.Journal GetTree()
         {
@@ -53,6 +56,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
+        [AuthenticatedUsers]
         [Route(Consts.TreeControlerDelete)]
         public int Delete(RemoveTreeNodeRequest removeTreeNodeRequest)
         {
