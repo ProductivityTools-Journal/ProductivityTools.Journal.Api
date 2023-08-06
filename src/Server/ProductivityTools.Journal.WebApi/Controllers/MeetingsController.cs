@@ -46,6 +46,13 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
+        [HttpGet]
+        [Route("UserName")]
+        public string UserNAme()
+        {
+            return base.UserEmail;
+        }
+
         [HttpPost]
         [Route("Date")]
         public object GetDate()
