@@ -47,10 +47,12 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [AuthenticatedUsers]
         [Route("UserEmail")]
-        public object UserNAme()
+        public object UserEmailProvider()
         {
-            return base.UserEmail;
+            return "pawel";
         }
 
         [HttpPost]
