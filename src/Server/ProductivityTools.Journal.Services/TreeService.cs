@@ -133,10 +133,6 @@ namespace ProductivityTools.Meetings.Services
                 }
                 if (email == "malgorzata.wujczyk@gmail.com")
                 {
-                    userId = 2;
-                }
-                if (email == "malgorzata.wujczyk@gmail.com")
-                {
                     userId = 4;
                 }
                 this.PermissionCommands.AddOwner(userId, result.JournalId);
