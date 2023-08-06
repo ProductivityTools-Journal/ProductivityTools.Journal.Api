@@ -56,8 +56,7 @@ namespace ProductivityTools.Meetings.Database
 
             modelBuilder.Entity<ProductivityTools.Meetings.Database.Objects.Journal>()
                 .ToTable("Journal", "j").HasKey(x => x.JournalId);
-            modelBuilder.Entity<ProductivityTools.Meetings.Database.Objects.Journal>
-                (x => x.Property(x => x.ParentId).IsRequired(false));
+            modelBuilder.Entity<ProductivityTools.Meetings.Database.Objects.Journal>().Property(x => x.ParentId).IsRequired(false);
 
 
             modelBuilder.Entity<JournalOwner>().HasKey("JournalId", "UserId");
