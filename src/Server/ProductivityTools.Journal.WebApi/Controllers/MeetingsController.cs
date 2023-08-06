@@ -50,7 +50,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Authorize]
         [AuthenticatedUsers]
         [Route("UserEmail")]
-        public object UserEmailProvider(int id)
+        public object UserEmailProvider(MeetingListRequest request)
         {
             return "pawel";
         }
