@@ -59,8 +59,8 @@ pipeline {
             }
         }
         stage('copyIisFiles') {
-            steps {
-                bat('xcopy "C:\\Program Files (x86)\\Jenkins\\workspace\\Journal.Api\\src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\Journal\\" /O /X /E /H /K')
+            steps {         
+                bat('xcopy " c:\programdata\\Jenkins\\.jenkins\\workspace\\PTJournal\\src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\Journal\\" /O /X /E /H /K')
 				                      
             }
         }
