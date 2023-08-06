@@ -48,7 +48,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpPost]
         [Route("UserEmail")]
-        public string UserNAme()
+        public object UserNAme()
         {
             return base.UserEmail;
         }
