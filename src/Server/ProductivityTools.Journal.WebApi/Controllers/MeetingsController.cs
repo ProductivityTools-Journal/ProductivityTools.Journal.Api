@@ -47,8 +47,6 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        [AuthenticatedUsers]
         [Route("UserEmail")]
         public object UserEmailProvider(MeetingListRequest request)
         {
