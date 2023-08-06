@@ -54,6 +54,14 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("Date2")]
+        public object GetDate2()
+        {
+
+            return "pawel2";
+        }
+
+        [HttpPost]
         [Route("Date")]
         public object GetDate()
         {
