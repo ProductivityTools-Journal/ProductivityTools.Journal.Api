@@ -54,10 +54,14 @@ namespace ProductivityTools.Meetings.Database
             //modelBuilder.Entity<JournalItemNotes>().HasKey(x => x.JournalItemNotesId);
             //modelBuilder.Entity<JournalItemNotes>().Ignore(x=>x.Status);
 
-            modelBuilder.Entity<ProductivityTools.Meetings.Database.Objects.Journal>().ToTable("Journal","j").HasKey(x => x.JournalId);
+            modelBuilder.Entity<ProductivityTools.Meetings.Database.Objects.Journal>()
+                .ToTable("Journal", "j").HasKey(x => x.JournalId);
+            modelBuilder.Entity<ProductivityTools.Meetings.Database.Objects.Journal>
+                (x => x.Property(x => x.ParentId).IsRequired(false));
+
 
             modelBuilder.Entity<JournalOwner>().HasKey("JournalId", "UserId");
-           // modelBuilder.Entity<Tree>().HasOne(x => x.Parent).WithMany(x => x.Parent);
+            // modelBuilder.Entity<Tree>().HasOne(x => x.Parent).WithMany(x => x.Parent);
 
             base.OnModelCreating(modelBuilder);
         }
