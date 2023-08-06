@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -49,6 +50,8 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.TreeControlerNewNode)]
         public int AddTreeNode(NewTreeNodeRequest request)
         {
+            EventLog.WriteEntry("PT.Journak.api", "started request add treenode", EventLogEntryType.Information);
+            EventLog.WriteEntry("PT.Journak.api", base.UserEmail, EventLogEntryType.Information);
             var result=this.TreeServices.AddTreeNode(base.UserEmail, request.ParentId, request.Name);
             return result;
         }
