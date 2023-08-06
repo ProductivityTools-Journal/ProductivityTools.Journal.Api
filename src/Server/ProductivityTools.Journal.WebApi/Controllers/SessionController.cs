@@ -19,6 +19,8 @@ namespace ProductivityTools.Journal.WebApi.Controllers
             return View();
         }
 
+
+
         //[HttpPost]
         //[Route("Login")]
         //public async Task<ActionResult> Login([FromBody] LoginRequest request)
