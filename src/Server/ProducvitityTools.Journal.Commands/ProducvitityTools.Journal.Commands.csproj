@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="006.NullableParentId-Fix.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="006.NullableParentId-Fix.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ProductivityTools.Journal.Database\ProductivityTools.Journal.Database.csproj" />
   </ItemGroup>
 
