@@ -60,7 +60,7 @@ pipeline {
         }
         stage('copyIisFiles') {
             steps {         
-                bat('xcopy "src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\IIS\\Journal\\" /O /X /E /H /K')
+                bat('xcopy "src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\IIS\\PTJournal\\" /O /X /E /H /K')
             }
         }
 
