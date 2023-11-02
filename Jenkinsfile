@@ -46,27 +46,27 @@ pipeline {
 
         stage('stopMeetingsOnIis') {
             steps {
-                bat('%windir%\\system32\\inetsrv\\appcmd stop site /site.name:journal')
+                bat('%windir%\\system32\\inetsrv\\appcmd stop site /site.name:PTJournal')
             }
         }
 
         stage('deleteIisDir') {
             steps {
                 retry(5) {
-                    bat('if exist "C:\\Bin\\Journal" RMDIR /Q/S "C:\\Bin\\Journal"')
+                    bat('if exist "C:\\Bin\\IIS\\Journal" RMDIR /Q/S "C:\\Bin\\IIS\\Journal"')
                 }
 
             }
         }
         stage('copyIisFiles') {
             steps {         
-                bat('xcopy "src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\Journal\\" /O /X /E /H /K')
+                bat('xcopy "src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\IIS\\Journal\\" /O /X /E /H /K')
             }
         }
 
         stage('startMeetingsOnIis') {
             steps {
-                bat('%windir%\\system32\\inetsrv\\appcmd start site /site.name:Journal')
+                bat('%windir%\\system32\\inetsrv\\appcmd start site /site.name:PTJournal')
             }
         }
         stage('byebye') {
