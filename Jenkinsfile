@@ -18,7 +18,7 @@ pipeline {
         stage('clone') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'master',
+                git branch: 'main',
                 url: 'https://github.com/ProductivityTools-Journal/ProductivityTools.Journal.Api'
             }
         }
