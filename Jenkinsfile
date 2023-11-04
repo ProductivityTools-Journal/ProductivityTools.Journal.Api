@@ -57,7 +57,7 @@ pipeline {
         }
 		
 
-        stage('Delete IIS\Journal Directory') {
+        stage('Delete IIS Journal Directory') {
             steps {
                 retry(5) {
                     bat('if exist "C:\\Bin\\IIS\\Journal" RMDIR /Q/S "C:\\Bin\\IIS\\PTJournal"')
