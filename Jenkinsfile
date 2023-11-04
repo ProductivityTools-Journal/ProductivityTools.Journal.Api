@@ -44,13 +44,20 @@ pipeline {
             }
         }
 
-        stage('stopMeetingsOnIis') {
+        stage('Stop PTJournal on IIS') {
             steps {
                 bat('%windir%\\system32\\inetsrv\\appcmd stop site /site.name:PTJournal')
             }
         }
+		
+		stage('Stop PTJournal AppPool') {
+            steps {
+                bat('%windir%\\system32\\inetsrv\\appcmd stop apppool /apppool.name:"PTJournal"')
+            }
+        }
+		
 
-        stage('deleteIisDir') {
+        stage('Delete IIS\Journal Directory') {
             steps {
                 retry(5) {
                     bat('if exist "C:\\Bin\\IIS\\Journal" RMDIR /Q/S "C:\\Bin\\IIS\\PTJournal"')
@@ -58,13 +65,19 @@ pipeline {
 
             }
         }
-        stage('copyIisFiles') {
+        stage('Copy IIS files') {
             steps {         
                 bat('xcopy "src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\IIS\\PTJournal\\" /O /X /E /H /K')
             }
         }
+		
+		stage('Start PTJournal AppPool') {
+            steps {
+                bat('%windir%\\system32\\inetsrv\\appcmd start apppool /apppool.name:"PTJournal"')
+            }
+        }
 
-        stage('startMeetingsOnIis') {
+        stage('Start PTJournal on IIS') {
             steps {
                 bat('%windir%\\system32\\inetsrv\\appcmd start site /site.name:PTJournal')
             }
