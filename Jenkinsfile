@@ -52,7 +52,8 @@ pipeline {
 		
 		stage('Stop PTJournal AppPool') {
             steps {
-                bat('%windir%\\system32\\inetsrv\\appcmd stop apppool /apppool.name:"PTJournal"')
+              
+				bat('if ($(.\appcmd.exe list site PTJournal /text:state) -eq "Started") {%windir%\\system32\\inetsrv\\appcmd stop apppool /apppool.name:"PTJournal"}')
             }
         }
 		
