@@ -50,8 +50,8 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.TreeControlerNewNode)]
         public int AddTreeNode(NewTreeNodeRequest request)
         {
-            EventLog.WriteEntry("PT.Journak.api", "started request add treenode", EventLogEntryType.Warning);
-            EventLog.WriteEntry("PT.Journak.api", base.UserEmail, EventLogEntryType.Warning);
+            //EventLog.WriteEntry("PT.Journak.api", "started request add treenode", EventLogEntryType.Warning);
+            //EventLog.WriteEntry("PT.Journak.api", base.UserEmail, EventLogEntryType.Warning);
             var result=this.TreeServices.AddTreeNode(base.UserEmail, request.ParentId, request.Name);
             return result;
         }
