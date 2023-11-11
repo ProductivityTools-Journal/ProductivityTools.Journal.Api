@@ -50,6 +50,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route(Consts.TreeControlerNewNode)]
         public int AddTreeNode(NewTreeNodeRequest request)
         {
+            //if uncoment I need tocreate eventlog on the server. I do not know if I need it. 
             //EventLog.WriteEntry("PT.Journak.api", "started request add treenode", EventLogEntryType.Warning);
             //EventLog.WriteEntry("PT.Journak.api", base.UserEmail, EventLogEntryType.Warning);
             var result=this.TreeServices.AddTreeNode(base.UserEmail, request.ParentId, request.Name);
