@@ -155,6 +155,15 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("SaveBookJournal")]
+        //add validation
+        public CoreObjects.Page SaveBookJournal(CoreObjects.BookJournal bookJournal)
+        {
+            Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
+
+        }
+
+        [HttpPost]
         [Route(Consts.UpdateMeetingName)]
         public void Update(CoreObjects.Page meeting)
         {
