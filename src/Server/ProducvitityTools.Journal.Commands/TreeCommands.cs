@@ -1,4 +1,5 @@
-﻿using ProductivityTools.Journal.Database;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using ProductivityTools.Journal.Database;
 using ProductivityTools.Meetings.Database;
 using ProductivityTools.Meetings.Database.Objects;
 using System.Collections;
@@ -16,6 +17,7 @@ namespace ProducvitityTools.Meetings.Commands
         void Move(int sourceId, int targetId);
 
         Journal RenameJournal(int journalId, string newName);
+        bool CheckIfTreeNodeExists(int parentId, string name);
     }
 
     public class TreeCommands : ITreeCommands
@@ -63,6 +65,12 @@ namespace ProducvitityTools.Meetings.Commands
             MeetingContext.Update(sourceElement);
             MeetingContext.SaveChanges();
             return sourceElement;
+        }
+
+        public bool CheckIfTreeNodeExists(int parentId, string name)
+        {
+            var journals = this.MeetingContext.Journal.FirstOrDefault(x => x.ParentId == parentId && x.Name==name);
+            return journals != null;
         }
     }
 }

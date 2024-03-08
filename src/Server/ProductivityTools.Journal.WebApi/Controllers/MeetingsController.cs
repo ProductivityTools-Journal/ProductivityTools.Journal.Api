@@ -31,16 +31,18 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         IMeetingQueries MeetingQueries;
         IJournalCommands MeetingCommands;
         IMeetingService MeetingService;
+        ITreeService TreeService;
         private readonly IConfiguration configuration;
         private IHttpContextAccessor _httpContextAccessor;
        // UserManager<IdentityUser> _userManager;
 
-        public MeetingsController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IMeetingService meetingService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public MeetingsController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IMeetingService meetingService,ITreeService treeService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.MeetingQueries = meetingQueries;
             this.mapper = mapper;
             this.MeetingService = meetingService;
             this.MeetingCommands = meetingCommands;
+            this.TreeService = treeService;
             this.configuration = configuration;
            // this._userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
@@ -160,6 +162,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         public CoreObjects.Page SaveBookJournal(CoreObjects.BookJournal bookJournal)
         {
             Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
+            TreeService.AddIfDoesNotExists();
 
         }
 
