@@ -161,5 +161,12 @@ namespace ProductivityTools.Meetings.Services
             return this.Mapper.Map<CoreObjects.Journal>(r);
         }
 
+        public int? AddIfDoesNotExists(int parentId, string journalName)
+        {
+            var jounnalId=this.TreeCommands.CheckIfTreeNodeExists(parentId, journalName);
+            return jounnalId;
+        }
+
+
     }
 }

@@ -15,5 +15,6 @@ namespace ProductivityTools.Meetings.Services
         void MoveTree(int sourceId, int targetId);
 
         CoreObjects.Journal RenameJournal(int journalId, string newName);
+        int? AddIfDoesNotExists(int parentId, string journalName);
     }
 }

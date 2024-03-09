@@ -17,7 +17,7 @@ namespace ProducvitityTools.Meetings.Commands
         void Move(int sourceId, int targetId);
 
         Journal RenameJournal(int journalId, string newName);
-        bool CheckIfTreeNodeExists(int parentId, string name);
+        int? CheckIfTreeNodeExists(int parentId, string name);
     }
 
     public class TreeCommands : ITreeCommands
@@ -67,10 +67,10 @@ namespace ProducvitityTools.Meetings.Commands
             return sourceElement;
         }
 
-        public bool CheckIfTreeNodeExists(int parentId, string name)
+        public int? CheckIfTreeNodeExists(int parentId, string name)
         {
-            var journals = this.MeetingContext.Journal.FirstOrDefault(x => x.ParentId == parentId && x.Name==name);
-            return journals != null;
+            var journals = this.MeetingContext.Journal.FirstOrDefault(x => x.ParentId == parentId && x.Name == name);
+            return journals?.JournalId;
         }
     }
 }
