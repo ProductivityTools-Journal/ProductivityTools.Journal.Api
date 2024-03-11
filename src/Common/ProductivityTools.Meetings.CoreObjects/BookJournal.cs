@@ -8,6 +8,6 @@ namespace ProductivityTools.Meetings.CoreObjects
     {
         public int ParentJournalId { get; set; }
         public string JournalName { get; set; }
-        public Page Page { get; set; }
+      // public Page Page { get; set; }
     }
 }
