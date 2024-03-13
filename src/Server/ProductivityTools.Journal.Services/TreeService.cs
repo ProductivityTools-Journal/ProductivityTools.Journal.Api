@@ -160,9 +160,13 @@ namespace ProductivityTools.Meetings.Services
             var r = this.TreeCommands.RenameJournal(journalId, newName);
             return this.Mapper.Map<CoreObjects.Journal>(r);
         }
-        public int? AddIfDoesNotExists(int parentId, string journalName)
+        public int? AddIfDoesNotExists(string email, int parentId, string journalName)
         {
-            var jounnalId=this.TreeCommands.CheckIfTreeNodeExists(parentId, journalName);
+            var jounnalId = this.TreeCommands.CheckIfTreeNodeExists(parentId, journalName);
+            if (journalName == null)
+            {
+                jounnalId = this.AddTreeNode(email, parentId, journalName);
+            }
             return jounnalId;
         }
 

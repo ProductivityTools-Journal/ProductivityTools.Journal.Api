@@ -161,8 +161,8 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         //add validation
         public string SaveBookJournal(CoreObjects.BookJournal bookJournal)
         {
-            //Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
-            //var journalId=TreeService.AddIfDoesNotExists(bookJournal.ParentJournalId, bookJournal.JournalName);
+            Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
+            var journalId=TreeService.AddIfDoesNotExists(bookJournal.Email, bookJournal.ParentJournalId, bookJournal.JournalName);
             return "pawel";
         }
 
