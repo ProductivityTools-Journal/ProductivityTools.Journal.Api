@@ -51,16 +51,16 @@ namespace ProducvitityTools.Meetings.Commands
             MeetingContext.SaveChanges();
         }
 
-        Page IJournalCommands.Save(Page journal)
+        Page IJournalCommands.Save(Page page)
         {
-            if (journal.PageId == null)
+            if (page.PageId == null)
             {
-                MeetingContext.Pages.Add(journal);
+                MeetingContext.Pages.Add(page);
             }
             else
             {
-                MeetingContext.Pages.Attach(journal);
-                MeetingContext.Entry(journal).State = EntityState.Modified;
+                MeetingContext.Pages.Attach(page);
+                MeetingContext.Entry(page).State = EntityState.Modified;
             }
             var ChangeTracker = MeetingContext.ChangeTracker;
 
@@ -70,7 +70,7 @@ namespace ProducvitityTools.Meetings.Commands
 
 
             MeetingContext.SaveChanges();
-            return journal;
+            return page;
         }
 
         void IJournalCommands.Delete(Page meeting)

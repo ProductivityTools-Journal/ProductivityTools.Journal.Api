@@ -159,11 +159,14 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [HttpPost]
         [Route("SaveBookJournal")]
         //add validation
-        public string SaveBookJournal(CoreObjects.BookJournal bookJournal)
+        public CoreObjects.Page SaveBookJournal(CoreObjects.BookJournal bookJournal)
         {
-            Database.Objects.Page dbMeeting = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
+            Database.Objects.Page dbPage = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
             var journalId=TreeService.AddIfDoesNotExists(bookJournal.Email, bookJournal.ParentJournalId, bookJournal.JournalName);
-            return "pawel";
+            dbPage.JournalId = journalId;
+            Database.Objects.Page savedMeeting = MeetingCommands.Save(dbPage);
+            var result = this.mapper.Map<CoreObjects.Page>(savedMeeting);
+            return result;
         }
 
         [HttpPost]

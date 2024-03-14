@@ -163,7 +163,7 @@ namespace ProductivityTools.Meetings.Services
         public int? AddIfDoesNotExists(string email, int parentId, string journalName)
         {
             var jounnalId = this.TreeCommands.CheckIfTreeNodeExists(parentId, journalName);
-            if (journalName == null)
+            if (jounnalId == null)
             {
                 jounnalId = this.AddTreeNode(email, parentId, journalName);
             }
