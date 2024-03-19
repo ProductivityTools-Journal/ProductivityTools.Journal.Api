@@ -25,7 +25,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MeetingsController : JlController 
+    public class PageController : JlController 
     {
         private readonly IMapper mapper;
         IMeetingQueries MeetingQueries;
@@ -36,7 +36,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         private IHttpContextAccessor _httpContextAccessor;
        // UserManager<IdentityUser> _userManager;
 
-        public MeetingsController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IMeetingService meetingService,ITreeService treeService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public PageController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IMeetingService meetingService,ITreeService treeService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.MeetingQueries = meetingQueries;
             this.mapper = mapper;
@@ -113,9 +113,21 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             //    eventLog.WriteEntry(message, EventLogEntryType.Information, 101, 1);
             //}
         }
-        
 
 
+        [HttpPost]
+        [Route("SaveBookJournal")]
+        //add validation
+        public Page SaveBookJournal(BookJournal bookJournal)
+        {
+            
+            Database.Objects.Page dbPage = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
+            var journalId = TreeService.AddIfDoesNotExists(bookJournal.Email, bookJournal.ParentJournalId, bookJournal.JournalName);
+            dbPage.JournalId = journalId;
+            Database.Objects.Page savedMeeting = MeetingCommands.Save(dbPage);
+            var result = this.mapper.Map<CoreObjects.Page>(savedMeeting);
+            return result;
+        }
 
         [HttpPost]
         [Authorize]
@@ -156,18 +168,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             return result;
         }
 
-        [HttpPost]
-        [Route("SaveBookJournal")]
-        //add validation
-        public CoreObjects.Page SaveBookJournal(CoreObjects.BookJournal bookJournal)
-        {
-            Database.Objects.Page dbPage = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
-            var journalId=TreeService.AddIfDoesNotExists(bookJournal.Email, bookJournal.ParentJournalId, bookJournal.JournalName);
-            dbPage.JournalId = journalId;
-            Database.Objects.Page savedMeeting = MeetingCommands.Save(dbPage);
-            var result = this.mapper.Map<CoreObjects.Page>(savedMeeting);
-            return result;
-        }
+      
 
         [HttpPost]
         [Route(Consts.UpdateMeetingName)]

@@ -15,11 +15,11 @@ namespace ProducvitityTools.Meetings.Commands
         int Delete(IEnumerable<int> treeIds);
     }
 
-    public class MeetingCommands : IJournalCommands
+    public class JournalCommands : IJournalCommands
     {
         MeetingContext MeetingContext;
 
-        public MeetingCommands(MeetingContext context)
+        public JournalCommands(MeetingContext context)
         {
             this.MeetingContext = context;
         }

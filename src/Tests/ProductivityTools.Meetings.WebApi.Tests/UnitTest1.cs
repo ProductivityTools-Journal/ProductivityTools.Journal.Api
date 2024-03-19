@@ -62,7 +62,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
         [TestMethod]
         public void GetDateTest()
         {
-            var controler = new MeetingsController(MeetingQueries, null, null,null, null, null, null);
+            var controler = new PageController(MeetingQueries, null, null,null, null, null, null);
             var result = controler?.GetDate();
             Assert.IsNotNull(result);
         }
@@ -72,7 +72,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
         public void GetMeetingsTest()
         {
 
-            var controler = new MeetingsController(null, null, MeetingService, null,null, null, null);
+            var controler = new PageController(null, null, MeetingService, null,null, null, null);
             var result = controler.GetList(new CoreObjects.MeetingListRequest { DrillDown = true, Id = null });
             Assert.IsNotNull(result);
         }
