@@ -30,7 +30,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         private readonly IMapper mapper;
         IMeetingQueries MeetingQueries;
         IJournalCommands MeetingCommands;
-        IMeetingService MeetingService;
+        IMeetingService MeetingService;         
         ITreeService TreeService;
         private readonly IConfiguration configuration;
         private IHttpContextAccessor _httpContextAccessor;

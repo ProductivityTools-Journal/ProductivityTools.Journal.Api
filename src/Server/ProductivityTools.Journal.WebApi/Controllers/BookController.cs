@@ -23,6 +23,8 @@ using System.Threading.Tasks;
 
 namespace ProductivityTools.Meetings.WebApi.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class BookController : JlController
     {
 
@@ -55,9 +57,19 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             Database.Objects.Page dbPage = this.mapper.Map<Database.Objects.Page>(bookJournal.Page);
             var journalId = TreeService.AddIfDoesNotExists(bookJournal.Email, bookJournal.ParentJournalId, bookJournal.JournalName);
             dbPage.JournalId = journalId;
-            Database.Objects.Page savedMeeting = MeetingCommands.Save(dbPage);
-            var result = this.mapper.Map<CoreObjects.Page>(savedMeeting);
-            return result;
+            var currentPages=this.MeetingQueries.GetPages(bookJournal.Email, new List<int> { journalId });
+            var pageWithTheSameTitle = currentPages.FirstOrDefault(x => x.Subject == bookJournal.Page.Subject);
+            if (pageWithTheSameTitle==null)
+            {
+                Database.Objects.Page savedMeeting = MeetingCommands.Save(dbPage);
+                var result = this.mapper.Map<CoreObjects.Page>(savedMeeting);
+                return result;
+            }
+            else
+            {
+                return this.mapper.Map<CoreObjects.Page>(pageWithTheSameTitle); ;
+            }
+            
         }
     }
 }
