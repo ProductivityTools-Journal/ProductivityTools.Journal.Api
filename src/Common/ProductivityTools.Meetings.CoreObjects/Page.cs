@@ -18,6 +18,11 @@ namespace ProductivityTools.Meetings.CoreObjects
         /// </summary>
         public string Status { get; set; }
 
+        /// <summary>
+        /// It says if Page should be displayed on top
+        /// </summary>
+        public bool Pinned { get; set; }
+
         //public List<JournalItemNotes> NotesList { get; set; }
 
         public Page()
