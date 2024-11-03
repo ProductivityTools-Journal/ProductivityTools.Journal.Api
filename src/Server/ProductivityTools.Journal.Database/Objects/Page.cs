@@ -11,7 +11,10 @@ namespace ProductivityTools.Meetings.Database.Objects
         public int? JournalId { get; set; }
         public DateTime Date { get; set; }
         public string Subject { get; set; }
-
+        /// <summary>
+        /// It says if Page should be displayed on top
+        /// </summary>
+        public bool Pinned { get; set; }
         public string Content { get; set; }
         public string ContentType { get; set; }
         public bool Deleted { get; set; }

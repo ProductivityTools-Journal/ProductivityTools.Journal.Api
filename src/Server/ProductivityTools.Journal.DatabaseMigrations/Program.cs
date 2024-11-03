@@ -11,6 +11,8 @@ namespace ProductivityTools.Meetings.DatabaseMigrations
     {
         static void Main(string[] args)
         {
+            throw new Exception("This is the old way of doing migration, probably project should be deleted")
+            throw new Exception(DateTime.Now.ToString());
             Database database = new Database("PTMeetings", "Server=.\\SQL2019;Trusted_Connection=True;");
             database.CreateSilent();
 
