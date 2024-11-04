@@ -35,13 +35,22 @@ namespace ProducvitityTools.Meetings.Queries
         {
             treeNodeId.RemoveAll(x => x == 1);
             QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, treeNodeId.ToArray());
-            var query = this.MeetingContext.Pages
-            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value))
+
+            IQueryable<Page> queryPinned = this.MeetingContext.Pages
+            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Pinned == true)
+            // .Include(x => x.NotesList)
+            .OrderByDescending(x => x.Date);
+            var queryStringPinned = queryPinned.ToQueryString();
+            List<Page> pined = queryPinned.ToList();
+
+            IQueryable<Page> query = this.MeetingContext.Pages
+            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Pinned==false)
             // .Include(x => x.NotesList)
             .OrderByDescending(x => x.Date).Take(50);
             var queryString = query.ToQueryString();
-            var result = query.ToList();
-            return result;
+            List<Page> pages = query.ToList();
+            pined.AddRange(pages);
+            return pined;
 
 
         }

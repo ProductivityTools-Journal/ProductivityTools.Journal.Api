@@ -10,7 +10,7 @@ namespace ProductivityTools.Meetings.Services
         public static IServiceCollection ConfigureServicesTreeService(this IServiceCollection services)
         {
             services.AddScoped<ITreeService, TreeService>();
-            services.AddScoped<IMeetingService, MeetingService>();
+            services.AddScoped<IPageService, PageService>();
             return services;
         }
     }

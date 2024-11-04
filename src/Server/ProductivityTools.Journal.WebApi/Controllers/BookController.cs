@@ -31,13 +31,13 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         private readonly IMapper mapper;
         IMeetingQueries MeetingQueries;
         IJournalCommands MeetingCommands;
-        IMeetingService MeetingService;
+        IPageService MeetingService;
         ITreeService TreeService;
         private readonly IConfiguration configuration;
         private IHttpContextAccessor _httpContextAccessor;
         // UserManager<IdentityUser> _userManager;
 
-        public BookController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IMeetingService meetingService, ITreeService treeService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public BookController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IPageService meetingService, ITreeService treeService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.MeetingQueries = meetingQueries;
             this.mapper = mapper;

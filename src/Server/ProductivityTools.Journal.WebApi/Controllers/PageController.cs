@@ -30,13 +30,13 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         private readonly IMapper mapper;
         IMeetingQueries MeetingQueries;
         IJournalCommands MeetingCommands;
-        IMeetingService MeetingService;         
+        IPageService MeetingService;         
         ITreeService TreeService;
         private readonly IConfiguration configuration;
         private IHttpContextAccessor _httpContextAccessor;
        // UserManager<IdentityUser> _userManager;
 
-        public PageController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IMeetingService meetingService,ITreeService treeService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public PageController(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, IPageService meetingService,ITreeService treeService, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.MeetingQueries = meetingQueries;
             this.mapper = mapper;
@@ -138,7 +138,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             //var x=_userManager.GetUserAsync(HttpContext.User);
 
             SaveToLog("Request started");
-            List<CoreObjects.Page> result = this.MeetingService.GetMeetings(UserEmail, meetingListRequest.Id, meetingListRequest.DrillDown).OrderByDescending(x => x.Date).ToList();
+            List<CoreObjects.Page> result = this.MeetingService.GetPages(UserEmail, meetingListRequest.Id, meetingListRequest.DrillDown).ToList();
             SaveToLog("Meetings mapped");
             return result;
         }

@@ -51,7 +51,7 @@ namespace ProductivityTools.Meetings.WebApi.Tests
             }
         }
 
-        IMeetingService MeetingService => ServiceProvider.GetService<IMeetingService>();
+        IPageService MeetingService => ServiceProvider.GetService<IPageService>();
         IMeetingQueries MeetingQueries => ServiceProvider.GetService<IMeetingQueries>();
         IJournalCommands MeetingCommands => ServiceProvider.GetService<IJournalCommands>();
         ITreeService TreeService => ServiceProvider.GetService<ITreeService>();

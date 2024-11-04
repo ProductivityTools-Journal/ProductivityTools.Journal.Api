@@ -9,14 +9,14 @@ using System.Text;
 
 namespace ProductivityTools.Meetings.Services
 {
-    class MeetingService : IMeetingService
+    class PageService : IPageService
     {
         IMeetingQueries MeetingQueries;
         IJournalCommands MeetingCommand;
         ITreeService TreeService;
         readonly IMapper Mapper;
 
-        public MeetingService(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, ITreeService treeService, IMapper mapper)
+        public PageService(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, ITreeService treeService, IMapper mapper)
         {
             this.MeetingQueries = meetingQueries;
             this.TreeService = treeService;
@@ -24,11 +24,11 @@ namespace ProductivityTools.Meetings.Services
             this.Mapper = mapper;
         }
 
-        public List<CoreObjects.Page> GetMeetings(string email, int? treeNodeId, bool drillDown)
+        public List<CoreObjects.Page> GetPages(string email, int? treeNodeId, bool drillDown)
         {
             if (treeNodeId.HasValue)
             {
-                return GetMeetingsInternal(email, treeNodeId.Value, drillDown);
+                return GetPagesInternal(email, treeNodeId.Value, drillDown);
 
             }
             else
@@ -44,7 +44,7 @@ namespace ProductivityTools.Meetings.Services
             }
         }
 
-        public List<CoreObjects.Page> GetMeetingsInternal(string email, int treeNodeId, bool drillDown)
+        public List<CoreObjects.Page> GetPagesInternal(string email, int treeNodeId, bool drillDown)
         {
             var trees = new List<int>() { treeNodeId };
             if (drillDown)
