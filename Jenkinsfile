@@ -110,7 +110,7 @@ pipeline {
 		
         stage('Copy web page to the IIS Bin directory') {
             steps {         
-                bat('xcopy "src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net6.0\\publish" "C:\\Bin\\IIS\\PTJournal\\" /O /X /E /H /K')
+                bat('xcopy "src\\Server\\ProductivityTools.Journal.WebApi\\bin\\Release\\net9.0\\publish" "C:\\Bin\\IIS\\PTJournal\\" /O /X /E /H /K')
             }
         }
 
