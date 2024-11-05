@@ -120,7 +120,7 @@ pipeline {
             }
         }
 
-       stage('Create Login PTExpenses on SQL2022') {
+       stage('Create Login PTJournal on SQL2022') {
              steps {
                  bat('sqlcmd -S ".\\SQL2022" -q "CREATE LOGIN [IIS APPPOOL\\PTJorunal] FROM WINDOWS WITH DEFAULT_DATABASE=[PTJournal];"')
              }
@@ -128,7 +128,7 @@ pipeline {
 
         stage('Create User PTJournal on SQL2022') {
              steps {
-                 bat('sqlcmd -S ".\\SQL2022" -q " USE PTJournal;  CREATE USER [IIS APPPOOL\\PTJournal]  FOR LOGIN [IIS APPPOOL\\PTJournal];"')
+                 bat('sqlcmd -S ".\\SQL2022" -q "USE PTJournal;  CREATE USER [IIS APPPOOL\\PTJournal]  FOR LOGIN [IIS APPPOOL\\PTJournal];"')
              }
         }
 

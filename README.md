@@ -3,7 +3,9 @@ Group of application which helps to write notes from meetings
 
 [Column Descriptions](docs/ColumnDescription.MD)
 
+## Setup 
 
+[Environment]::SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS","C:\Bin\GitHub\Home.Configuration\ptjournal-serviceaccount.json")
 
 ## User validation
 
