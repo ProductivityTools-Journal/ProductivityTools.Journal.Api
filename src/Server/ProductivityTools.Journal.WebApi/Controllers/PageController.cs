@@ -1,5 +1,4 @@
-﻿using Auth0.AuthenticationApi;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

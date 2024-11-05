@@ -21,6 +21,12 @@ namespace ProducvitityTools.Meetings.Queries
             this.MeetingContext = context;
         }
 
+        public string GetServerName()
+        {
+            string server = this.MeetingContext.Database.SqlQuery<string>($"select @@SERVERNAME as value").Single();
+            return server;
+        }
+
         public List<Page> GetPages()
         {
             //do not know when it is used, so throw it.
