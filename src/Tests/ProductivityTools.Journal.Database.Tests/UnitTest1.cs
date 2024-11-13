@@ -51,7 +51,7 @@ namespace ProductivityTools.Journal.Database.Tests
             MeetingContext context = new MeetingContext(Configuration);
             var r1=DatabaseHelpers.ExecutVerifyOwnership(context,"pwujczyk@gmail.com", new int[] { 130 });
             Assert.IsTrue(r1);
-            var r2 = DatabaseHelpers.ExecutVerifyOwnership(context, "pwujczyk@gmail.com", new int[] { 130,9 });
+            var r2 = DatabaseHelpers.ExecutVerifyOwnership(context, "pwujczyk@gmail.com", new int[] { 1560, 9 });
             Assert.IsFalse(r2);
         }
     }
