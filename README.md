@@ -1,4 +1,4 @@
-# ProductivityTools.Journal.Api
+# ProductivityTools.Journal.Api xx
 Group of application which helps to write notes from meetings  
 
 [Column Descriptions](docs/ColumnDescription.MD)
