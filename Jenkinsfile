@@ -6,8 +6,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                // Get some code from a GitHub repository
-                echo 'hello21'
+                echo 'Hello Jenkins!'
             }
         }
         stage('Print workpalce Path'){
@@ -15,12 +14,12 @@ pipeline {
 				echo "${env.WORKSPACE}"
 			}
 		}
-        stage('Delete Workspace') {
+        stage('Print workpalce directory'){
             steps {
                 deleteDir()
             }
         }
-        stage('Git Clone') {
+        stage('Git clone') {
             steps {
                 // Get some code from a GitHub repository
                 git branch: 'main',
