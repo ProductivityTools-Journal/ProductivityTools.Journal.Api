@@ -66,7 +66,7 @@ namespace ProductivityTools.Meetings.WebApi
                     ValidateIssuer = true,
                     ValidIssuer = "https://securetoken.google.com/ptjournal-b53b0",
                     ValidateAudience = true,
-                    ValidAudience = "ptjournal-b53b0",
+                    ValidAudience = "ptprojectsweb",
                     ValidateLifetime = true
                 };
             });
