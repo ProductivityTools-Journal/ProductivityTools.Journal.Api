@@ -81,9 +81,9 @@ namespace ProductivityTools.Meetings.WebApi
                 {
                     builder.WithOrigins("http://localhost:3000", "https://meetingsweb.z13.web.core.windows.net",
                         "https://ptservicestatus-309299231472.us-central1.run.app",
-                        "https://pt-journal-temp.web.app/",
-                        "https://pt-journal.web.app/",
-                        "https://journal.productivitytool.top/").AllowAnyMethod().AllowAnyHeader();
+                        "https://pt-journal-temp.web.app",
+                        "https://pt-journal.web.app",
+                        "https://journal.productivitytool.top").AllowAnyMethod().AllowAnyHeader();
                 });
             });
         }
