@@ -60,11 +60,11 @@ namespace ProductivityTools.Meetings.WebApi
             }).AddJwtBearer(options =>
             {
                 //options.Authority = "https://identityserver.productivitytools.tech:8010";
-                options.Authority = "https://securetoken.google.com/ptjournal-b53b0";
+                options.Authority = "https://securetoken.google.com/ptprojectsweb";
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = "https://securetoken.google.com/ptjournal-b53b0",
+                    ValidIssuer = "https://securetoken.google.com/ptprojectsweb",
                     ValidateAudience = true,
                     ValidAudience = "ptprojectsweb",
                     ValidateLifetime = true
