@@ -83,7 +83,7 @@ namespace ProductivityTools.Meetings.WebApi
                         "https://ptservicestatus-309299231472.us-central1.run.app",
                         "https://pt-journal-temp.web.app",
                         "https://pt-journal.web.app",
-                        "https://journal.productivitytool.top").AllowAnyMethod().AllowAnyHeader();
+                        "https://journal.productivitytools.top").AllowAnyMethod().AllowAnyHeader();
                 });
             });
         }
