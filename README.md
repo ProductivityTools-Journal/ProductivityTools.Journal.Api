@@ -9,7 +9,7 @@ Group of application which helps to write notes from meetings
 
 ## User validation
 
-In each method which returns information to database application made additionall call which validates if user is owner of the particular tree in which journal item exists. If user owns the parent tree the condition is also meet. 
+In each method which returns information to database application made additionall call which validates if user is owner of the particular tree in which journal item exists. If user owns the parent tree the condition is also meet.  x
 
 **jl.VerifyOwnership**
 
