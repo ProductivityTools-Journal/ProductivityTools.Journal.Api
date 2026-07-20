@@ -69,6 +69,13 @@ jobs:
 
         Create "PTJournal" "*:8008" "C:\Bin\IIS\PTJournal"
 
+    - name: Open Firewall Port 8008
+      shell: powershell
+      run: |
+        if (!(Get-NetFirewallRule -DisplayName "PTJournal 8008" -ErrorAction SilentlyContinue)) {
+            New-NetFirewallRule -DisplayName "PTJournal 8008" -Direction Inbound -LocalPort 8008 -Protocol TCP -Action Allow
+        }
+
     - name: Stop IIS Website
       shell: cmd
       run: '%windir%\system32\inetsrv\appcmd stop site /site.name:PTJournal'
