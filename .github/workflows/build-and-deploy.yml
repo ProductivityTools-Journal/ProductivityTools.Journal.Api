@@ -76,9 +76,15 @@ jobs:
             New-NetFirewallRule -DisplayName "PTJournal 8008" -Direction Inbound -LocalPort 8008 -Protocol TCP -Action Allow
         }
 
-    - name: Stop IIS Website
+    - name: Stop IIS site
+      run: |
+        %windir%\system32\inetsrv\appcmd stop site /site.name:PTJournal
       shell: cmd
-      run: '%windir%\system32\inetsrv\appcmd stop site /site.name:PTJournal'
+
+    - name: Stop IIS App Pool
+      shell: cmd
+      run: "%windir%\\system32\\inetsrv\\appcmd stop apppool /apppool.name:PTJournal"
+      continue-on-error: true
 
     - name: Delete old IIS directory
       shell: powershell
@@ -102,9 +108,13 @@ jobs:
         New-Item -ItemType Directory -Force -Path "C:\Bin\IIS\PTJournal"
         Copy-Item -Path "src\Server\ProductivityTools.Journal.WebApi\bin\Release\net9.0\publish\*" -Destination "C:\Bin\IIS\PTJournal\" -Recurse -Force
 
-    - name: Start IIS Website
+    - name: Start IIS App Pool
       shell: cmd
-      run: '%windir%\system32\inetsrv\appcmd start site /site.name:PTJournal'
+      run: "%windir%\\system32\\inetsrv\\appcmd start apppool /apppool.name:PTJournal"
+
+    - name: Start IIS Site
+      shell: cmd
+      run: "%windir%\\system32\\inetsrv\\appcmd start site /site.name:PTJournal"
 
     - name: Create SQL Login
       shell: cmd
