@@ -21,6 +21,11 @@ jobs:
       with:
         dotnet-version: '9.0'
 
+    - name: Set GOOGLE_APPLICATION_CREDENTIALS environment variable
+      shell: powershell
+      run: |
+        [Environment]::SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\Bin\GitHub\Home.Configuration\ptjournal-serviceaccount.json", "Machine")
+
     - name: Build and Publish Solution
       shell: cmd
       run: dotnet publish ProductivityTools.Journal.Api.sln -c Release
