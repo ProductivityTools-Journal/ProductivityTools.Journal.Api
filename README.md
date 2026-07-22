@@ -77,3 +77,8 @@ BEGIN
 	RETURN;
 END
 ```
+
+## Running on Prod
+
+Application needs google credentials service account to run.
+The GOOGLE_APPLICATION_CREDENTIALS varable is set in the gighub actions file. The variable points to: C:\Bin\GitHub\Home.Configuration\ptjournal-serviceaccount.json

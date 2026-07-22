@@ -74,6 +74,15 @@ jobs:
 
         Create "PTJournal" "*:8008" "C:\Bin\IIS\PTJournal"
 
+    - name: Configure GOOGLE_APPLICATION_CREDENTIALS on IIS App Pool
+      shell: powershell
+      run: |
+        $appcmd = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
+        # Try to remove the environment variable if it exists to avoid errors on duplicate addition
+        Start-Process $appcmd -ArgumentList "set config -section:system.applicationHost/applicationPools /-`"[name='PTJournal'].environmentVariables.[name='GOOGLE_APPLICATION_CREDENTIALS']`" /commit:apphost" -Wait -NoNewWindow -ErrorAction SilentlyContinue
+        # Add the environment variable to the App Pool
+        Start-Process $appcmd -ArgumentList "set config -section:system.applicationHost/applicationPools /+`"[name='PTJournal'].environmentVariables.[name='GOOGLE_APPLICATION_CREDENTIALS',value='C:\Bin\GitHub\Home.Configuration\ptjournal-serviceaccount.json']`" /commit:apphost" -Wait -NoNewWindow
+
     - name: Open Firewall Port 8008
       shell: powershell
       run: |
