@@ -82,3 +82,6 @@ END
 
 Application needs google credentials service account to run.
 The GOOGLE_APPLICATION_CREDENTIALS varable is set in the gighub actions file. The variable points to: C:\Bin\GitHub\Home.Configuration\ptjournal-serviceaccount.json
+
+In Windows, services like IIS (and its worker processes) inherit their environment variables from the Service Control Manager (SCM). The SCM only loads machine environment variables at system boot. Therefore, setting a machine-wide variable will not take effect for IIS unless the computer is restarted.
+The github action has a step that configures the environment variable directly on the IIS Application Pool (PTJournal) using appcmd.exe.
