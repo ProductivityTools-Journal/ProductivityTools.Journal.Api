@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +12,7 @@ namespace ProductivityTools.Meetings.CoreObjects
         //not always filled
         public Journal Parent { get; set; }
         public List<Journal> Nodes { get; set; }
+        public string PublicHash { get; set; }
 
         public Journal(string name)
         {

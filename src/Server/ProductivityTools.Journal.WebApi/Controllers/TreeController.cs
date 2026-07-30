@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -91,6 +91,15 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         public CoreObjects.Journal Rename(RenameJournalRequst request)
         {
             var r = this.TreeServices.RenameJournal(request.JournalId, request.NewName);
+            return r;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route(Consts.GeneratePublicHash)]
+        public string GeneratePublicHash(JournalId request)
+        {
+            var r = this.TreeServices.GeneratePublicHash(UserEmail, request.Id.Value);
             return r;
         }
     }

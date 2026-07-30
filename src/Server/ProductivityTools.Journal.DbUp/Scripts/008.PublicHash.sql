@@ -1,0 +1,5 @@
+ALTER TABLE [j].[Journal] ADD [PublicHash] NVARCHAR(255) NULL
+GO
+
+ALTER TABLE [j].[Page] ADD [PublicHash] NVARCHAR(255) NULL
+GO
