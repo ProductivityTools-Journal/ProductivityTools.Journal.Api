@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using ProductivityTools.Meetings.CoreObjects;
 using ProducvitityTools.Meetings.Commands;
 using ProducvitityTools.Meetings.Queries;
@@ -170,6 +170,16 @@ namespace ProductivityTools.Meetings.Services
             return jounnalId.Value;
         }
 
-
+        public string GeneratePublicHash(string email, int journalId)
+        {
+            var hasPermission = this.TreeQueries.ValidateOnershipCall(email, new int[] { journalId });
+            if (!hasPermission)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            var hash = Guid.NewGuid().ToString("N");
+            this.TreeCommands.SetPublicHash(journalId, hash);
+            return hash;
+        }
     }
 }

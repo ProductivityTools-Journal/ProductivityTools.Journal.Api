@@ -1,4 +1,4 @@
-﻿using ProductivityTools.Meetings.CoreObjects;
+using ProductivityTools.Meetings.CoreObjects;
 using System.Collections.Generic;
 
 namespace ProductivityTools.Meetings.Services
@@ -7,5 +7,6 @@ namespace ProductivityTools.Meetings.Services
     {
         List<CoreObjects.Page> GetPages(string email, int? treeNodeId, bool drillDown);
         void DeletePage(string email, int pageId);
+        string GeneratePublicHash(string email, int pageId);
     }
 }

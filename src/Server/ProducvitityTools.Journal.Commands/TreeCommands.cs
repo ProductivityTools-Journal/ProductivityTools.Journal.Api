@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query;
 using ProductivityTools.Journal.Database;
 using ProductivityTools.Meetings.Database;
 using ProductivityTools.Meetings.Database.Objects;
@@ -18,6 +18,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         Journal RenameJournal(int journalId, string newName);
         int? CheckIfTreeNodeExists(int parentId, string name);
+        Journal SetPublicHash(int journalId, string publicHash);
     }
 
     public class TreeCommands : ITreeCommands
@@ -71,6 +72,15 @@ namespace ProducvitityTools.Meetings.Commands
         {
             var journals = this.MeetingContext.Journal.FirstOrDefault(x => x.ParentId == parentId && x.Name == name);
             return journals?.JournalId;
+        }
+
+        public Journal SetPublicHash(int journalId, string publicHash)
+        {
+            var sourceElement = this.MeetingContext.Journal.Where(x => x.JournalId == journalId).FirstOrDefault();
+            sourceElement.PublicHash = publicHash;
+            MeetingContext.Update(sourceElement);
+            MeetingContext.SaveChanges();
+            return sourceElement;
         }
     }
 }

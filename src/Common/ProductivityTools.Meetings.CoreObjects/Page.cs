@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace ProductivityTools.Meetings.CoreObjects
@@ -22,6 +22,8 @@ namespace ProductivityTools.Meetings.CoreObjects
         /// It says if Page should be displayed on top
         /// </summary>
         public bool Pinned { get; set; }
+
+        public string PublicHash { get; set; }
 
         //public List<JournalItemNotes> NotesList { get; set; }
 

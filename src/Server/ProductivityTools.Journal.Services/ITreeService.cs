@@ -1,4 +1,4 @@
-﻿using ProductivityTools.Meetings.CoreObjects;
+using ProductivityTools.Meetings.CoreObjects;
 using System.Collections.Generic;
 
 namespace ProductivityTools.Meetings.Services
@@ -16,5 +16,6 @@ namespace ProductivityTools.Meetings.Services
 
         CoreObjects.Journal RenameJournal(int journalId, string newName);
         int AddIfDoesNotExists(string email, int parentId, string journalName);
+        string GeneratePublicHash(string email, int journalId);
     }
 }

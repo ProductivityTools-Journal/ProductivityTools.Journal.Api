@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -182,6 +182,15 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         public void Delete(PageId page)
         {
             MeetingService.DeletePage(UserEmail, page.Id);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route(Consts.GeneratePublicHash)]
+        public string GeneratePublicHash(PageId page)
+        {
+            var result = this.MeetingService.GeneratePublicHash(UserEmail, page.Id);
+            return result;
         }
     }
 }

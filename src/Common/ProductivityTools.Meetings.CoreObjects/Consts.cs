@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +12,7 @@ namespace ProductivityTools.Meetings.CoreObjects
         public const string AddMeetingName = "New";
         public const string UpdateMeetingName = "Update";
         public const string DeletePageName = "Delete";
+        public const string GeneratePublicHash = "GeneratePublicHash";
 
 
         public const string TreeControllerName = "Tree";
@@ -22,4 +23,3 @@ namespace ProductivityTools.Meetings.CoreObjects
         public const string TreeControllerMoveName = "Move";
     }
 }
-

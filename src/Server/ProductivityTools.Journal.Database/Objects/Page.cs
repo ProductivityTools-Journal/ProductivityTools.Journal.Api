@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,6 +18,7 @@ namespace ProductivityTools.Meetings.Database.Objects
         public string Content { get; set; }
         public string ContentType { get; set; }
         public bool Deleted { get; set; }
+        public string PublicHash { get; set; }
 
        // public List<JournalItemNotes> NotesList { get; set; }
     }

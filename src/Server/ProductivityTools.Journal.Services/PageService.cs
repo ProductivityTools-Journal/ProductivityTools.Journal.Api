@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using ProductivityTools.Meetings.CoreObjects;
 using ProducvitityTools.Meetings.Commands;
 using ProducvitityTools.Meetings.Queries;
@@ -62,6 +62,15 @@ namespace ProductivityTools.Meetings.Services
         {
             var meeting = this.MeetingQueries.GetPage(email,meetingId);
             this.MeetingCommand.Delete(meeting);
+        }
+
+        public string GeneratePublicHash(string email, int pageId)
+        {
+            var page = this.MeetingQueries.GetPage(email, pageId);
+            var hash = Guid.NewGuid().ToString("N");
+            page.PublicHash = hash;
+            this.MeetingCommand.Update(page);
+            return hash;
         }
     }
 }
