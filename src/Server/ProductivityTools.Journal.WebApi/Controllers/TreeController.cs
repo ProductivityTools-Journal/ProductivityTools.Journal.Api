@@ -96,10 +96,10 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route(Consts.GeneratePublicHash)]
-        public string GeneratePublicHash(JournalId request)
+        [Route(Consts.GetPublicHash)]
+        public string GetPublicHash(JournalId request)
         {
-            var r = this.TreeServices.GeneratePublicHash(UserEmail, request.Id.Value);
+            var r = this.TreeServices.GetPublicHash(UserEmail, request.Id.Value);
             return r;
         }
     }

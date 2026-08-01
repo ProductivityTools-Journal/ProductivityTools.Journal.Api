@@ -186,10 +186,10 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route(Consts.GeneratePublicHash)]
-        public string GeneratePublicHash(PageId page)
+        [Route(Consts.GetPublicHash)]
+        public string GetPublicHash(PageId page)
         {
-            var result = this.MeetingService.GeneratePublicHash(UserEmail, page.Id);
+            var result = this.MeetingService.GetPublicHash(UserEmail, page.Id);
             return result;
         }
     }

@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore.Query;
 using ProductivityTools.Journal.Database;
 using ProductivityTools.Meetings.Database;
 using ProductivityTools.Meetings.Database.Objects;
+using System;
 using System.Collections;
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +18,7 @@ namespace ProducvitityTools.Meetings.Commands
 
         Journal RenameJournal(int journalId, string newName);
         int? CheckIfTreeNodeExists(int parentId, string name);
-        Journal SetPublicHash(int journalId, string publicHash);
+        string GetPublicHash(int journalId);
     }
 
     public class TreeCommands : ITreeCommands
@@ -74,13 +74,18 @@ namespace ProducvitityTools.Meetings.Commands
             return journals?.JournalId;
         }
 
-        public Journal SetPublicHash(int journalId, string publicHash)
+        public string GetPublicHash(int journalId)
         {
             var sourceElement = this.MeetingContext.Journal.Where(x => x.JournalId == journalId).FirstOrDefault();
-            sourceElement.PublicHash = publicHash;
+            if (!string.IsNullOrEmpty(sourceElement.PublicHash))
+            {
+                return sourceElement.PublicHash;
+            }
+            var hash = Guid.NewGuid().ToString("N");
+            sourceElement.PublicHash = hash;
             MeetingContext.Update(sourceElement);
             MeetingContext.SaveChanges();
-            return sourceElement;
+            return hash;
         }
     }
 }

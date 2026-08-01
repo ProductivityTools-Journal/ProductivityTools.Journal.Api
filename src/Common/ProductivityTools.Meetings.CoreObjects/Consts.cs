@@ -12,7 +12,7 @@ namespace ProductivityTools.Meetings.CoreObjects
         public const string AddMeetingName = "New";
         public const string UpdateMeetingName = "Update";
         public const string DeletePageName = "Delete";
-        public const string GeneratePublicHash = "GeneratePublicHash";
+        public const string GetPublicHash = "GetPublicHash";
 
 
         public const string TreeControllerName = "Tree";

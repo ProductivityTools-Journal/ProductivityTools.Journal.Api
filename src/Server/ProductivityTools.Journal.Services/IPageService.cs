@@ -7,6 +7,6 @@ namespace ProductivityTools.Meetings.Services
     {
         List<CoreObjects.Page> GetPages(string email, int? treeNodeId, bool drillDown);
         void DeletePage(string email, int pageId);
-        string GeneratePublicHash(string email, int pageId);
+        string GetPublicHash(string email, int pageId);
     }
 }
