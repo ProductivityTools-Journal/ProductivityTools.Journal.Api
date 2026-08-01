@@ -170,16 +170,14 @@ namespace ProductivityTools.Meetings.Services
             return jounnalId.Value;
         }
 
-        public string GeneratePublicHash(string email, int journalId)
+        public string GetPublicHash(string email, int journalId)
         {
             var hasPermission = this.TreeQueries.ValidateOnershipCall(email, new int[] { journalId });
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException();
             }
-            var hash = Guid.NewGuid().ToString("N");
-            this.TreeCommands.SetPublicHash(journalId, hash);
-            return hash;
+            return this.TreeCommands.GetPublicHash(journalId);
         }
     }
 }

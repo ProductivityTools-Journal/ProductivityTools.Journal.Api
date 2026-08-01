@@ -64,9 +64,13 @@ namespace ProductivityTools.Meetings.Services
             this.MeetingCommand.Delete(meeting);
         }
 
-        public string GeneratePublicHash(string email, int pageId)
+        public string GetPublicHash(string email, int pageId)
         {
             var page = this.MeetingQueries.GetPage(email, pageId);
+            if (!string.IsNullOrEmpty(page.PublicHash))
+            {
+                return page.PublicHash;
+            }
             var hash = Guid.NewGuid().ToString("N");
             page.PublicHash = hash;
             this.MeetingCommand.Update(page);
