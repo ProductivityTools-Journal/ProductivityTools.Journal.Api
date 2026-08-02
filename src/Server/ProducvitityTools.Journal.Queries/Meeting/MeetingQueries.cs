@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProductivityTools.Journal.Database;
 using ProductivityTools.Meetings.Database;
 using ProductivityTools.Meetings.Database.Objects;
@@ -43,14 +43,14 @@ namespace ProducvitityTools.Meetings.Queries
             QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, treeNodeId.ToArray());
 
             IQueryable<Page> queryPinned = this.MeetingContext.Pages
-            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Pinned == true)
+            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Pinned == true && x.Deleted == false)
             // .Include(x => x.NotesList)
             .OrderByDescending(x => x.Date);
             var queryStringPinned = queryPinned.ToQueryString();
             List<Page> pined = queryPinned.ToList();
 
             IQueryable<Page> query = this.MeetingContext.Pages
-            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Pinned==false)
+            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Pinned==false && x.Deleted == false)
             // .Include(x => x.NotesList)
             .OrderByDescending(x => x.Date).Take(50);
             var queryString = query.ToQueryString();
@@ -69,6 +69,33 @@ namespace ProducvitityTools.Meetings.Queries
             QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, new int[] { result.JournalId.Value });
 
             return result;
+        }
+
+        public Page GetPageByPublicHash(string publicHash)
+        {
+            if (string.IsNullOrEmpty(publicHash))
+            {
+                return null;
+            }
+            var result = this.MeetingContext.Pages
+                .SingleOrDefault(x => x.PublicHash == publicHash && x.Deleted == false);
+            return result;
+        }
+
+        public List<Page> GetPagesByJournalIds(List<int> journalIds)
+        {
+            var pined = this.MeetingContext.Pages
+                .Where(x => x.JournalId.HasValue && journalIds.Contains(x.JournalId.Value) && x.Pinned == true && x.Deleted == false)
+                .OrderByDescending(x => x.Date)
+                .ToList();
+
+            var pages = this.MeetingContext.Pages
+                .Where(x => x.JournalId.HasValue && journalIds.Contains(x.JournalId.Value) && x.Pinned == false && x.Deleted == false)
+                .OrderByDescending(x => x.Date)
+                .ToList();
+
+            pined.AddRange(pages);
+            return pined;
         }
     }
 }

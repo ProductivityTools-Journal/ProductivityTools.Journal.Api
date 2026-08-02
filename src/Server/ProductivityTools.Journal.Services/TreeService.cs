@@ -15,15 +15,17 @@ namespace ProductivityTools.Meetings.Services
         private readonly ITreeCommands TreeCommands;
         private readonly IJournalCommands MeetingCommands;
         private readonly IPermissionCommands PermissionCommands;
+        private readonly IMeetingQueries MeetingQueries;
 
         readonly IMapper Mapper;
 
-        public TreeService(ITreeQueries treeQueries, ITreeCommands treeCommands, IJournalCommands meetingCommands, IPermissionCommands permissionCommands, IMapper mapper)
+        public TreeService(ITreeQueries treeQueries, ITreeCommands treeCommands, IJournalCommands meetingCommands, IPermissionCommands permissionCommands, IMeetingQueries meetingQueries, IMapper mapper)
         {
             this.TreeQueries = treeQueries;
             this.TreeCommands = treeCommands;
             this.MeetingCommands = meetingCommands;
             this.PermissionCommands = permissionCommands;
+            this.MeetingQueries = meetingQueries;
             this.Mapper = mapper;
         }
 
@@ -178,6 +180,34 @@ namespace ProductivityTools.Meetings.Services
                 throw new UnauthorizedAccessException();
             }
             return this.TreeCommands.GetPublicHash(journalId);
+        }
+
+        public List<CoreObjects.Page> GetPublicPages(string publicHash)
+        {
+            var rootJournal = this.TreeQueries.GetJournalByPublicHash(publicHash);
+            if (rootJournal == null)
+            {
+                return new List<CoreObjects.Page>();
+            }
+
+            var journalIds = new List<int>() { rootJournal.JournalId };
+            journalIds.AddRange(GetFlatChildsIdPublic(rootJournal.JournalId));
+
+            var dbPages = this.MeetingQueries.GetPagesByJournalIds(journalIds);
+            var result = this.Mapper.Map<List<CoreObjects.Page>>(dbPages);
+            return result;
+        }
+
+        private List<int> GetFlatChildsIdPublic(int parentId)
+        {
+            List<int> result = new List<int>();
+            var childJournals = this.TreeQueries.GetChildJournals(parentId);
+            foreach (var child in childJournals)
+            {
+                result.Add(child.JournalId);
+                result.AddRange(GetFlatChildsIdPublic(child.JournalId));
+            }
+            return result;
         }
     }
 }

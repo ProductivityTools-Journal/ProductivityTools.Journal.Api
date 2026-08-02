@@ -76,5 +76,16 @@ namespace ProductivityTools.Meetings.Services
             this.MeetingCommand.Update(page);
             return hash;
         }
+
+        public CoreObjects.Page GetPublicPage(string publicHash)
+        {
+            var dbPage = this.MeetingQueries.GetPageByPublicHash(publicHash);
+            if (dbPage == null)
+            {
+                return null;
+            }
+            var result = this.Mapper.Map<CoreObjects.Page>(dbPage);
+            return result;
+        }
     }
 }
