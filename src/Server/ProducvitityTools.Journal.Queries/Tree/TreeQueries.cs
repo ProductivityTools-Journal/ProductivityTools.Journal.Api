@@ -1,4 +1,4 @@
-﻿using ProductivityTools.Journal.Database;
+using ProductivityTools.Journal.Database;
 using ProductivityTools.Meetings.Database;
 using ProductivityTools.Meetings.Database.Objects;
 using ProducvitityTools.Journal.Queries;
@@ -16,6 +16,8 @@ namespace ProducvitityTools.Meetings.Queries
         List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId);
         ProductivityTools.Meetings.Database.Objects.Journal GetTreeNode(int id);
         bool ValidateOnershipCall(string email, int[] treeIds);
+        ProductivityTools.Meetings.Database.Objects.Journal GetJournalByPublicHash(string publicHash);
+        List<ProductivityTools.Meetings.Database.Objects.Journal> GetChildJournals(int parentId);
     }
 
     class TreeQueries : ITreeQueries
@@ -49,6 +51,25 @@ namespace ProducvitityTools.Meetings.Queries
         {
             var r = DatabaseHelpers.ExecutVerifyOwnership(this.MeetingContext, email, treeIds);
             return r;
+        }
+
+        public ProductivityTools.Meetings.Database.Objects.Journal GetJournalByPublicHash(string publicHash)
+        {
+            if (string.IsNullOrEmpty(publicHash))
+            {
+                return null;
+            }
+            var result = this.MeetingContext.Journal
+                .SingleOrDefault(x => x.PublicHash == publicHash && x.Deleted == false);
+            return result;
+        }
+
+        public List<ProductivityTools.Meetings.Database.Objects.Journal> GetChildJournals(int parentId)
+        {
+            var result = this.MeetingContext.Journal
+                .Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false)
+                .ToList();
+            return result;
         }
     }
 }

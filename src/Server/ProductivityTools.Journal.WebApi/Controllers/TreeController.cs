@@ -102,5 +102,13 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             var r = this.TreeServices.GetPublicHash(UserEmail, request.Id.Value);
             return r;
         }
+
+        [HttpGet]
+        [Route("Public/{publicHash}")]
+        public List<CoreObjects.Page> GetPublic(string publicHash)
+        {
+            var result = this.TreeServices.GetPublicPages(publicHash);
+            return result;
+        }
     }
 }

@@ -192,5 +192,13 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             var result = this.MeetingService.GetPublicHash(UserEmail, page.Id);
             return result;
         }
+
+        [HttpGet]
+        [Route("Public/{publicHash}")]
+        public CoreObjects.Page GetPublic(string publicHash)
+        {
+            var result = this.MeetingService.GetPublicPage(publicHash);
+            return result;
+        }
     }
 }
