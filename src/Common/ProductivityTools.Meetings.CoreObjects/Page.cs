@@ -24,6 +24,7 @@ namespace ProductivityTools.Meetings.CoreObjects
         public bool Pinned { get; set; }
 
         public string PublicHash { get; set; }
+        public string PlainText { get; set; }
 
         //public List<JournalItemNotes> NotesList { get; set; }
 

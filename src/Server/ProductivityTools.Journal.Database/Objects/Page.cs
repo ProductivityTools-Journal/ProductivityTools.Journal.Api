@@ -19,6 +19,7 @@ namespace ProductivityTools.Meetings.Database.Objects
         public string ContentType { get; set; }
         public bool Deleted { get; set; }
         public string PublicHash { get; set; }
+        public string PlainText { get; set; }
 
        // public List<JournalItemNotes> NotesList { get; set; }
     }
