@@ -200,5 +200,14 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             var result = this.MeetingService.GetPublicPage(publicHash);
             return result;
         }
+
+        [HttpPost]
+        [Route("GetPagesWithoutPlainText")]
+        public List<CoreObjects.Page> GetPagesWithoutPlainText()
+        {
+            var dbPages = MeetingQueries.GetPagesWithoutPlainText(100);
+            var result = this.mapper.Map<List<CoreObjects.Page>>(dbPages);
+            return result;
+        }
     }
 }

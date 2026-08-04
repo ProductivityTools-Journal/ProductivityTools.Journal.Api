@@ -97,5 +97,15 @@ namespace ProducvitityTools.Meetings.Queries
             pined.AddRange(pages);
             return pined;
         }
+
+        public List<Page> GetPagesWithoutPlainText(int count = 100)
+        {
+            var result = this.MeetingContext.Pages
+                .Where(x => (x.PlainText == null || x.PlainText == "") && x.Content != null && x.Deleted == false)
+                .OrderByDescending(x => x.PageId)
+                .Take(count)
+                .ToList();
+            return result;
+        }
     }
 }
