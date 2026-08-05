@@ -103,7 +103,7 @@ namespace ProducvitityTools.Meetings.Queries
             var result = this.MeetingContext.Pages
                 .Where(x => (x.PlainText == null || x.PlainText == "") && x.Content != null && x.Deleted == false)
                 .OrderByDescending(x => x.PageId)
-                .Take(count)
+                .Take(500)
                 .ToList();
             return result;
         }
