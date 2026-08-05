@@ -122,12 +122,12 @@ namespace ProducvitityTools.Meetings.Queries
             return pined;
         }
 
-        public List<Page> GetPagesWithoutPlainText(int count = 500)
+        public List<Page> GetPagesWithoutPlainText(int count = 1000)
         {
             var result = this.MeetingContext.Pages
                 .Where(x => (x.PlainText == null || x.PlainText == "") && x.Content != null)
                 .OrderByDescending(x => x.PageId)
-                .Take(500)
+                .Take(count)
                 .ToList();
             return result;
         }

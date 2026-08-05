@@ -205,7 +205,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route("GetPagesWithoutPlainText")]
         public List<CoreObjects.Page> GetPagesWithoutPlainText()
         {
-            var dbPages = MeetingQueries.GetPagesWithoutPlainText(100);
+            var dbPages = MeetingQueries.GetPagesWithoutPlainText(1000);
             var result = this.mapper.Map<List<CoreObjects.Page>>(dbPages);
             return result;
         }

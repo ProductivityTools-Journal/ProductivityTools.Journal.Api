@@ -10,7 +10,7 @@ namespace ProducvitityTools.Meetings.Queries
         Page GetPage(string email, int id);
         Page GetPageByPublicHash(string publicHash);
         List<Page> GetPagesByJournalIds(List<int> journalIds);
-        List<Page> GetPagesWithoutPlainText(int count = 100);
+        List<Page> GetPagesWithoutPlainText(int count = 1000);
 
         string GetServerName();
     }
