@@ -86,11 +86,33 @@ namespace ProducvitityTools.Meetings.Queries
         {
             var pined = this.MeetingContext.Pages
                 .Where(x => x.JournalId.HasValue && journalIds.Contains(x.JournalId.Value) && x.Pinned == true && x.Deleted == false)
+                .Select(x => new Page
+                {
+                    PageId = x.PageId,
+                    JournalId = x.JournalId,
+                    Date = x.Date,
+                    Subject = x.Subject,
+                    ContentType = x.ContentType,
+                    Pinned = x.Pinned,
+                    Deleted = x.Deleted,
+                    PublicHash = x.PublicHash
+                })
                 .OrderByDescending(x => x.Date)
                 .ToList();
 
             var pages = this.MeetingContext.Pages
                 .Where(x => x.JournalId.HasValue && journalIds.Contains(x.JournalId.Value) && x.Pinned == false && x.Deleted == false)
+                .Select(x => new Page
+                {
+                    PageId = x.PageId,
+                    JournalId = x.JournalId,
+                    Date = x.Date,
+                    Subject = x.Subject,
+                    ContentType = x.ContentType,
+                    Pinned = x.Pinned,
+                    Deleted = x.Deleted,
+                    PublicHash = x.PublicHash
+                })
                 .OrderByDescending(x => x.Date)
                 .ToList();
 

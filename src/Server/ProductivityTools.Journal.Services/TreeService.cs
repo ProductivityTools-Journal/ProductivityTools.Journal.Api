@@ -195,6 +195,7 @@ namespace ProductivityTools.Meetings.Services
 
             var dbPages = this.MeetingQueries.GetPagesByJournalIds(journalIds);
             var result = this.Mapper.Map<List<CoreObjects.Page>>(dbPages);
+            result.ForEach(x => x.Content = null);
             return result;
         }
 
