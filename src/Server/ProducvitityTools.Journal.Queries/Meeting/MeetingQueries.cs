@@ -98,7 +98,7 @@ namespace ProducvitityTools.Meetings.Queries
             return pined;
         }
 
-        public List<Page> GetPagesWithoutPlainText(int count = 100)
+        public List<Page> GetPagesWithoutPlainText(int count = 500)
         {
             var result = this.MeetingContext.Pages
                 .Where(x => (x.PlainText == null || x.PlainText == "") && x.Content != null && x.Deleted == false)
