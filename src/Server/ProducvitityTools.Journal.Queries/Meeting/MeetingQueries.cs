@@ -123,7 +123,7 @@ namespace ProducvitityTools.Meetings.Queries
         public List<Page> GetPagesWithoutPlainText(int count = 500)
         {
             var result = this.MeetingContext.Pages
-                .Where(x => (x.PlainText == null || x.PlainText == "") && x.Content != null && x.Deleted == false)
+                .Where(x => (x.PlainText == null || x.PlainText == "") && x.Content != null)
                 .OrderByDescending(x => x.PageId)
                 .Take(500)
                 .ToList();
