@@ -17,6 +17,7 @@
     <None Remove="Scripts\006.NullableParentId-Fix.sql" />
     <None Remove="Scripts\007.Pinned.sql" />
     <None Remove="Scripts\008.PublicHash.sql" />
+    <None Remove="Scripts\009.PlainText.sql" />
     <None Remove="Scripts\101.DataMigrationUserJournal.sql" />
     <None Remove="Scripts\102.DataMigrationPages.sql" />
     <None Remove="Scripts\103.DataMigrationOwnership.sql" />
@@ -35,6 +36,7 @@
     <EmbeddedResource Include="Scripts\005.NullableParentId.sql" />
     <EmbeddedResource Include="Scripts\004.Index.sql" />
     <EmbeddedResource Include="Scripts\003.Ownership.sql" />
+    <EmbeddedResource Include="Scripts\009.PlainText.sql" />
     <EmbeddedResource Include="Scripts\203.ListMigration-Function.sql" />
     <EmbeddedResource Include="Scripts\204.DataMigrationSlate2PlateConvertPlate.sql" />
     <EmbeddedResource Include="Scripts\202.DataMigrationSlate2Plate.sql" />
