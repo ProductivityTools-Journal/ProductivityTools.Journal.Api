@@ -95,7 +95,8 @@ namespace ProducvitityTools.Meetings.Queries
                     ContentType = x.ContentType,
                     Pinned = x.Pinned,
                     Deleted = x.Deleted,
-                    PublicHash = x.PublicHash
+                    PublicHash = x.PublicHash,
+                    PlainText = x.PlainText
                 })
                 .OrderByDescending(x => x.Date)
                 .ToList();
@@ -111,7 +112,8 @@ namespace ProducvitityTools.Meetings.Queries
                     ContentType = x.ContentType,
                     Pinned = x.Pinned,
                     Deleted = x.Deleted,
-                    PublicHash = x.PublicHash
+                    PublicHash = x.PublicHash,
+                    PlainText = x.PlainText
                 })
                 .OrderByDescending(x => x.Date)
                 .ToList();
