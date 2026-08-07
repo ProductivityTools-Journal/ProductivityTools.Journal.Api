@@ -9,6 +9,7 @@ using ProductivityTools.Journal.WebApi;
 using ProductivityTools.Journal.WebApi.Controllers;
 using ProductivityTools.Meetings.CoreObjects;
 using ProductivityTools.Meetings.Services;
+using ProductivityTools.Meetings.WebApi.Helpers;
 using ProducvitityTools.Meetings.Commands;
 using ProducvitityTools.Meetings.Queries;
 using System;

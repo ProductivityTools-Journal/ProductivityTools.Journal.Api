@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace ProductivityTools.Journal.WebApi.Helpers
+namespace ProductivityTools.Meetings.WebApi.Helpers
 {
     public static class HtmlTableRenderer
     {

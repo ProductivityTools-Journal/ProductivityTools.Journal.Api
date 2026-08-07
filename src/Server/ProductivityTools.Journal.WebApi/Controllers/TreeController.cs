@@ -11,6 +11,7 @@ using ProductivityTools.Journal.WebApi;
 using ProductivityTools.Journal.WebApi.Controllers;
 using ProductivityTools.Meetings.CoreObjects;
 using ProductivityTools.Meetings.Services;
+using ProductivityTools.Meetings.WebApi.Helpers;
 using ProducvitityTools.Meetings.Queries;
 
 namespace ProductivityTools.Meetings.WebApi.Controllers
@@ -115,7 +116,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
             if (HttpContext.Request.Query.ContainsKey("table") && !HttpContext.Request.Query.ContainsKey("json"))
             {
-                var html = Helpers.HtmlTableRenderer.RenderPagesTable(result);
+                var html = HtmlTableRenderer.RenderPagesTable(result);
                 return Content(html, "text/html", System.Text.Encoding.UTF8);
             }
 
