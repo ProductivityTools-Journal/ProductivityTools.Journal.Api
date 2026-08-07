@@ -105,10 +105,21 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpGet]
         [Route("Public/{publicHash}")]
-        public List<CoreObjects.Page> GetPublic(string publicHash)
+        public IActionResult GetPublic(string publicHash)
         {
             var result = this.TreeServices.GetPublicPages(publicHash);
-            return result;
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            if (HttpContext.Request.Query.ContainsKey("table") && !HttpContext.Request.Query.ContainsKey("json"))
+            {
+                var html = Helpers.HtmlTableRenderer.RenderPagesTable(result);
+                return Content(html, "text/html", System.Text.Encoding.UTF8);
+            }
+
+            return Ok(result);
         }
     }
 }

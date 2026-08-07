@@ -85,6 +85,7 @@ namespace ProductivityTools.Meetings.Services
                 return null;
             }
             var result = this.Mapper.Map<CoreObjects.Page>(dbPage);
+            result.Content = null;
             return result;
         }
     }

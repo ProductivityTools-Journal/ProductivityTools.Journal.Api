@@ -195,10 +195,21 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
         [HttpGet]
         [Route("Public/{publicHash}")]
-        public CoreObjects.Page GetPublic(string publicHash)
+        public IActionResult GetPublic(string publicHash)
         {
             var result = this.MeetingService.GetPublicPage(publicHash);
-            return result;
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            if (HttpContext.Request.Query.ContainsKey("table") && !HttpContext.Request.Query.ContainsKey("json"))
+            {
+                var html = Helpers.HtmlTableRenderer.RenderPageTable(result);
+                return Content(html, "text/html", System.Text.Encoding.UTF8);
+            }
+
+            return Ok(result);
         }
 
         [HttpPost]
