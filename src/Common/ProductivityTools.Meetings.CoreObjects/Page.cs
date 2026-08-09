@@ -25,6 +25,7 @@ namespace ProductivityTools.Meetings.CoreObjects
 
         public string PublicHash { get; set; }
         public string PlainText { get; set; }
+        public string Path { get; set; }
 
         //public List<JournalItemNotes> NotesList { get; set; }
 

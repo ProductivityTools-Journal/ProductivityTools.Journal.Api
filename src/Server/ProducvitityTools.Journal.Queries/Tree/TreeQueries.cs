@@ -18,6 +18,8 @@ namespace ProducvitityTools.Meetings.Queries
         bool ValidateOnershipCall(string email, int[] treeIds);
         ProductivityTools.Meetings.Database.Objects.Journal GetJournalByPublicHash(string publicHash);
         List<ProductivityTools.Meetings.Database.Objects.Journal> GetChildJournals(int parentId);
+        string GetJournalPath(int journalId);
+        Dictionary<int, string> GetJournalPaths(IEnumerable<int> journalIds);
     }
 
     class TreeQueries : ITreeQueries
@@ -69,6 +71,54 @@ namespace ProducvitityTools.Meetings.Queries
             var result = this.MeetingContext.Journal
                 .Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false)
                 .ToList();
+            return result;
+        }
+
+        public string GetJournalPath(int journalId)
+        {
+            var names = new List<string>();
+            var current = this.MeetingContext.Journal.SingleOrDefault(x => x.JournalId == journalId);
+            while (current != null && current.Name != "Root")
+            {
+                names.Add(current.Name);
+                if (!current.ParentId.HasValue || current.ParentId.Value == current.JournalId)
+                {
+                    break;
+                }
+                current = this.MeetingContext.Journal.SingleOrDefault(x => x.JournalId == current.ParentId.Value);
+            }
+            if (names.Count == 0 && current != null)
+            {
+                names.Add(current.Name);
+            }
+            names.Reverse();
+            return string.Join(" / ", names);
+        }
+
+        public Dictionary<int, string> GetJournalPaths(IEnumerable<int> journalIds)
+        {
+            var result = new Dictionary<int, string>();
+            var allJournals = this.MeetingContext.Journal.Where(x => x.Deleted == false).ToDictionary(x => x.JournalId);
+            foreach (var id in journalIds.Distinct())
+            {
+                var names = new List<string>();
+                int? currentId = id;
+                while (currentId.HasValue && allJournals.TryGetValue(currentId.Value, out var current) && current.Name != "Root")
+                {
+                    names.Add(current.Name);
+                    if (!current.ParentId.HasValue || current.ParentId.Value == current.JournalId)
+                    {
+                        break;
+                    }
+                    currentId = current.ParentId.Value;
+                }
+                if (names.Count == 0 && currentId.HasValue && allJournals.TryGetValue(currentId.Value, out var rootNode))
+                {
+                    names.Add(rootNode.Name);
+                }
+                names.Reverse();
+                result[id] = string.Join(" / ", names);
+            }
             return result;
         }
     }

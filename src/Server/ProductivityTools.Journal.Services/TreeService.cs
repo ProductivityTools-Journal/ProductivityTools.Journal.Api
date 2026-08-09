@@ -193,9 +193,16 @@ namespace ProductivityTools.Meetings.Services
             var journalIds = new List<int>() { rootJournal.JournalId };
             journalIds.AddRange(GetFlatChildsIdPublic(rootJournal.JournalId));
 
+            var journalPaths = this.TreeQueries.GetJournalPaths(journalIds);
             var dbPages = this.MeetingQueries.GetPagesByJournalIds(journalIds);
             var result = this.Mapper.Map<List<CoreObjects.Page>>(dbPages);
-            result.ForEach(x => x.Content = null);
+            foreach (var page in result)
+            {
+                if (page.JournalId.HasValue && journalPaths.TryGetValue(page.JournalId.Value, out var path))
+                {
+                    page.Path = path;
+                }
+            }
             return result;
         }
 

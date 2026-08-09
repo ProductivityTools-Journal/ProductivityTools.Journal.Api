@@ -14,12 +14,14 @@ namespace ProductivityTools.Meetings.Services
         IMeetingQueries MeetingQueries;
         IJournalCommands MeetingCommand;
         ITreeService TreeService;
+        ITreeQueries TreeQueries;
         readonly IMapper Mapper;
 
-        public PageService(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, ITreeService treeService, IMapper mapper)
+        public PageService(IMeetingQueries meetingQueries, IJournalCommands meetingCommands, ITreeService treeService, ITreeQueries treeQueries, IMapper mapper)
         {
             this.MeetingQueries = meetingQueries;
             this.TreeService = treeService;
+            this.TreeQueries = treeQueries;
             this.MeetingCommand = meetingCommands;
             this.Mapper = mapper;
         }
@@ -85,7 +87,10 @@ namespace ProductivityTools.Meetings.Services
                 return null;
             }
             var result = this.Mapper.Map<CoreObjects.Page>(dbPage);
-            result.Content = null;
+            if (dbPage.JournalId.HasValue)
+            {
+                result.Path = this.TreeQueries.GetJournalPath(dbPage.JournalId.Value);
+            }
             return result;
         }
     }
