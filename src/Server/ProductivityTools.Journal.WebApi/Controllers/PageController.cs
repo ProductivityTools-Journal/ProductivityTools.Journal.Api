@@ -206,7 +206,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
 
             if (HttpContext.Request.Query.ContainsKey("table") && !HttpContext.Request.Query.ContainsKey("json"))
             {
-                var html = Helpers.HtmlTableRenderer.RenderPageTable(result);
+                var html = HtmlTableRenderer.RenderPageTable(result);
                 return Content(html, "text/html", System.Text.Encoding.UTF8);
             }
 
