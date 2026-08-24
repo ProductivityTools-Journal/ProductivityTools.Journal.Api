@@ -31,20 +31,27 @@ namespace ProductivityTools.Meetings.Services
 
         private List<CoreObjects.Journal> GetNodes(string email, int parent)
         {
-            List<CoreObjects.Journal> result = new List<CoreObjects.Journal>();
-            var dbTreeNodes = this.TreeQueries.GetTree(email, parent);
-            foreach (var dbTreeNode in dbTreeNodes)
+            var userJournals = this.TreeQueries.GetUserJournals(email);
+            return BuildHierarchy(userJournals, parent);
+        }
+
+        private List<CoreObjects.Journal> BuildHierarchy(List<Database.Objects.Journal> userJournals, int parent)
+        {
+            var nodesByParent = userJournals
+                .Select(x => this.Mapper.Map<CoreObjects.Journal>(x))
+                .ToLookup(x => x.ParentId);
+
+            List<CoreObjects.Journal> GetChildren(int parentId)
             {
-                CoreObjects.Journal treeNode = this.Mapper.Map<CoreObjects.Journal>(dbTreeNode);
-                treeNode.ParentId = parent;
-                treeNode.Nodes = GetNodes(email, dbTreeNode.JournalId);
-                if (this.TreeQueries.ValidateOnershipCall(email, new int[] { treeNode.Id }))
+                var children = nodesByParent[parentId].OrderBy(x => x.Name).ToList();
+                foreach (var child in children)
                 {
-                    result.Add(treeNode);
+                    child.Nodes = GetChildren(child.Id);
                 }
+                return children;
             }
-            result = result.OrderBy(x => x.Name).ToList();
-            return result;
+
+            return GetChildren(parent);
         }
 
         private List<int> GetIds(List<CoreObjects.Journal> nodes)
@@ -62,7 +69,8 @@ namespace ProductivityTools.Meetings.Services
 
         public List<int> GetFlatChildsId(string email, int parent)
         {
-            var nodes = GetNodes(email, parent);
+            var userJournals = this.TreeQueries.GetUserJournals(email);
+            var nodes = BuildHierarchy(userJournals, parent);
             List<int> result = GetIds(nodes);
             return result;
         }
@@ -71,7 +79,8 @@ namespace ProductivityTools.Meetings.Services
         {
             var rootdb = TreeQueries.GetRoot();
             CoreObjects.Journal root = Mapper.Map<CoreObjects.Journal>(rootdb);
-            root.Nodes = GetNodes(email, rootdb.JournalId);
+            var userJournals = this.TreeQueries.GetUserJournals(email);
+            root.Nodes = BuildHierarchy(userJournals, rootdb.JournalId);
             return root;
         }
 
