@@ -9,5 +9,6 @@ namespace ProductivityTools.Meetings.Services
         void DeletePage(string email, int pageId);
         string GetPublicHash(string email, int pageId);
         CoreObjects.Page GetPublicPage(string publicHash);
+        List<CoreObjects.Page> GetPublicPages(string publicHash);
     }
 }

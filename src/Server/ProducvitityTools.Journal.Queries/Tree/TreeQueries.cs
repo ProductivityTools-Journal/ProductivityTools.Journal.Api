@@ -22,6 +22,7 @@ namespace ProducvitityTools.Meetings.Queries
         List<ProductivityTools.Meetings.Database.Objects.Journal> GetChildJournals(int parentId);
         string GetJournalPath(int journalId);
         Dictionary<int, string> GetJournalPaths(IEnumerable<int> journalIds);
+        List<int> GetFlatChildsIdPublic(int parentId);
     }
 
     class TreeQueries : ITreeQueries
@@ -103,29 +104,19 @@ namespace ProducvitityTools.Meetings.Queries
 
         public string GetJournalPath(int journalId)
         {
-            var names = new List<string>();
-            var current = this.MeetingContext.Journal.SingleOrDefault(x => x.JournalId == journalId);
-            while (current != null && current.Name != "Root")
-            {
-                names.Add(current.Name);
-                if (!current.ParentId.HasValue || current.ParentId.Value == current.JournalId)
-                {
-                    break;
-                }
-                current = this.MeetingContext.Journal.SingleOrDefault(x => x.JournalId == current.ParentId.Value);
-            }
-            if (names.Count == 0 && current != null)
-            {
-                names.Add(current.Name);
-            }
-            names.Reverse();
-            return string.Join(" / ", names);
+            var paths = GetJournalPaths(new[] { journalId });
+            return paths.TryGetValue(journalId, out var path) ? path : string.Empty;
         }
 
         public Dictionary<int, string> GetJournalPaths(IEnumerable<int> journalIds)
         {
             var result = new Dictionary<int, string>();
-            var allJournals = this.MeetingContext.Journal.Where(x => x.Deleted == false).ToDictionary(x => x.JournalId);
+            var allJournals = this.MeetingContext.Journal
+                .AsNoTracking()
+                .Where(x => x.Deleted == false)
+                .Select(x => new { x.JournalId, x.ParentId, x.Name })
+                .ToDictionary(x => x.JournalId);
+
             foreach (var id in journalIds.Distinct())
             {
                 var names = new List<string>();
@@ -147,6 +138,30 @@ namespace ProducvitityTools.Meetings.Queries
                 result[id] = string.Join(" / ", names);
             }
             return result;
+        }
+
+        public List<int> GetFlatChildsIdPublic(int parentId)
+        {
+            var sql = @"
+                WITH PublicTree AS (
+                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash
+                    FROM [j].[Journal] j
+                    WHERE j.ParentId = {0} AND j.JournalId != j.ParentId AND j.Deleted = 0
+                    UNION ALL
+                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash
+                    FROM [j].[Journal] child
+                    INNER JOIN PublicTree parent ON child.ParentId = parent.JournalId
+                    WHERE child.JournalId != child.ParentId AND child.Deleted = 0
+                )
+                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash FROM PublicTree;";
+
+            var childJournals = this.MeetingContext.Journal
+                .FromSqlRaw(sql, parentId)
+                .AsNoTracking()
+                .Select(x => x.JournalId)
+                .ToList();
+
+            return childJournals;
         }
     }
 }

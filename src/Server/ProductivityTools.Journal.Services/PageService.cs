@@ -93,5 +93,29 @@ namespace ProductivityTools.Meetings.Services
             }
             return result;
         }
+
+        public List<CoreObjects.Page> GetPublicPages(string publicHash)
+        {
+            var rootJournal = this.TreeQueries.GetJournalByPublicHash(publicHash);
+            if (rootJournal == null)
+            {
+                return new List<CoreObjects.Page>();
+            }
+
+            var journalIds = new List<int>() { rootJournal.JournalId };
+            journalIds.AddRange(this.TreeQueries.GetFlatChildsIdPublic(rootJournal.JournalId));
+
+            var journalPaths = this.TreeQueries.GetJournalPaths(journalIds);
+            var dbPages = this.MeetingQueries.GetPagesByJournalIds(journalIds);
+            var result = this.Mapper.Map<List<CoreObjects.Page>>(dbPages);
+            foreach (var page in result)
+            {
+                if (page.JournalId.HasValue && journalPaths.TryGetValue(page.JournalId.Value, out var path))
+                {
+                    page.Path = path;
+                }
+            }
+            return result;
+        }
     }
 }

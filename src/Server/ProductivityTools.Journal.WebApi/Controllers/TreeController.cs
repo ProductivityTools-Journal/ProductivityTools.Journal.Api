@@ -22,9 +22,12 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
     {
         readonly IMapper Mapper;
         readonly ITreeService TreeServices;
-        public TreeController(ITreeService treeService, IMapper mapper)
+        readonly IPageService PageService;
+
+        public TreeController(ITreeService treeService, IPageService pageService, IMapper mapper)
         {
             this.TreeServices = treeService;
+            this.PageService = pageService;
             this.Mapper = mapper;
         }
 
@@ -108,7 +111,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Route("Public/{publicHash}")]
         public IActionResult GetPublic(string publicHash)
         {
-            var result = this.TreeServices.GetPublicPages(publicHash);
+            var result = this.PageService.GetPublicPages(publicHash);
             if (result == null)
             {
                 return NotFound();
