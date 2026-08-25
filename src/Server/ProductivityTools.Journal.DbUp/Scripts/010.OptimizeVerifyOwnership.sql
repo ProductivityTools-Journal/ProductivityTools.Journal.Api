@@ -13,9 +13,9 @@ BEGIN
     BEGIN
         SET @HasPermission = 0;
         RETURN;
-    END
+    END;
 
-    WITH AncestorTree AS (
+    ;WITH AncestorTree AS (
         SELECT t.TreeId AS RequestedTreeId, j.JournalId, j.ParentId
         FROM @TreeIds t
         INNER JOIN [j].[Journal] j ON t.TreeId = j.JournalId
@@ -34,12 +34,12 @@ BEGIN
         INNER JOIN [j].[JournalOwner] jo ON a.JournalId = jo.JournalId
         WHERE jo.UserId = @UserId
     )
-    IF NOT EXISTS (
-        SELECT 1 FROM @TreeIds t
-        WHERE t.TreeId NOT IN (SELECT RequestedTreeId FROM PermittedRequestedIds)
-    )
-        SET @HasPermission = 1;
-    ELSE
-        SET @HasPermission = 0;
+    SELECT @HasPermission = CASE 
+        WHEN NOT EXISTS (
+            SELECT 1 FROM @TreeIds t
+            WHERE t.TreeId NOT IN (SELECT RequestedTreeId FROM PermittedRequestedIds)
+        ) THEN 1
+        ELSE 0
+    END;
 END;
 GO
