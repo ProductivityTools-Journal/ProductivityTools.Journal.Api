@@ -1,48 +1,80 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductivityTools.Journal.Database
 {
     public class DatabaseHelpers
     {
-        public static bool ExecutVerifyOwnership(DbContext context,string email,  int[] treeIds)
+        public static bool ExecutVerifyOwnership(DbContext context, string email, int[] treeIds)
         {
-            string connectionstring = context.Database.GetConnectionString();
-
-            using (var connection = new SqlConnection(connectionstring))
-            using (var command = connection.CreateCommand())
+            if (string.IsNullOrEmpty(email))
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "j.VerifyOwnership";
+                return false;
+            }
 
-                SqlParameter emailparameter = command.Parameters.Add("@email", SqlDbType.Text);
-                emailparameter.Direction = ParameterDirection.Input;
-                emailparameter.Value = email;
+            if (treeIds == null || treeIds.Length == 0)
+            {
+                return true;
+            }
 
-                DataTable table = new DataTable();
-                table.Columns.Add("TreeId", typeof(int));
-                foreach (var treeId in treeIds)
-                {
-                    table.Rows.Add(treeId);
-                }
-                SqlParameter treeeIds = command.Parameters.Add("@TreeIds", SqlDbType.Structured);
-                treeeIds.Direction = ParameterDirection.Input;
-                treeeIds.Value = table;
+            var connection = context.Database.GetDbConnection() as SqlConnection;
+            bool shouldDisposeConnection = false;
+            if (connection == null)
+            {
+                string connectionString = context.Database.GetConnectionString();
+                connection = new SqlConnection(connectionString);
+                shouldDisposeConnection = true;
+            }
 
-
-                SqlParameter returnValue = command.Parameters.Add("@HasPermission", SqlDbType.Bit);
-                returnValue.Direction = ParameterDirection.Output;
-
+            bool shouldCloseConnection = false;
+            if (connection.State != ConnectionState.Open)
+            {
                 connection.Open();
-                
-                var r = command.ExecuteNonQuery();
-                return (bool)returnValue.Value;
+                shouldCloseConnection = true;
+            }
+
+            try
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "j.VerifyOwnership";
+
+                    var emailParameter = command.Parameters.Add("@email", SqlDbType.VarChar, 100);
+                    emailParameter.Direction = ParameterDirection.Input;
+                    emailParameter.Value = email;
+
+                    DataTable table = new DataTable();
+                    table.Columns.Add("TreeId", typeof(int));
+                    foreach (var treeId in treeIds)
+                    {
+                        table.Rows.Add(treeId);
+                    }
+
+                    var treeIdsParameter = command.Parameters.Add("@TreeIds", SqlDbType.Structured);
+                    treeIdsParameter.Direction = ParameterDirection.Input;
+                    treeIdsParameter.TypeName = "j.TreeArray";
+                    treeIdsParameter.Value = table;
+
+                    var returnValue = command.Parameters.Add("@HasPermission", SqlDbType.Bit);
+                    returnValue.Direction = ParameterDirection.Output;
+
+                    command.ExecuteNonQuery();
+                    return returnValue.Value != null && returnValue.Value != DBNull.Value && (bool)returnValue.Value;
+                }
+            }
+            finally
+            {
+                if (shouldCloseConnection)
+                {
+                    connection.Close();
+                }
+                if (shouldDisposeConnection)
+                {
+                    connection.Dispose();
+                }
             }
         }
     }
