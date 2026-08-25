@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using ProductivityTools.Journal.Database;
 using ProductivityTools.Meetings.Database;
@@ -40,15 +41,11 @@ namespace ProducvitityTools.Meetings.Commands
 
         public int Delete(IEnumerable<int> treeIds)
         {
-            var trees = this.MeetingContext.Journal.Where(x => treeIds.Contains(x.JournalId));
-            foreach (var tree in trees)
-            {
-                tree.Deleted = true;
-                MeetingContext.Update(tree);
-            }
+            var affected = this.MeetingContext.Journal
+                .Where(x => treeIds.Contains(x.JournalId))
+                .ExecuteUpdate(s => s.SetProperty(j => j.Deleted, true));
 
-            this.MeetingContext.SaveChanges();
-            return trees.Count();
+            return affected;
         }
 
         public void Move(int source, int target)

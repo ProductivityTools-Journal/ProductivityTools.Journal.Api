@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -81,15 +81,11 @@ namespace ProducvitityTools.Meetings.Commands
 
         int IJournalCommands.Delete(IEnumerable<int> treeIds)
         {
-            var meetings = MeetingContext.Pages.Where(x => treeIds.Contains(x.JournalId.Value));
-            foreach (var meeting in meetings)
-            {
-                meeting.Deleted = true;
-            };
+            var affected = MeetingContext.Pages
+                .Where(x => x.JournalId.HasValue && treeIds.Contains(x.JournalId.Value))
+                .ExecuteUpdate(s => s.SetProperty(p => p.Deleted, true));
 
-            MeetingContext.SaveChanges();
-
-            return meetings.Count();
+            return affected;
         }
     }
 }
