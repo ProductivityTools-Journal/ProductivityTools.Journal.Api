@@ -80,26 +80,11 @@ namespace ProducvitityTools.Meetings.Queries
 
         public List<Page> GetPagesByJournalIds(List<int> journalIds)
         {
-            var pined = this.MeetingContext.Pages
-                .Where(x => x.JournalId.HasValue && journalIds.Contains(x.JournalId.Value) && x.Pinned == true && x.Deleted == false)
-                .Select(x => new Page
-                {
-                    PageId = x.PageId,
-                    JournalId = x.JournalId,
-                    Date = x.Date,
-                    Subject = x.Subject,
-                    Content = x.Content,
-                    ContentType = x.ContentType,
-                    Pinned = x.Pinned,
-                    Deleted = x.Deleted,
-                    PublicHash = x.PublicHash,
-                    PlainText = x.PlainText
-                })
-                .OrderByDescending(x => x.Date)
-                .ToList();
-
             var pages = this.MeetingContext.Pages
-                .Where(x => x.JournalId.HasValue && journalIds.Contains(x.JournalId.Value) && x.Pinned == false && x.Deleted == false)
+                .AsNoTracking()
+                .Where(x => x.JournalId.HasValue && journalIds.Contains(x.JournalId.Value) && x.Deleted == false)
+                .OrderByDescending(x => x.Pinned)
+                .ThenByDescending(x => x.Date)
                 .Select(x => new Page
                 {
                     PageId = x.PageId,
@@ -113,11 +98,9 @@ namespace ProducvitityTools.Meetings.Queries
                     PublicHash = x.PublicHash,
                     PlainText = x.PlainText
                 })
-                .OrderByDescending(x => x.Date)
                 .ToList();
 
-            pined.AddRange(pages);
-            return pined;
+            return pages;
         }
 
         public List<Page> GetPagesWithoutPlainText(int count = 1000)

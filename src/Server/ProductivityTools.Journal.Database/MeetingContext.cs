@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,23 +24,18 @@ namespace ProductivityTools.Meetings.Database
         public DbSet<JournalOwner> JournalOwner { get; set; }
 
 
-        private ILoggerFactory GetLoggerFactory()
+        private static readonly ILoggerFactory DbLoggerFactory = LoggerFactory.Create(builder =>
         {
-            IServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddLogging(builder =>
-                   builder.AddConsole()
-                          .AddFilter(DbLoggerCategory.Database.Command.Name,
-                                     LogLevel.Information));
-            return serviceCollection.BuildServiceProvider()
-                    .GetService<ILoggerFactory>();
-        }
+            builder.AddConsole()
+                   .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+        });
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(configuration.GetConnectionString("PTJournal"));
-                optionsBuilder.UseLoggerFactory(GetLoggerFactory());
+                optionsBuilder.UseLoggerFactory(DbLoggerFactory);
                 optionsBuilder.EnableSensitiveDataLogging();
                 base.OnConfiguring(optionsBuilder);
             }
