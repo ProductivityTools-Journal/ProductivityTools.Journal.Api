@@ -42,31 +42,26 @@ namespace ProducvitityTools.Meetings.Queries
             treeNodeId.RemoveAll(x => x == 1);
             QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, treeNodeId.ToArray());
 
-            IQueryable<Page> queryPinned = this.MeetingContext.Pages
-            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Pinned == true && x.Deleted == false)
-            // .Include(x => x.NotesList)
-            .OrderByDescending(x => x.Date);
-            var queryStringPinned = queryPinned.ToQueryString();
-            List<Page> pined = queryPinned.ToList();
+            var result = this.MeetingContext.Pages
+                .AsNoTracking()
+                .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Deleted == false)
+                .OrderByDescending(x => x.Pinned)
+                .ThenByDescending(x => x.Date)
+                .Take(50)
+                .ToList();
 
-            IQueryable<Page> query = this.MeetingContext.Pages
-            .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Pinned==false && x.Deleted == false)
-            // .Include(x => x.NotesList)
-            .OrderByDescending(x => x.Date).Take(50);
-            var queryString = query.ToQueryString();
-            List<Page> pages = query.ToList();
-            pined.AddRange(pages);
-            return pined;
-
-
+            return result;
         }
 
         public Page GetPage(string email, int pageId)
         {
             var result = this.MeetingContext.Pages
-               // .Include(x => x.NotesList)
+                .AsNoTracking()
                 .SingleOrDefault(x => x.PageId == pageId);
-            QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, new int[] { result.JournalId.Value });
+            if (result != null && result.JournalId.HasValue)
+            {
+                QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, new int[] { result.JournalId.Value });
+            }
 
             return result;
         }
@@ -78,6 +73,7 @@ namespace ProducvitityTools.Meetings.Queries
                 return null;
             }
             var result = this.MeetingContext.Pages
+                .AsNoTracking()
                 .SingleOrDefault(x => x.PublicHash == publicHash && x.Deleted == false);
             return result;
         }
