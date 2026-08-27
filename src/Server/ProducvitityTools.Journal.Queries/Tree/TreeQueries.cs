@@ -50,18 +50,18 @@ namespace ProducvitityTools.Meetings.Queries
         {
             var sql = @"
                 WITH UserTree AS (
-                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash
+                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash, j.InboxName
                     FROM [j].[Journal] j
                     INNER JOIN [j].[JournalOwner] jo ON j.JournalId = jo.JournalId
                     INNER JOIN [j].[User] u ON jo.UserId = u.UserId
                     WHERE u.email = {0} AND j.Deleted = 0
                     UNION ALL
-                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash
+                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash, child.InboxName
                     FROM [j].[Journal] child
                     INNER JOIN UserTree parent ON child.ParentId = parent.JournalId
                     WHERE child.JournalId != child.ParentId AND child.Deleted = 0
                 )
-                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash FROM UserTree;";
+                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash, InboxName FROM UserTree;";
 
             var result = this.MeetingContext.Journal
                 .FromSqlRaw(sql, email)
@@ -144,16 +144,16 @@ namespace ProducvitityTools.Meetings.Queries
         {
             var sql = @"
                 WITH PublicTree AS (
-                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash
+                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash, j.InboxName
                     FROM [j].[Journal] j
                     WHERE j.ParentId = {0} AND j.JournalId != j.ParentId AND j.Deleted = 0
                     UNION ALL
-                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash
+                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash, child.InboxName
                     FROM [j].[Journal] child
                     INNER JOIN PublicTree parent ON child.ParentId = parent.JournalId
                     WHERE child.JournalId != child.ParentId AND child.Deleted = 0
                 )
-                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash FROM PublicTree;";
+                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash, InboxName FROM PublicTree;";
 
             var childJournals = this.MeetingContext.Journal
                 .FromSqlRaw(sql, parentId)

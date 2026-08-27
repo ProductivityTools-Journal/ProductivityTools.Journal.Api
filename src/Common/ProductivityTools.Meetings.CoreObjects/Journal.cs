@@ -13,6 +13,7 @@ namespace ProductivityTools.Meetings.CoreObjects
         public Journal Parent { get; set; }
         public List<Journal> Nodes { get; set; }
         public string PublicHash { get; set; }
+        public string InboxName { get; set; }
 
         public Journal(string name)
         {

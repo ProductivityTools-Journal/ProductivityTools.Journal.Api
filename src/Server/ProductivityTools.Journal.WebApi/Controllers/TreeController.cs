@@ -107,6 +107,24 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             return r;
         }
 
+        [HttpPost]
+        [Authorize]
+        [Route(Consts.SetInboxName)]
+        public CoreObjects.Journal SetInboxName(SetInboxNameRequest request)
+        {
+            var r = this.TreeServices.SetInboxName(UserEmail, request.JournalId, request.InboxName);
+            return r;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route(Consts.RemoveInboxName)]
+        public CoreObjects.Journal RemoveInboxName(JournalId request)
+        {
+            var r = this.TreeServices.RemoveInboxName(UserEmail, request.Id.Value);
+            return r;
+        }
+
         [HttpGet]
         [Route("Public/{publicHash}")]
         public IActionResult GetPublic(string publicHash)

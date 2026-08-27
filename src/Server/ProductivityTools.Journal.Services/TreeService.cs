@@ -190,5 +190,27 @@ namespace ProductivityTools.Meetings.Services
             }
             return this.TreeCommands.GetPublicHash(journalId);
         }
+
+        public CoreObjects.Journal SetInboxName(string email, int journalId, string inboxName)
+        {
+            var hasPermission = this.TreeQueries.ValidateOnershipCall(email, new int[] { journalId });
+            if (!hasPermission)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            var r = this.TreeCommands.SetInboxName(journalId, inboxName);
+            return this.Mapper.Map<CoreObjects.Journal>(r);
+        }
+
+        public CoreObjects.Journal RemoveInboxName(string email, int journalId)
+        {
+            var hasPermission = this.TreeQueries.ValidateOnershipCall(email, new int[] { journalId });
+            if (!hasPermission)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            var r = this.TreeCommands.RemoveInboxName(journalId);
+            return this.Mapper.Map<CoreObjects.Journal>(r);
+        }
     }
 }

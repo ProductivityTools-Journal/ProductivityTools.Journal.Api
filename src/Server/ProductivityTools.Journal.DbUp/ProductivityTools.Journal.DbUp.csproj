@@ -20,6 +20,7 @@
     <None Remove="Scripts\009.PlainText.sql" />
     <None Remove="Scripts\010.OptimizeVerifyOwnership.sql" />
     <None Remove="Scripts\011.Indexes.sql" />
+    <None Remove="Scripts\012.InboxName.sql" />
     <None Remove="Scripts\101.DataMigrationUserJournal.sql" />
     <None Remove="Scripts\102.DataMigrationPages.sql" />
     <None Remove="Scripts\103.DataMigrationOwnership.sql" />
@@ -41,6 +42,7 @@
     <EmbeddedResource Include="Scripts\009.PlainText.sql" />
     <EmbeddedResource Include="Scripts\010.OptimizeVerifyOwnership.sql" />
     <EmbeddedResource Include="Scripts\011.Indexes.sql" />
+    <EmbeddedResource Include="Scripts\012.InboxName.sql" />
     <EmbeddedResource Include="Scripts\203.ListMigration-Function.sql" />
     <EmbeddedResource Include="Scripts\204.DataMigrationSlate2PlateConvertPlate.sql" />
     <EmbeddedResource Include="Scripts\202.DataMigrationSlate2Plate.sql" />

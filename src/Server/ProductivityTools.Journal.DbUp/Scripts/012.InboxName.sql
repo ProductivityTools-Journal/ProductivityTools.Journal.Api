@@ -1,0 +1,2 @@
+ALTER TABLE [j].[Journal] ADD [InboxName] NVARCHAR(255) NULL
+GO

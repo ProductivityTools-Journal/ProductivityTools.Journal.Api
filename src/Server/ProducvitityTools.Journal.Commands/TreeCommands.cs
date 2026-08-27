@@ -20,6 +20,8 @@ namespace ProducvitityTools.Meetings.Commands
         Journal RenameJournal(int journalId, string newName);
         int? CheckIfTreeNodeExists(int parentId, string name);
         string GetPublicHash(int journalId);
+        Journal SetInboxName(int journalId, string inboxName);
+        Journal RemoveInboxName(int journalId);
     }
 
     public class TreeCommands : ITreeCommands
@@ -83,6 +85,24 @@ namespace ProducvitityTools.Meetings.Commands
             MeetingContext.Update(sourceElement);
             MeetingContext.SaveChanges();
             return hash;
+        }
+
+        public Journal SetInboxName(int journalId, string inboxName)
+        {
+            var sourceElement = this.MeetingContext.Journal.Where(x => x.JournalId == journalId).FirstOrDefault();
+            sourceElement.InboxName = inboxName;
+            MeetingContext.Update(sourceElement);
+            MeetingContext.SaveChanges();
+            return sourceElement;
+        }
+
+        public Journal RemoveInboxName(int journalId)
+        {
+            var sourceElement = this.MeetingContext.Journal.Where(x => x.JournalId == journalId).FirstOrDefault();
+            sourceElement.InboxName = null;
+            MeetingContext.Update(sourceElement);
+            MeetingContext.SaveChanges();
+            return sourceElement;
         }
     }
 }

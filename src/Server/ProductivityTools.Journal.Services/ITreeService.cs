@@ -17,5 +17,7 @@ namespace ProductivityTools.Meetings.Services
         CoreObjects.Journal RenameJournal(int journalId, string newName);
         int AddIfDoesNotExists(string email, int parentId, string journalName);
         string GetPublicHash(string email, int journalId);
+        CoreObjects.Journal SetInboxName(string email, int journalId, string inboxName);
+        CoreObjects.Journal RemoveInboxName(string email, int journalId);
     }
 }

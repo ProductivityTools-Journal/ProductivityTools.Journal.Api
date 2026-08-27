@@ -12,5 +12,6 @@ namespace ProductivityTools.Meetings.Database.Objects
         public string Name { get; set; }
         public bool Deleted { get; set; }
         public string PublicHash { get; set; }
+        public string InboxName { get; set; }
     }
 }
