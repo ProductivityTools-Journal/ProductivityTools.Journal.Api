@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProducvitityTools.Journal.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Journal.DatabaseMigrations", "src\Server\ProductivityTools.Journal.DatabaseMigrations\ProductivityTools.Journal.DatabaseMigrations.csproj", "{C2DB3106-4BD1-40FA-B999-55FE8EB2E0BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Meetings.ClientCaller", "src\Client\ProductivityTools.Meetings.ClientCaller\ProductivityTools.Meetings.ClientCaller.csproj", "{14854ACA-3F16-433E-B38E-EF8C185D6BC5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Journal.Database", "src\Server\ProductivityTools.Journal.Database\ProductivityTools.Journal.Database.csproj", "{B4CBC7CD-57B7-43E7-863B-3B3976325808}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityTools.Journal.Services", "src\Server\ProductivityTools.Journal.Services\ProductivityTools.Journal.Services.csproj", "{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866}"
@@ -61,10 +59,6 @@ Global
 		{C2DB3106-4BD1-40FA-B999-55FE8EB2E0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2DB3106-4BD1-40FA-B999-55FE8EB2E0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2DB3106-4BD1-40FA-B999-55FE8EB2E0BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14854ACA-3F16-433E-B38E-EF8C185D6BC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14854ACA-3F16-433E-B38E-EF8C185D6BC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14854ACA-3F16-433E-B38E-EF8C185D6BC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14854ACA-3F16-433E-B38E-EF8C185D6BC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B4CBC7CD-57B7-43E7-863B-3B3976325808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B4CBC7CD-57B7-43E7-863B-3B3976325808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4CBC7CD-57B7-43E7-863B-3B3976325808}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -99,7 +93,6 @@ Global
 		{F5264BC6-655D-4811-A5DA-21173CDA64B3} = {A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}
 		{DEBE5225-83BF-4E96-9FEE-3BAAEF704D9B} = {A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}
 		{C2DB3106-4BD1-40FA-B999-55FE8EB2E0BE} = {A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}
-		{14854ACA-3F16-433E-B38E-EF8C185D6BC5} = {D02DF10D-BF1E-4544-B53F-427FDB95AFD6}
 		{B4CBC7CD-57B7-43E7-863B-3B3976325808} = {A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}
 		{3DC4E7F9-2848-4865-A1BB-EE22ECBD7866} = {A6CBCB6C-02B9-4702-AABD-7DAEB3E4D285}
 		{FFE22747-84AE-4F16-A8C5-48BB76EA23B5} = {FB520989-8FE9-4601-8D79-DA864C3470E4}
