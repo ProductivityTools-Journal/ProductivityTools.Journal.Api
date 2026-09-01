@@ -158,6 +158,7 @@ namespace ProducvitityTools.Meetings.Queries
             var childJournals = this.MeetingContext.Journal
                 .FromSqlRaw(sql, parentId)
                 .AsNoTracking()
+                .AsEnumerable()
                 .Select(x => x.JournalId)
                 .ToList();
 
