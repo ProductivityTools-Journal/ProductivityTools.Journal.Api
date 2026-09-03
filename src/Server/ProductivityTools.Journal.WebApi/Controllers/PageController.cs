@@ -210,7 +210,6 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
                 return Content(html, "text/html", System.Text.Encoding.UTF8);
             }
 
-            result.Content = null;
             return Ok(result);
         }
 
