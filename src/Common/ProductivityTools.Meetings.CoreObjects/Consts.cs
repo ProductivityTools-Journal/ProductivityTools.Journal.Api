@@ -24,5 +24,7 @@ namespace ProductivityTools.Meetings.CoreObjects
         public const string TreeControllerMoveName = "Move";
         public const string SetInboxName = "SetInboxName";
         public const string RemoveInboxName = "RemoveInboxName";
+        public const string Archive = "Archive";
+        public const string Unarchive = "Unarchive";
     }
 }

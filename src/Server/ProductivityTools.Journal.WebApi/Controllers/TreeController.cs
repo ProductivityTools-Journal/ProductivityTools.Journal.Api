@@ -35,9 +35,9 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         [Authorize]
         [AuthenticatedUsers]
         [Route(Consts.TreeControlerGet)]
-        public CoreObjects.Journal GetTree()
+        public CoreObjects.Journal GetTree(GetTreeRequest request)
         {
-            var result = TreeServices.GetTree(UserEmail);
+            var result = TreeServices.GetTree(UserEmail, request?.IncludeArchived ?? false);
             return result;
         }
 
@@ -122,6 +122,24 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
         public CoreObjects.Journal RemoveInboxName(JournalId request)
         {
             var r = this.TreeServices.RemoveInboxName(UserEmail, request.Id.Value);
+            return r;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route(Consts.Archive)]
+        public CoreObjects.Journal Archive(ArchiveJournalRequest request)
+        {
+            var r = this.TreeServices.ArchiveJournal(UserEmail, request.JournalId, request.Archived);
+            return r;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route(Consts.Unarchive)]
+        public CoreObjects.Journal Unarchive(ArchiveJournalRequest request)
+        {
+            var r = this.TreeServices.ArchiveJournal(UserEmail, request.JournalId, false);
             return r;
         }
 

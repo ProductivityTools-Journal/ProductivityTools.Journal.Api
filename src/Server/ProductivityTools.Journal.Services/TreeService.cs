@@ -29,15 +29,16 @@ namespace ProductivityTools.Meetings.Services
             this.Mapper = mapper;
         }
 
-        private List<CoreObjects.Journal> GetNodes(string email, int parent)
+        private List<CoreObjects.Journal> GetNodes(string email, int parent, bool includeArchived = false)
         {
-            var userJournals = this.TreeQueries.GetUserJournals(email);
-            return BuildHierarchy(userJournals, parent);
+            var userJournals = this.TreeQueries.GetUserJournals(email, includeArchived);
+            return BuildHierarchy(userJournals, parent, includeArchived);
         }
 
-        private List<CoreObjects.Journal> BuildHierarchy(List<Database.Objects.Journal> userJournals, int parent)
+        private List<CoreObjects.Journal> BuildHierarchy(List<Database.Objects.Journal> userJournals, int parent, bool includeArchived = false)
         {
             var nodesByParent = userJournals
+                .Where(x => includeArchived || !x.Archived)
                 .Select(x => this.Mapper.Map<CoreObjects.Journal>(x))
                 .ToLookup(x => x.ParentId);
 
@@ -67,20 +68,20 @@ namespace ProductivityTools.Meetings.Services
             return result;
         }
 
-        public List<int> GetFlatChildsId(string email, int parent)
+        public List<int> GetFlatChildsId(string email, int parent, bool includeArchived = false)
         {
-            var userJournals = this.TreeQueries.GetUserJournals(email);
-            var nodes = BuildHierarchy(userJournals, parent);
+            var userJournals = this.TreeQueries.GetUserJournals(email, includeArchived);
+            var nodes = BuildHierarchy(userJournals, parent, includeArchived);
             List<int> result = GetIds(nodes);
             return result;
         }
 
-        public CoreObjects.Journal GetTree(string email)
+        public CoreObjects.Journal GetTree(string email, bool includeArchived = false)
         {
             var rootdb = TreeQueries.GetRoot();
             CoreObjects.Journal root = Mapper.Map<CoreObjects.Journal>(rootdb);
-            var userJournals = this.TreeQueries.GetUserJournals(email);
-            root.Nodes = BuildHierarchy(userJournals, rootdb.JournalId);
+            var userJournals = this.TreeQueries.GetUserJournals(email, includeArchived);
+            root.Nodes = BuildHierarchy(userJournals, rootdb.JournalId, includeArchived);
             return root;
         }
 
@@ -153,7 +154,7 @@ namespace ProductivityTools.Meetings.Services
 
         public int Delete(string email, int treeId)
         {
-            List<CoreObjects.Journal> subTreeNodes = GetNodes(email, treeId);
+            List<CoreObjects.Journal> subTreeNodes = GetNodes(email, treeId, includeArchived: true);
             subTreeNodes.Add(this.Mapper.Map<CoreObjects.Journal>(this.TreeQueries.GetTreeNode(treeId)));
             var treesIds = subTreeNodes.Select(x => x.Id);
             int meetingRemoved = this.MeetingCommands.Delete(treesIds);
@@ -210,6 +211,17 @@ namespace ProductivityTools.Meetings.Services
                 throw new UnauthorizedAccessException();
             }
             var r = this.TreeCommands.RemoveInboxName(journalId);
+            return this.Mapper.Map<CoreObjects.Journal>(r);
+        }
+
+        public CoreObjects.Journal ArchiveJournal(string email, int journalId, bool archived = true)
+        {
+            var hasPermission = this.TreeQueries.ValidateOnershipCall(email, new int[] { journalId });
+            if (!hasPermission)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            var r = this.TreeCommands.ArchiveJournal(journalId, archived);
             return this.Mapper.Map<CoreObjects.Journal>(r);
         }
     }

@@ -22,6 +22,7 @@ namespace ProducvitityTools.Meetings.Commands
         string GetPublicHash(int journalId);
         Journal SetInboxName(int journalId, string inboxName);
         Journal RemoveInboxName(int journalId);
+        Journal ArchiveJournal(int journalId, bool archived = true);
     }
 
     public class TreeCommands : ITreeCommands
@@ -100,6 +101,15 @@ namespace ProducvitityTools.Meetings.Commands
         {
             var sourceElement = this.MeetingContext.Journal.Where(x => x.JournalId == journalId).FirstOrDefault();
             sourceElement.InboxName = null;
+            MeetingContext.Update(sourceElement);
+            MeetingContext.SaveChanges();
+            return sourceElement;
+        }
+
+        public Journal ArchiveJournal(int journalId, bool archived = true)
+        {
+            var sourceElement = this.MeetingContext.Journal.Where(x => x.JournalId == journalId).FirstOrDefault();
+            sourceElement.Archived = archived;
             MeetingContext.Update(sourceElement);
             MeetingContext.SaveChanges();
             return sourceElement;

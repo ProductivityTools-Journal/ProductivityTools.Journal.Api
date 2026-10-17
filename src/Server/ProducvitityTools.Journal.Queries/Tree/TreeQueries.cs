@@ -14,15 +14,15 @@ namespace ProducvitityTools.Meetings.Queries
     public interface ITreeQueries
     {
         ProductivityTools.Meetings.Database.Objects.Journal GetRoot();
-        List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId);
-        List<ProductivityTools.Meetings.Database.Objects.Journal> GetUserJournals(string email);
+        List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId, bool includeArchived = false);
+        List<ProductivityTools.Meetings.Database.Objects.Journal> GetUserJournals(string email, bool includeArchived = false);
         ProductivityTools.Meetings.Database.Objects.Journal GetTreeNode(int id);
         bool ValidateOnershipCall(string email, int[] treeIds);
         ProductivityTools.Meetings.Database.Objects.Journal GetJournalByPublicHash(string publicHash);
-        List<ProductivityTools.Meetings.Database.Objects.Journal> GetChildJournals(int parentId);
+        List<ProductivityTools.Meetings.Database.Objects.Journal> GetChildJournals(int parentId, bool includeArchived = false);
         string GetJournalPath(int journalId);
         Dictionary<int, string> GetJournalPaths(IEnumerable<int> journalIds);
-        List<int> GetFlatChildsIdPublic(int parentId);
+        List<int> GetFlatChildsIdPublic(int parentId, bool includeArchived = false);
     }
 
     class TreeQueries : ITreeQueries
@@ -40,28 +40,43 @@ namespace ProducvitityTools.Meetings.Queries
             return root;
         }
 
-        public List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId)
+        public List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId, bool includeArchived = false)
         {
-            var result = this.MeetingContext.Journal.Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false).ToList();
+            var result = this.MeetingContext.Journal.Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false && (includeArchived || x.Archived == false)).ToList();
             return result;
         }
 
-        public List<ProductivityTools.Meetings.Database.Objects.Journal> GetUserJournals(string email)
+        public List<ProductivityTools.Meetings.Database.Objects.Journal> GetUserJournals(string email, bool includeArchived = false)
         {
-            var sql = @"
+            var sql = includeArchived
+                ? @"
                 WITH UserTree AS (
-                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash, j.InboxName
+                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash, j.InboxName, j.Archived
                     FROM [j].[Journal] j
                     INNER JOIN [j].[JournalOwner] jo ON j.JournalId = jo.JournalId
                     INNER JOIN [j].[User] u ON jo.UserId = u.UserId
                     WHERE u.email = {0} AND j.Deleted = 0
                     UNION ALL
-                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash, child.InboxName
+                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash, child.InboxName, child.Archived
                     FROM [j].[Journal] child
                     INNER JOIN UserTree parent ON child.ParentId = parent.JournalId
                     WHERE child.JournalId != child.ParentId AND child.Deleted = 0
                 )
-                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash, InboxName FROM UserTree;";
+                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash, InboxName, Archived FROM UserTree;"
+                : @"
+                WITH UserTree AS (
+                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash, j.InboxName, j.Archived
+                    FROM [j].[Journal] j
+                    INNER JOIN [j].[JournalOwner] jo ON j.JournalId = jo.JournalId
+                    INNER JOIN [j].[User] u ON jo.UserId = u.UserId
+                    WHERE u.email = {0} AND j.Deleted = 0 AND j.Archived = 0
+                    UNION ALL
+                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash, child.InboxName, child.Archived
+                    FROM [j].[Journal] child
+                    INNER JOIN UserTree parent ON child.ParentId = parent.JournalId
+                    WHERE child.JournalId != child.ParentId AND child.Deleted = 0 AND child.Archived = 0
+                )
+                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash, InboxName, Archived FROM UserTree;";
 
             var result = this.MeetingContext.Journal
                 .FromSqlRaw(sql, email)
@@ -94,10 +109,10 @@ namespace ProducvitityTools.Meetings.Queries
             return result;
         }
 
-        public List<ProductivityTools.Meetings.Database.Objects.Journal> GetChildJournals(int parentId)
+        public List<ProductivityTools.Meetings.Database.Objects.Journal> GetChildJournals(int parentId, bool includeArchived = false)
         {
             var result = this.MeetingContext.Journal
-                .Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false)
+                .Where(x => x.ParentId == parentId && x.JournalId != x.ParentId && x.Deleted == false && (includeArchived || x.Archived == false))
                 .ToList();
             return result;
         }
@@ -140,20 +155,33 @@ namespace ProducvitityTools.Meetings.Queries
             return result;
         }
 
-        public List<int> GetFlatChildsIdPublic(int parentId)
+        public List<int> GetFlatChildsIdPublic(int parentId, bool includeArchived = false)
         {
-            var sql = @"
+            var sql = includeArchived
+                ? @"
                 WITH PublicTree AS (
-                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash, j.InboxName
+                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash, j.InboxName, j.Archived
                     FROM [j].[Journal] j
                     WHERE j.ParentId = {0} AND j.JournalId != j.ParentId AND j.Deleted = 0
                     UNION ALL
-                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash, child.InboxName
+                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash, child.InboxName, child.Archived
                     FROM [j].[Journal] child
                     INNER JOIN PublicTree parent ON child.ParentId = parent.JournalId
                     WHERE child.JournalId != child.ParentId AND child.Deleted = 0
                 )
-                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash, InboxName FROM PublicTree;";
+                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash, InboxName, Archived FROM PublicTree;"
+                : @"
+                WITH PublicTree AS (
+                    SELECT j.JournalId, j.ParentId, j.Name, j.Deleted, j.PublicHash, j.InboxName, j.Archived
+                    FROM [j].[Journal] j
+                    WHERE j.ParentId = {0} AND j.JournalId != j.ParentId AND j.Deleted = 0 AND j.Archived = 0
+                    UNION ALL
+                    SELECT child.JournalId, child.ParentId, child.Name, child.Deleted, child.PublicHash, child.InboxName, child.Archived
+                    FROM [j].[Journal] child
+                    INNER JOIN PublicTree parent ON child.ParentId = parent.JournalId
+                    WHERE child.JournalId != child.ParentId AND child.Deleted = 0 AND child.Archived = 0
+                )
+                SELECT DISTINCT JournalId, ParentId, Name, Deleted, PublicHash, InboxName, Archived FROM PublicTree;";
 
             var childJournals = this.MeetingContext.Journal
                 .FromSqlRaw(sql, parentId)

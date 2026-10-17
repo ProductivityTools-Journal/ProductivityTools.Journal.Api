@@ -14,6 +14,7 @@ namespace ProductivityTools.Meetings.CoreObjects
         public List<Journal> Nodes { get; set; }
         public string PublicHash { get; set; }
         public string InboxName { get; set; }
+        public bool Archived { get; set; }
 
         public Journal(string name)
         {
