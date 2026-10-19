@@ -28,16 +28,27 @@ namespace ProducvitityTools.Meetings.Queries
     class TreeQueries : ITreeQueries
     {
         MeetingContext MeetingContext;
+        private static ProductivityTools.Meetings.Database.Objects.Journal _cachedRoot;
 
         public TreeQueries(MeetingContext context)
         {
             this.MeetingContext = context;
         }
 
+        internal static ProductivityTools.Meetings.Database.Objects.Journal GetRoot(MeetingContext context)
+        {
+            if (_cachedRoot == null)
+            {
+                _cachedRoot = context.Journal
+                    .AsNoTracking()
+                    .First(x => x.Name == "Root");
+            }
+            return _cachedRoot;
+        }
+
         public ProductivityTools.Meetings.Database.Objects.Journal GetRoot()
         {
-            ProductivityTools.Meetings.Database.Objects.Journal root = this.MeetingContext.Journal.Where(x => x.Name == "Root").First();
-            return root;
+            return GetRoot(this.MeetingContext);
         }
 
         public List<ProductivityTools.Meetings.Database.Objects.Journal> GetTree(string email, int parentId, bool includeArchived = false)
@@ -186,7 +197,6 @@ namespace ProducvitityTools.Meetings.Queries
             var childJournals = this.MeetingContext.Journal
                 .FromSqlRaw(sql, parentId)
                 .AsNoTracking()
-                .AsEnumerable()
                 .Select(x => x.JournalId)
                 .ToList();
 

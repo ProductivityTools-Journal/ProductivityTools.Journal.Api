@@ -7,6 +7,7 @@ namespace ProducvitityTools.Meetings.Queries
     {
         List<Page> GetPages();
         List<Page> GetPages(string email, List<int> treeNodeIds);
+        List<Page> GetPagesForVerifiedJournals(List<int> treeNodeIds);
         Page GetPage(string email, int id);
         Page GetPageByPublicHash(string publicHash);
         List<Page> GetPagesByJournalIds(List<int> journalIds);

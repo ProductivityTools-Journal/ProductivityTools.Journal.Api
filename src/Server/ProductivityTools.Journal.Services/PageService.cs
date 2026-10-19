@@ -48,14 +48,24 @@ namespace ProductivityTools.Meetings.Services
 
         public List<CoreObjects.Page> GetPagesInternal(string email, int treeNodeId, bool drillDown)
         {
-            var trees = new List<int>() { treeNodeId };
-            if (drillDown)
+            var root = this.TreeQueries.GetRoot();
+            var trees = new List<int>();
+
+            if (treeNodeId != root.JournalId)
             {
-                trees.AddRange(this.TreeService.GetFlatChildsId(email,treeNodeId));
+                if (!this.TreeQueries.ValidateOnershipCall(email, new[] { treeNodeId }))
+                {
+                    throw new UnauthorizedAccessException();
+                }
+                trees.Add(treeNodeId);
             }
 
-            //var result = new List<Meeting>();
-            var dbResult = this.MeetingQueries.GetPages(email, trees).ToList();
+            if (drillDown)
+            {
+                trees.AddRange(this.TreeService.GetFlatChildsId(email, treeNodeId));
+            }
+
+            var dbResult = this.MeetingQueries.GetPagesForVerifiedJournals(trees);
             var result = this.Mapper.Map<List<CoreObjects.Page>>(dbResult);
             return result;
         }

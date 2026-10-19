@@ -39,8 +39,19 @@ namespace ProducvitityTools.Meetings.Queries
 
         public List<Page> GetPages(string email, List<int> treeNodeId)
         {
-            treeNodeId.RemoveAll(x => x == 1);
+            var root = TreeQueries.GetRoot(this.MeetingContext);
+            treeNodeId.RemoveAll(x => x == root.JournalId);
             QueriesHelper.ValidateOnershipCall(this.MeetingContext, email, treeNodeId.ToArray());
+
+            return GetPagesForVerifiedJournals(treeNodeId);
+        }
+
+        public List<Page> GetPagesForVerifiedJournals(List<int> treeNodeId)
+        {
+            if (treeNodeId == null || treeNodeId.Count == 0)
+            {
+                return new List<Page>();
+            }
 
             var result = this.MeetingContext.Pages
                 .AsNoTracking()

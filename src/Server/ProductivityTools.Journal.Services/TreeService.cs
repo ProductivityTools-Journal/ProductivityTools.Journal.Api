@@ -71,8 +71,21 @@ namespace ProductivityTools.Meetings.Services
         public List<int> GetFlatChildsId(string email, int parent, bool includeArchived = false)
         {
             var userJournals = this.TreeQueries.GetUserJournals(email, includeArchived);
-            var nodes = BuildHierarchy(userJournals, parent, includeArchived);
-            List<int> result = GetIds(nodes);
+            var childrenByParent = userJournals
+                .Where(x => includeArchived || !x.Archived)
+                .ToLookup(x => x.ParentId, x => x.JournalId);
+
+            var result = new List<int>();
+            var stack = new Stack<int>(childrenByParent[parent]);
+            while (stack.Count > 0)
+            {
+                var currentId = stack.Pop();
+                result.Add(currentId);
+                foreach (var childId in childrenByParent[currentId])
+                {
+                    stack.Push(childId);
+                }
+            }
             return result;
         }
 
@@ -132,7 +145,8 @@ namespace ProductivityTools.Meetings.Services
         public int AddTreeNode(string email, int parentId, string name)
         {
             var result = this.TreeCommands.AddTreeNode(parentId, name);
-            if (parentId == 1)
+            var root = this.TreeQueries.GetRoot();
+            if (parentId == root.JournalId)
             {
                 int userId = -1;
                 if (email == "pwujczyk@google.com")
