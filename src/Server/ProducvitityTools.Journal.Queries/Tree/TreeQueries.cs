@@ -190,7 +190,7 @@ namespace ProducvitityTools.Meetings.Queries
                     SELECT child.JournalId
                     FROM [j].[Journal] child
                     INNER JOIN PublicTree parent ON child.ParentId = parent.JournalId
-                    WHERE child.JournalId != child.ParentId AND child.Deleted = 0 AND j.Archived = 0
+                    WHERE child.JournalId != child.ParentId AND child.Deleted = 0 AND child.Archived = 0
                 )
                 SELECT DISTINCT JournalId AS [Value] FROM PublicTree;";
 
