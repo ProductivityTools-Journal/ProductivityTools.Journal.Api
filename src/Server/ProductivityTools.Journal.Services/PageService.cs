@@ -51,18 +51,25 @@ namespace ProductivityTools.Meetings.Services
             var root = this.TreeQueries.GetRoot();
             var trees = new List<int>();
 
-            if (treeNodeId != root.JournalId)
+            if (treeNodeId == root.JournalId)
+            {
+                if (drillDown)
+                {
+                    trees.AddRange(this.TreeService.GetFlatChildsId(email, root.JournalId));
+                }
+            }
+            else
             {
                 if (!this.TreeQueries.ValidateOnershipCall(email, new[] { treeNodeId }))
                 {
                     throw new UnauthorizedAccessException();
                 }
                 trees.Add(treeNodeId);
-            }
 
-            if (drillDown)
-            {
-                trees.AddRange(this.TreeService.GetFlatChildsId(email, treeNodeId));
+                if (drillDown)
+                {
+                    trees.AddRange(this.TreeQueries.GetFlatChildsIdPublic(treeNodeId));
+                }
             }
 
             var dbResult = this.MeetingQueries.GetPagesForVerifiedJournals(trees);
