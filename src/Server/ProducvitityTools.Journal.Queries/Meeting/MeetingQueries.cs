@@ -46,22 +46,25 @@ namespace ProducvitityTools.Meetings.Queries
             return GetPagesForVerifiedJournals(treeNodeId);
         }
 
-        public List<Page> GetPagesForVerifiedJournals(List<int> treeNodeId)
+        public List<Page> GetPagesForVerifiedJournals(List<int> treeNodeId, bool fullSync = false)
         {
             if (treeNodeId == null || treeNodeId.Count == 0)
             {
                 return new List<Page>();
             }
 
-            var result = this.MeetingContext.Pages
+            var query = this.MeetingContext.Pages
                 .AsNoTracking()
                 .Where(x => x.JournalId.HasValue && treeNodeId.Contains(x.JournalId.Value) && x.Deleted == false)
                 .OrderByDescending(x => x.Pinned)
-                .ThenByDescending(x => x.Date)
-                .Take(50)
-                .ToList();
+                .ThenByDescending(x => x.Date);
 
-            return result;
+            if (!fullSync)
+            {
+                return query.Take(50).ToList();
+            }
+
+            return query.ToList();
         }
 
         public Page GetPage(string email, int pageId)

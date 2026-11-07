@@ -138,7 +138,7 @@ namespace ProductivityTools.Meetings.WebApi.Controllers
             //var x=_userManager.GetUserAsync(HttpContext.User);
 
             SaveToLog("Request started");
-            List<CoreObjects.Page> result = this.MeetingService.GetPages(UserEmail, meetingListRequest.Id, meetingListRequest.DrillDown).ToList();
+            List<CoreObjects.Page> result = this.MeetingService.GetPages(UserEmail, meetingListRequest.Id, meetingListRequest.DrillDown, meetingListRequest.FullSync).ToList();
             SaveToLog("Meetings mapped");
             return result;
         }
